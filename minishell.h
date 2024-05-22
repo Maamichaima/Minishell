@@ -47,5 +47,6 @@ void	ft_lstadd_back(t_token **lst, t_token *new);
 int		ft_isalpha(int c);
 int 	is_symbol(char c);
 char	*get_next_token(char *s);
-
+int check_pipe(t_token *head);
+ int check_string(t_token *head);
 #endif

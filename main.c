@@ -44,11 +44,12 @@ int main(int c, char **v) {
             add_history(input);
 		head = NULL;
         lst_token(input, &head);
-		while(head != NULL)
-		{
-			printf("%s   %d \n", head->token, head->type);
-			head = head->next;
-		}
+		printf("%d\n ",  check_string(head));
+		// while(head != NULL)
+		// {
+		// 	printf("%s   %d \n", head->token, head->type);
+		// 	head = head->next;
+		// }
         free(input);
     }
     return 0;

@@ -1,4 +1,4 @@
-SRC = main.c lst.c get_token.c
+SRC = main.c lst.c get_token.c syntaxe_error.c
 OBJ = ${SRC:.c=.o}
 
 LDFLAGS = -lreadline
