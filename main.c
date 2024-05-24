@@ -44,7 +44,7 @@ int	main(int c, char **v)
 	t_token	*head;
 	t_ast	*root;
 	t_str *red;
-
+	t_str *cmd;
 
 	while (1)
 	{
@@ -57,14 +57,15 @@ int	main(int c, char **v)
 			printf("pas valide\n");
 		else
 		{
-			// root = parse_pipe(head);
-			// red = jbdi_red(head);
+			root = parse_pipe(head);
+			red = jbdi_red(head);
+			cmd = jbdi_cmd(head);
 			// printf_tree(root);
-			while (red != NULL)
-			{
-				printf("%s   %d \n", red->str, red->type);
-				red = red->next;
-			}
+			// while (cmd != NULL)
+			// {
+			// 	printf("%s   %d \n", cmd->str, cmd->type);
+			// 	cmd = cmd->next;
+			// }
 		}
 		free(input);
 	}

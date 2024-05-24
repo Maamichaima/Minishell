@@ -32,7 +32,8 @@ typedef enum
 	token_back_ope,
 	token_left_par,
 	token_right_par,
-	token_word
+	token_word,
+	token_cmd
 }					token_type;
 
 typedef struct s_token
@@ -68,6 +69,7 @@ int					is_redirectien(token_type type);
 int					is_valid_token(t_token *lst);
 int 				is_valid_word(char *s);
 t_ast 				*parse_pipe(t_token *lst);
-t_str *jbdi_red(t_token *lst);
+t_str 				*jbdi_red(t_token *lst);
+t_str			   	*jbdi_cmd(t_token *lst);
 
 #endif
