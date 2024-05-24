@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:50:22 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/22 12:22:26 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/23 19:38:44 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,29 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-token_type set_type(char *content)
+token_type	set_type(char *content)
 {
-	token_type type;
+	token_type	type;
 
-	if(!ft_strcmp(content, "<"))
+	if (!ft_strcmp(content, "<"))
 		type = token_red_input;
-	else if(!ft_strcmp(content, ">"))
+	else if (!ft_strcmp(content, ">"))
 		type = token_red_output;
-	else if(!ft_strcmp(content, ">>"))
+	else if (!ft_strcmp(content, ">>"))
 		type = token_herd;
-	else if(!ft_strcmp(content, "<<"))
-		type = token_expand;
-	else if(!ft_strcmp(content, "|"))
+	else if (!ft_strcmp(content, "<<"))
+		type = token_apend;
+	else if (!ft_strcmp(content, "|"))
 		type = token_pipe;
-	else if(!ft_strcmp(content, "||"))
+	else if (!ft_strcmp(content, "||"))
 		type = token_or;
-	else if(!ft_strcmp(content, "&"))
+	else if (!ft_strcmp(content, ")"))
+		type = token_right_par;
+	else if (!ft_strcmp(content, "("))
+		type = token_left_par;
+	else if (!ft_strcmp(content, "&"))
 		type = token_back_ope;
-	else if(!ft_strcmp(content, "&&"))
+	else if (!ft_strcmp(content, "&&"))
 		type = token_and;
 	else
 		type = token_word;
@@ -50,8 +54,8 @@ token_type set_type(char *content)
 t_token	*ft_lstnew(char *content)
 {
 	t_token	*l;
-	
-	if(!content)
+
+	if (!content)
 		return (NULL);
 	l = malloc(sizeof(t_token));
 	if (!l)
