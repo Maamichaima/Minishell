@@ -25,12 +25,28 @@ void	lst_token(char *ligne, t_token **head)
 	}
 }
 
+void printf_tree(t_ast *root)
+{
+
+    if (!root)
+        return ;
+    printf("     %d   ", root->type);
+    if (root->right)
+        printf_tree(root->right);
+    if (root->left)
+        printf_tree(root->left);
+    printf("\n");
+}
+
 int	main(int c, char **v)
 {
 	char	*input;
 	t_token	*head;
+	t_ast	*root;
+	t_str *red;
 
-	while (input)
+
+	while (1)
 	{
 		input = readline("bash$ ");
 		if (*input)
@@ -41,10 +57,13 @@ int	main(int c, char **v)
 			printf("pas valide\n");
 		else
 		{
-			while (head != NULL)
+			// root = parse_pipe(head);
+			// red = jbdi_red(head);
+			// printf_tree(root);
+			while (red != NULL)
 			{
-				printf("%s   %d \n", head->token, is_valid_word(head->token));
-				head = head->next;
+				printf("%s   %d \n", red->str, red->type);
+				red = red->next;
 			}
 		}
 		free(input);

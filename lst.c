@@ -30,9 +30,9 @@ token_type	set_type(char *content)
 		type = token_red_input;
 	else if (!ft_strcmp(content, ">"))
 		type = token_red_output;
-	else if (!ft_strcmp(content, ">>"))
-		type = token_herd;
 	else if (!ft_strcmp(content, "<<"))
+		type = token_herd;
+	else if (!ft_strcmp(content, ">>"))
 		type = token_apend;
 	else if (!ft_strcmp(content, "|"))
 		type = token_pipe;

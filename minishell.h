@@ -43,6 +43,22 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_str
+{
+	char *str;
+	token_type	type;
+	struct s_str *next;
+}	t_str;
+
+typedef struct s_ast
+{
+	token_type type;
+	t_str	*cmd;
+	t_str	*red;
+	struct s_ast *left;
+	struct s_ast *right;
+}	t_ast;
+
 t_token				*ft_lstnew(char *content);
 t_token				*ft_lstlast(t_token *lst);
 void				ft_lstadd_back(t_token **lst, t_token *new);
@@ -51,5 +67,7 @@ char				*get_next_token(char *s);
 int					is_redirectien(token_type type);
 int					is_valid_token(t_token *lst);
 int 				is_valid_word(char *s);
+t_ast 				*parse_pipe(t_token *lst);
+t_str *jbdi_red(t_token *lst);
 
 #endif
