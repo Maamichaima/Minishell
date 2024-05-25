@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/23 15:39:48 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/25 16:54:59 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	is_whitespace(char c)
 
 int	is_symbol(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&' || c == '(' || c == ')')
+	if (c == '|' || c == '<' || c == '>' || c == '&') // || c == '('
+		|| c == ')')
 		return (1);
 	return (0);
 }
@@ -86,7 +87,7 @@ char	*get_next_symbol(char *s, int *i)
 		(*i)++;
 		j++;
 	}
-	if (s[*i] && (s[*i] == token[j - 1] && s[*i] != '(' && s[*i] != ')'))
+	if (s[*i] && (s[*i] == token[j - 1])) // && s[*i] != '(' && s[*i] != ')'))
 	{
 		token[j] = s[*i];
 		(*i)++;

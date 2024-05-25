@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/23 23:32:56 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/25 15:25:32 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ typedef struct s_token
 
 typedef struct s_str
 {
-	char *str;
-	token_type	type;
-	struct s_str *next;
-}	t_str;
+	char			*str;
+	token_type		type;
+	struct s_str	*next;
+}					t_str;
 
 typedef struct s_ast
 {
-	token_type type;
-	t_str	*cmd;
-	t_str	*red;
-	struct s_ast *left;
-	struct s_ast *right;
-}	t_ast;
+	token_type		type;
+	t_str			*cmd;
+	t_str			*red;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}					t_ast;
 
 t_token				*ft_lstnew(char *content);
 t_token				*ft_lstlast(t_token *lst);
@@ -67,9 +67,10 @@ int					is_symbol(char c);
 char				*get_next_token(char *s);
 int					is_redirectien(token_type type);
 int					is_valid_token(t_token *lst);
-int 				is_valid_word(char *s);
-t_ast 				*parse_pipe(t_token *lst);
-t_str 				*jbdi_red(t_token *lst);
-t_str			   	*jbdi_cmd(t_token *lst);
+int					is_valid_word(char *s);
+t_ast				*parse_pipe(t_token *lst);
+t_str				*jbdi_red(t_token *lst);
+t_str				*jbdi_cmd(t_token *lst);
+t_ast				*parse_and_or(t_token *lst);
 
 #endif

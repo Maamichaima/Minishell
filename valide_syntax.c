@@ -20,17 +20,17 @@ int	is_redirectien(token_type type)
 	return (0);
 }
 
-int is_valid_word(char *s)
+int	is_valid_word(char *s)
 {
-	char lock;
-	int i;
-	int j;
+	char	lock;
+	int		i;
+	int		j;
 
 	i = 0;
 	lock = 0;
-	while(s[i])
+	while (s[i])
 	{
-		if(!lock && (s[i] == '\'' || s[i] == '"'))
+		if (!lock && (s[i] == '\'' || s[i] == '"'))
 		{
 			lock = s[i];
 			j = i;
@@ -62,12 +62,14 @@ int	is_valid_token(t_token *lst)
 					&& !is_redirectien(lst->prev->type)))
 				return (0);
 		}
-		if(lst->type == token_pipe)
+		if (lst->type == token_pipe)
 		{
-			if(!lst->prev || !lst->next)
+			if (!lst->prev || !lst->next)
 				return (0);
-			if((lst->prev->type != token_word ) || (lst->next->type != token_word && !is_redirectien(lst->next->type)))
-				return(0);
+			if ((lst->prev->type != token_word)
+				|| (lst->next->type != token_word
+					&& !is_redirectien(lst->next->type)))
+				return (0);
 		}
 		lst = lst->next;
 	}

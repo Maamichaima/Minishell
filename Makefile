@@ -7,7 +7,7 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJ}
-	cc -o ${NAME} ${OBJ} ${LDFLAGS}
+	cc -o ${NAME} ${OBJ} ${LDFLAGS} #-fsanitize=address -g
 
 clean:
 	${RM} ${OBJ}
