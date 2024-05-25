@@ -1,7 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_token.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/05/25 19:00:46 by rraida-          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 int	is_whitespace(char c)
 {
@@ -10,22 +19,44 @@ int	is_whitespace(char c)
 	return (0);
 }
 
-int is_symbol(char c)
+int	is_symbol(char c)
 {
-	if(c == '|' || c == '<' || c == '>' || c == '&')
+	if (c == '|' || c == '<' || c == '>' || c == '&') // || c == '('|| c == ')')
 		return (1);
 	return (0);
 }
 
+int	get_next_str_length(char *s, int i)
+{
+	int		len;
+	char	lock;
+
+	lock = 0;
+	len = 0;
+	while (s[i] && (lock || (!is_symbol(s[i]) && !is_whitespace(s[i]))))
+	{
+		if (!lock && (s[i] == '\'' || s[i] == '\"'))
+			lock = s[i];
+		else if (lock == s[i])
+			lock = 0;
+		i++;
+		len++;
+	}
+	return (len);
+}
+
 char	*get_next_str(char *s, int *i)
 {
-	char	*token = malloc(256);
-	int j;
-	char	lock = 0;
-	int	a = 0;
+	char	*token;
+	int		j;
+	char	lock;
+	int		a;
 
+	token = malloc(sizeof(char) * (get_next_str_length(s, *i) + 1));
+	lock = 0;
+	a = 0;
 	j = 0;
-	while(s[*i] && (lock || (!is_symbol(s[*i]) && !is_whitespace(s[*i]))))
+	while (s[*i] && (lock || (!is_symbol(s[*i]) && !is_whitespace(s[*i]))))
 	{
 		if (!lock && (s[*i] == '\'' || s[*i] == '\"'))
 		{
@@ -44,17 +75,18 @@ char	*get_next_str(char *s, int *i)
 
 char	*get_next_symbol(char *s, int *i)
 {
-	char	*token = malloc(3);
-	int j;
+	char	*token;
+	int		j;
 
+	token = malloc(3);
 	j = 0;
-	if(s[*i] && is_symbol(s[*i]))
+	if (s[*i] && is_symbol(s[*i]))
 	{
 		token[j] = s[*i];
 		(*i)++;
 		j++;
 	}
-	if(s[*i] && s[*i] == token[j - 1])
+	if (s[*i] && (s[*i] == token[j - 1])) // && s[*i] != '(' && s[*i] != ')'))
 	{
 		token[j] = s[*i];
 		(*i)++;
@@ -84,6 +116,7 @@ char	*get_next_token(char *s)
 void	print_token(char *s)
 {
 	char	*token;
+
 	while (1)
 	{
 		token = get_next_token(s);
@@ -92,4 +125,3 @@ void	print_token(char *s)
 		puts(token);
 	}
 }
-

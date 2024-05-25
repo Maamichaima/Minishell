@@ -1,4 +1,4 @@
-SRC = main.c lst.c get_token.c syntaxe_error.c
+SRC = main.c lst.c get_token.c valide_syntax.c create_tree.c
 OBJ = ${SRC:.c=.o}
 
 LDFLAGS = -lreadline
@@ -7,7 +7,7 @@ NAME = minishell
 all: ${NAME}
 
 ${NAME}: ${OBJ}
-	cc -o ${NAME} ${OBJ} ${LDFLAGS}
+	cc -o ${NAME} ${OBJ} ${LDFLAGS} #-fsanitize=address -g
 
 clean:
 	${RM} ${OBJ}
