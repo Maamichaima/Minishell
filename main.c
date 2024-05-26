@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: 5rya <5rya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 20:46:53 by 5rya             ###   ########.fr       */
+/*   Updated: 2024/05/26 15:16:05 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,6 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-
-char * get_key(char *env)
-{
-	int i;
-	char *key = malloc(256);
-	i = 0;
-	while(env && env[i] != '=')
-	{
-			//printf("%c", env[i]);
-			key[i] = env[i];
-			i++;
-	}
-	key[i] = '\0';
-	return(key);
-}
 int	main(int c, char **v, char **env)
 {
 	char	*input;
@@ -67,21 +52,14 @@ int	main(int c, char **v, char **env)
 	t_ast	*root;
 	t_str	*red;
 	t_str	*cmd;
-
-
-	t_env	*path;
-	int i;
-	int j;
-	int k;
-
-	k = 0;
-	j = 0;
-	i = 0;
-	while( env && env[i])
+	t_env	*tt;
+	
+	tt = get_env_lst(env);
+	
+	while(tt)
 	{
-		ft_lstgetenv(get_key(env[i])));
-		
-		i++;
+		printf("%s\n",tt->value);
+		tt = tt->next;
 	}
 	//puts(env[0]);
 	// while (1)

@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:50:22 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 19:27:56 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/26 14:48:24 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,4 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 		t->next = new;
 		new->prev = t;
 	}
-}
-
-t_env	*ft_lstnew_env(char *key , char *value)
-{
-	t_env	*new;
-
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->key = key;
-	new->value = value;
-	new->next = NULL;
-	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 19:27:09 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/26 16:49:26 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 typedef enum
 {
@@ -36,12 +38,21 @@ typedef enum
 	token_cmd
 }					token_type;
 
+typedef struct s_cmd
+{
+	int		infile;
+	int		outfile;
+	char	**args;
+	char	*path;
+}			t_cmd;
+
 typedef struct s_env
 {
 	char  *value;	
 	char  *key;
 	struct s_env *next;
 }				t_env;
+
 typedef struct s_token
 {
 	char			*token;
@@ -78,5 +89,8 @@ t_ast				*parse_pipe(t_token *lst);
 t_str				*jbdi_red(t_token *lst);
 t_str				*jbdi_cmd(t_token *lst);
 t_ast				*parse_and_or(t_token *lst);
-
+t_env				*ft_lstnew_env(char *key , char *value);
+void				ft_lstadd_back_env(t_env **lst, t_env *new);
+t_env 				*get_env_lst(char **env);
+char				*get_key(char *env);
 #endif
