@@ -44,17 +44,18 @@ void   initialize_cmd(t_ast *node)
 {
     t_cmd  cmd;
 
-    if(node->red )
+    if(check_redout())
     {
+        close(cmd.outfile);
+        cmd.outfile = outfile(node->red);
         // while(node->red)
         // {
         //     if(node->red->type == token_herd)
         //         // infile = pipe_herd[0];
         //     if(node->red->type == token_red_input)
         //         // infile = functons;
-        //     if(node->)
+        //     // if(node->)
             
         // }
     }
-
 }
