@@ -1,4 +1,4 @@
-SRC = main.c lst.c get_token.c valide_syntax.c create_tree.c set_env.c
+SRC = main.c lst.c get_token.c valide_syntax.c create_tree.c env.c set_env.c redirection.c
 OBJ = ${SRC:.c=.o}
 
 LDFLAGS = -lreadline

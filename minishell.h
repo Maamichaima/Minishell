@@ -21,6 +21,7 @@
 # include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
+# include <fcntl.h>
 
 typedef enum
 {
@@ -71,8 +72,9 @@ typedef struct s_str
 typedef struct s_ast
 {
 	token_type		type;
-	t_str			*cmd;
+	t_str			*args;
 	t_str			*red;
+	t_cmd			*cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }					t_ast;

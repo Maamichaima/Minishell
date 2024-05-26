@@ -12,41 +12,49 @@
 
 #include "minishell.h"
 
+void    inisialiser_pipe(t_ast *root)
+{
+    int pip[2];
+
+    pipe(pip);
+    root->left->cmd->outfile = pip[0];
+    if(root->right->type == token_cmd)
+        root->right->cmd->infile = pip[1];
+    else
+        root->right->left->cmd->infile = pip[1];
+}
+
 void    search_ast(t_ast *root)
 {
-    while(root)
+    if(root->type = token_pipe)
     {
-        if(root->type = token_pipe)
-        {
-            execute_cmd(root->left);
-            search_ast(root->right);
-        }
-        execute_cmd(root);
+        inisialiser_pipe(root);
+        search_ast(root->right);
     }
+    else
+        initialize_cmd(root);
 }
+
 void set_data()
 {
     
 }
 
-void    execute_cmd(t_ast *node)
+void   initialize_cmd(t_ast *node)
 {
-    pid_t pid;
     t_cmd  cmd;
-    int pfd[2];
-    pipe(pfd);
-    if(node->cmd  && !node->red)
+
+    if(node->red )
     {
-        pid = fork();
-        if(pid = 0)
-        {
-            set_data(cmd);
-        }
+        // while(node->red)
+        // {
+        //     if(node->red->type == token_herd)
+        //         // infile = pipe_herd[0];
+        //     if(node->red->type == token_red_input)
+        //         // infile = functons;
+        //     if(node->)
+            
+        // }
     }
-    else if( node->cmd && node->red)
-    {
-        
-    }
-    else
-    
+
 }

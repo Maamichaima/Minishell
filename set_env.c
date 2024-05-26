@@ -32,6 +32,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	t_env	*p;
 
 	p = *lst;
+
 	if (!lst || !new)
 		return ;
 	if (*lst == NULL)
@@ -53,11 +54,12 @@ char * get_key(char *env)
 {
 	int i;
 	char *key = malloc(256);
+
 	i = 0;
 	while(env && env[i] != '=')
 	{
-			key[i] = env[i];
-			i++;
+		key[i] = env[i];
+		i++;
 	}
 	key[i] = '\0';
 	return(key);
@@ -73,8 +75,8 @@ t_env *get_env_lst(char **env)
 	i = 0;
 	while(env && env[i])
 	{
-		new = ft_lstnew_env(get_key(env[i]),getenv(get_key(env[i])));
-		ft_lstadd_back_env(&path,new);
+		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])));
+		ft_lstadd_back_env(&path, new);
 		i++;
 	}
 	return(path);

@@ -54,13 +54,16 @@ int	main(int c, char **v, char **env)
 	t_str	*cmd;
 	t_env	*tt;
 	
-	tt = get_env_lst(env);
+
+
+
+	// tt = get_env_lst(env);
 	
-	while(tt)
-	{
-		printf("%s\n",tt->value);
-		tt = tt->next;
-	}
+	// while(tt)
+	// {
+	// 	printf("%s\n",tt->value);
+	// 	tt = tt->next;
+	// }
 	//puts(env[0]);
 	// while (1)
 	// {
