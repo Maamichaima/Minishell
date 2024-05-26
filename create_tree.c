@@ -20,7 +20,7 @@ t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red)
 	if (!l)
 		return (NULL);
 	l->type = type;
-	l->cmd = cmd;
+	l->args = cmd;
 	l->red = red;
 	l->right = NULL;
 	l->left = NULL;

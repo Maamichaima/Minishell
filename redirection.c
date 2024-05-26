@@ -64,7 +64,7 @@ int infile(t_str *red)
     {
         if(red->type == token_herd)
         {
-            fd = here_doc(red->str);
+            // fd = here_doc(red->str);
         }
     }
     return fd;

@@ -37,6 +37,21 @@ typedef enum
 	token_cmd
 }					token_type;
 
+typedef struct s_cmd
+{
+	int		infile;
+	int		outfile;
+	char	**args;
+	char	*path;
+}			t_cmd;
+
+typedef struct s_env
+{
+	char  *value;	
+	char  *key;
+	struct s_env *next;
+}				t_env;
+
 typedef struct s_token
 {
 	char			*token;
@@ -55,8 +70,9 @@ typedef struct s_str
 typedef struct s_ast
 {
 	token_type		type;
-	t_str			*cmd;
+	t_str			*args;
 	t_str			*red;
+	t_cmd			*cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }					t_ast;
