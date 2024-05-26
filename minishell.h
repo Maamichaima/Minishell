@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <string.h>
+# include <fcntl.h>
 
 typedef enum
 {
@@ -72,5 +73,7 @@ t_ast				*parse_pipe(t_token *lst);
 t_str				*jbdi_red(t_token *lst);
 t_str				*jbdi_cmd(t_token *lst);
 t_ast				*parse_and_or(t_token *lst);
+char 				**list_to_table(t_str *str);
+int 				outfile(t_str *red);
 
 #endif

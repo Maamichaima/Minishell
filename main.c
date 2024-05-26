@@ -52,6 +52,7 @@ int	main(int c, char **v)
 	t_ast	*root;
 	t_str	*red;
 	t_str	*cmd;
+	char	**tb;
 
 	while (1)
 	{
@@ -67,9 +68,11 @@ int	main(int c, char **v)
 		else
 		{
 			root = parse_and_or(head);
-			// red = jbdi_red(head);
-			// cmd = jbdi_cmd(head);
 			printf_tree(root);
+			// red = jbdi_red(head);
+			// outfile(red);
+			// cmd = jbdi_cmd(head);
+			// tb = list_to_table(cmd);
 			// while (cmd != NULL)
 			// {
 			// 	printf("%s   %d \n", cmd->str, cmd->type);
