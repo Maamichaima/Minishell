@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/25 18:58:51 by cmaami           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:38:50 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char **list_to_table(t_str *str)
 {
     char **t;
     int i;
-
     i = 0;
     t = malloc(sizeof(char *) * (ft_lstsize(str) + 1));
+ 
     if(!t)
         return (NULL);
     while(str)
@@ -70,3 +70,4 @@ char **list_to_table(t_str *str)
     t[i] = NULL;
     return (t);
 }
+

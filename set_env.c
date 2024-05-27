@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/05/26 15:13:27 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/27 15:07:36 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_env *get_env_lst(char **env)
 
 	path = NULL;
 	i = 0;
+	if(!env)
+		printf("empty env");
 	while(env && env[i])
 	{
 		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])));

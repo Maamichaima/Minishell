@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/26 15:16:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/27 20:45:06 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,39 @@ int	main(int c, char **v, char **env)
 	t_str	*red;
 	t_str	*cmd;
 	t_env	*tt;
+	t_cmd  path;
+	int i;
+	i = 0;
+	char **tab;
 	
-
-
-
-	// tt = get_env_lst(env);
+	tt = get_env_lst(env);
 	
-	// while(tt)
-	// {
-	// 	printf("%s\n",tt->value);
-	// 	tt = tt->next;
-	// }
-	//puts(env[0]);
-	// while (1)
-	// {
-	// 	input = readline("bash$ ");
-	// 	if (!input)
-	// 		break ;
-	// 	if (*input)
-	// 		add_history(input);
-	// 	head = NULL;
-	// 	lst_token(input, &head);
-	// 	if (is_valid_token(head) == 0)
-	// 		printf("pas valide\n");
-	// 	else
-	// 	{
-	// 		root = parse_and_or(head);
-	// 		// red = jbdi_red(head);
-	// 		// cmd = jbdi_cmd(head);
-	// 		printf_tree(root);
-	// 		// while (cmd != NULL)
-	// 		// {
-	// 		// 	printf("%s   %d \n", cmd->str, cmd->type);
-	// 		// 	cmd = cmd->next;
-	// 		// }
-	// 	}
-	// 	free(input);
-	// }
-	//return (0);
+  	while (1)
+	{
+		input = readline("bash$ ");
+		if (!input)
+			break ;
+		if (*input)
+			add_history(input);
+		head = NULL;
+		lst_token(input, &head);
+		if (is_valid_token(head) == 0)
+			printf("pas valide\n");
+		else
+		{
+			
+			root = parse_and_or(head);
+			search_ast(root, tt);
+			// red = jbdi_red(head);
+			// cmd = jbdi_cmd(head);
+			//printf_tree(root);
+			// while (cmd != NULL)
+			// {
+			// 	printf("%s   %d \n", cmd->str, cmd->type);
+			// 	cmd = cmd->next;
+			// }
+		}
+		free(input);
+	}
+	return (0);
 }

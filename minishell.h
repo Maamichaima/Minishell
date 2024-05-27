@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/26 16:49:26 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/27 20:45:27 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_ast
 	token_type		type;
 	t_str			*args;
 	t_str			*red;
-	t_cmd			*cmd;
+	t_cmd			cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }					t_ast;
@@ -95,4 +95,19 @@ t_env				*ft_lstnew_env(char *key , char *value);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env 				*get_env_lst(char **env);
 char				*get_key(char *env);
+char 				**list_to_table(t_str *str);
+char 				**get_paths(t_env *env);
+int					ft_strcmp(char *s1, char *s2);
+char				**ft_split(char const *s, char *c);
+char				*alloc_word(const char *s, char *c);
+int					c_char(const char *s, char *c);
+int					count_word(char const *s, char *c);
+int					is_seperator(char s, char *c);
+void				*ft_free_split(int i, char **t);
+char				*ft_strjoin_pipe(char *s1, char *s2);
+char				*correct_path(char **path, char *v);
+size_t				ft_strlen(const char *s);
+void    			inisialiser_pipe(t_ast *root);
+ void    			search_ast(t_ast *root,t_env *env);
+void   				initialize_cmd(t_ast *node,t_env *env);
 #endif
