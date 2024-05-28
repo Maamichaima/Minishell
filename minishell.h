@@ -16,10 +16,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # define READLINE_LIBRARY
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <string.h>
-# include <fcntl.h>
+# include <unistd.h>
 
 typedef enum
 {
@@ -39,18 +40,18 @@ typedef enum
 
 typedef struct s_cmd
 {
-	int		infile;
-	int		outfile;
-	char	**args;
-	char	*path;
-}			t_cmd;
+	int				infile;
+	int				outfile;
+	char			**args;
+	char			*path;
+}					t_cmd;
 
 typedef struct s_env
 {
-	char  *value;	
-	char  *key;
-	struct s_env *next;
-}				t_env;
+	char			*value;
+	char			*key;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_token
 {
@@ -72,7 +73,7 @@ typedef struct s_ast
 	token_type		type;
 	t_str			*args;
 	t_str			*red;
-	t_cmd			*cmd;
+	t_cmd			cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }					t_ast;
@@ -89,7 +90,16 @@ t_ast				*parse_pipe(t_token *lst);
 t_str				*jbdi_red(t_token *lst);
 t_str				*jbdi_cmd(t_token *lst);
 t_ast				*parse_and_or(t_token *lst);
-char 				**list_to_table(t_str *str);
-int 				outfile(t_str *red);
-
+char				**list_to_table(t_str *str);
+int					ft_strcmp(char *s1, char *s2);
+size_t				ft_strlen(const char *s);
+int					outfile(t_str *red);
+int					infile(t_str *red);
+char				**ft_split(char const *s, char *c);
+void   				initialize_cmd(t_ast *node, t_env *env);
+t_env				*get_env_lst(char **env);
+void    			init_ast(t_ast *root,t_env *env);
+char				*correct_path(char **path, char *v);
+char				**get_paths(t_env *env);
+void    			executer_tree(t_ast *root, t_env *env, char **ev);
 #endif

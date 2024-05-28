@@ -12,50 +12,68 @@
 
 #include "minishell.h"
 
-void    inisialiser_pipe(t_ast *root)
+void	inisialiser_pipe(t_ast *root)
 {
-    int pip[2];
+	int	pip[2];
 
-    pipe(pip);
-    root->left->cmd->outfile = pip[0];
-    if(root->right->type == token_cmd)
-        root->right->cmd->infile = pip[1];
-    else
-        root->right->left->cmd->infile = pip[1];
+	pipe(pip);
+	root->left->cmd.outfile = pip[0];
+	if (root->right->type == token_cmd)
+		root->right->cmd.infile = pip[1];
+	else
+		root->right->left->cmd.infile = pip[1];
 }
 
-void    search_ast(t_ast *root)
+void    init_ast(t_ast *root, t_env *env)
 {
-    if(root->type = token_pipe)
+    if(root->type == token_pipe)
     {
         inisialiser_pipe(root);
-        search_ast(root->right);
+        initialize_cmd(root->left, env);
+        init_ast(root->right,env);
     }
     else
-        initialize_cmd(root);
+        initialize_cmd(root, env);
 }
 
-void set_data()
+void	set_data(void)
 {
-    
 }
 
-void   initialize_cmd(t_ast *node)
+int	check_redout(t_str *red)
 {
-    t_cmd  cmd;
+	while (red)
+	{
+		if (red->type == token_apend || red->type == token_red_output)
+			return (1);
+		red = red->next;
+	}
+	return (0);
+}
 
-    if(check_redout())
-    {
-        close(cmd.outfile);
-        cmd.outfile = outfile(node->red);
-        // while(node->red)
-        // {
-        //     if(node->red->type == token_herd)
-        //         // infile = pipe_herd[0];
-        //     if(node->red->type == token_red_input)
-        //         // infile = functons;
-        //     // if(node->)
-            
-        // }
-    }
+int	check_redin(t_str *red)
+{
+	while (red)
+	{
+		if (red->type == token_herd || red->type == token_red_input)
+			return (1);
+		red = red->next;
+	}
+	return (0);
+}
+
+void   initialize_cmd(t_ast *node, t_env *env)
+{
+	if (check_redout(node->red))
+	{
+		close(node->cmd.outfile);
+		node->cmd.outfile = outfile(node->red);
+	}
+	if (check_redin(node->red))
+	{
+        close(node->cmd.infile);
+		node->cmd.infile = infile(node->red);
+	}
+	node->cmd.args = list_to_table(node->args);
+    node->cmd.path = correct_path(get_paths(env),node->cmd.args[0]);
 }

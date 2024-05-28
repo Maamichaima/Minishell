@@ -29,7 +29,7 @@ void	print(t_ast *root)
 {
 	printf("        %d       \n", root->type);
 	if (root->left && root->right)
-		printf(" %d           %d \n", root->left->type, root->right->type);
+		printf(" %s           %s \n", root->left->cmd.path, root->right->cmd.path);
 }
 
 void	printf_tree(t_ast *root)
@@ -45,7 +45,7 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-int	main(int c, char **v)
+int	main(int c, char **v, char **env)
 {
 	char	*input;
 	t_token	*head;
@@ -68,16 +68,9 @@ int	main(int c, char **v)
 		else
 		{
 			root = parse_and_or(head);
-			printf_tree(root);
-			// red = jbdi_red(head);
-			// outfile(red);
-			// cmd = jbdi_cmd(head);
-			// tb = list_to_table(cmd);
-			// while (cmd != NULL)
-			// {
-			// 	printf("%s   %d \n", cmd->str, cmd->type);
-			// 	cmd = cmd->next;
-			// }
+			init_ast(root, get_env_lst(env));
+			// executer_tree(root, get_env_lst(env), env);
+			// printf_tree(root);
 		}
 		free(input);
 	}
