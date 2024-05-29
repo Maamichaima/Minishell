@@ -94,3 +94,14 @@ void    executer_tree(t_ast *root, t_ast *const_root, t_env *env)
         executer_tree(root->right, const_root, env);
     }
 }
+
+void execut_all_here_doc(t_ast *root)
+{
+	if(root->type == token_cmd)
+	{
+		if(check_redherdoc())
+		{
+			
+		}
+	}
+}

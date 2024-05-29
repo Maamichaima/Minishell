@@ -21,6 +21,8 @@
 # include <readline/readline.h>
 # include <string.h>
 # include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 typedef enum
 {
@@ -108,5 +110,7 @@ char				**list_to_table_env(t_env *str);
 void				close_(t_ast *root);
 int					check_redin(t_str *red);
 int					check_redout(t_str *red);
+int					check_redherdoc(t_str *red);
+void 				execut_all_here_doc(t_ast *root);
 
 #endif

@@ -87,8 +87,8 @@ int	infile(t_str *red)
 				exit(1);
 			}
 		}
-		else if (red->type == token_herd)
-			fd = open_here_doc(red->str);
+		// else if (red->type == token_herd)
+		// 	fd = open_here_doc(red->str);
 		red = red->next;
 	}
 	return (fd);
