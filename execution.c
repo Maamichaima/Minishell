@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/05/26 16:55:43 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/28 22:33:03 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	inisialiser_pipe(t_ast *root)
 	int	pip[2];
 
 	pipe(pip);
-	root->left->cmd.outfile = pip[0];
+	root->left->cmd.outfile = pip[1];
 	if (root->right->type == token_cmd)
-		root->right->cmd.infile = pip[1];
+		root->right->cmd.infile = pip[0];
 	else
-		root->right->left->cmd.infile = pip[1];
+		root->right->left->cmd.infile = pip[0];
 }
 
 void    init_ast(t_ast *root, t_env *env)
@@ -34,10 +34,6 @@ void    init_ast(t_ast *root, t_env *env)
     }
     else
         initialize_cmd(root, env);
-}
-
-void	set_data(void)
-{
 }
 
 int	check_redout(t_str *red)
@@ -64,14 +60,16 @@ int	check_redin(t_str *red)
 
 void   initialize_cmd(t_ast *node, t_env *env)
 {
+	// node->cmd.infile = -1;
+	// node->cmd.outfile = -1;
 	if (check_redout(node->red))
 	{
-		close(node->cmd.outfile);
+		// close(node->cmd.outfile);
 		node->cmd.outfile = outfile(node->red);
 	}
 	if (check_redin(node->red))
 	{
-        close(node->cmd.infile);
+        // close(node->cmd.infile);
 		node->cmd.infile = infile(node->red);
 	}
 	node->cmd.args = list_to_table(node->args);

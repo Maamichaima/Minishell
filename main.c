@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 16:28:56 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/28 22:52:37 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,34 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-int	main(int c, char **v, char **env)
+void	wait_(t_ast *root)
+{
+	if(root->type == token_cmd)
+		waitpid(root->cmd.pid, NULL, 0);
+    else
+    {
+        wait_(root->left);
+        wait_(root->right);
+    }
+}
+
+void	close_(t_ast *root)
+{
+	if(root->type == token_cmd)
+	{
+		if (root->cmd.infile != 0)
+			close(root->cmd.infile);
+		if (root->cmd.outfile != 1)
+			close(root->cmd.outfile);
+	}
+    else
+    {
+        close_(root->left);
+        close_(root->right);
+    }
+}
+
+int	main(int c, char **av, char **env)
 {
 	char	*input;
 	t_token	*head;
@@ -53,6 +80,7 @@ int	main(int c, char **v, char **env)
 	t_str	*red;
 	t_str	*cmd;
 	char	**tb;
+	t_env *v = get_env_lst(env);
 
 	while (1)
 	{
@@ -68,9 +96,10 @@ int	main(int c, char **v, char **env)
 		else
 		{
 			root = parse_and_or(head);
-			init_ast(root, get_env_lst(env));
-			// executer_tree(root, get_env_lst(env), env);
-			// printf_tree(root);
+			init_ast(root, v);
+			executer_tree(root, root, v);
+			close_(root);
+			wait_(root);
 		}
 		free(input);
 	}

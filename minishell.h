@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 15:25:32 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/28 22:46:51 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_cmd
 	int				outfile;
 	char			**args;
 	char			*path;
+	pid_t			pid;
 }					t_cmd;
 
 typedef struct s_env
@@ -101,5 +102,9 @@ t_env				*get_env_lst(char **env);
 void    			init_ast(t_ast *root,t_env *env);
 char				*correct_path(char **path, char *v);
 char				**get_paths(t_env *env);
-void    			executer_tree(t_ast *root, t_env *env, char **ev);
+void    			executer_tree(t_ast *root, t_ast *const_root, t_env *env);
+char				*ft_strjoin(char const *s1, char const *s2);
+char				**list_to_table_env(t_env *str);
+void				close_(t_ast *root);
+
 #endif

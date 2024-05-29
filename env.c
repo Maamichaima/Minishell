@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/25 18:58:51 by cmaami           ###   ########.fr       */
+/*   Updated: 2024/05/28 19:46:49 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,38 @@ char	**list_to_table(t_str *str)
 		if (!t[i])
 			return (NULL);
 		t[i] = ft_strcpy(t[i], str->str);
+		str = str->next;
+		i++;
+	}
+	t[i] = NULL;
+	return (t);
+}
+
+int	ft_lstsize_env(t_env *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+char	**list_to_table_env(t_env *str)
+{
+	char	**t;
+	int		i;
+
+	i = 0;
+	t = malloc(sizeof(char *) * (ft_lstsize_env(str) + 1));
+	if (!t)
+		return (NULL);
+	while (str)
+	{
+		t[i] = ft_strjoin(str->key, str->value);
 		str = str->next;
 		i++;
 	}

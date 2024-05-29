@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 15:57:30 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/28 22:38:20 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red)
 	l->red = red;
 	l->right = NULL;
 	l->left = NULL;
+	l->cmd.infile = 0;
+	l->cmd.outfile = 1;
 	return (l);
 }
 
