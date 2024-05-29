@@ -60,18 +60,16 @@ int	check_redin(t_str *red)
 
 void   initialize_cmd(t_ast *node, t_env *env)
 {
-	// node->cmd.infile = -1;
-	// node->cmd.outfile = -1;
-	if (check_redout(node->red))
-	{
-		// close(node->cmd.outfile);
-		node->cmd.outfile = outfile(node->red);
-	}
-	if (check_redin(node->red))
-	{
-        // close(node->cmd.infile);
-		node->cmd.infile = infile(node->red);
-	}
+	// if (check_redout(node->red))
+	// {
+	// 	// close(node->cmd.outfile);
+	// 	node->cmd.outfile = outfile(node->red);
+	// }
+	// if (check_redin(node->red))
+	// {
+    //     // close(node->cmd.infile);
+	// 	node->cmd.infile = infile(node->red);
+	// }
 	node->cmd.args = list_to_table(node->args);
     node->cmd.path = correct_path(get_paths(env),node->cmd.args[0]);
 }

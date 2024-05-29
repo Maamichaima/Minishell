@@ -106,5 +106,7 @@ void    			executer_tree(t_ast *root, t_ast *const_root, t_env *env);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**list_to_table_env(t_env *str);
 void				close_(t_ast *root);
+int					check_redin(t_str *red);
+int					check_redout(t_str *red);
 
 #endif

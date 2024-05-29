@@ -63,6 +63,20 @@ void    executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
     exit (1);
 }
 
+void init_infile_outfile(t_str *red, t_ast *node)
+{
+	if (check_redout(node->red))
+	{
+		// close(node->cmd.outfile);
+		node->cmd.outfile = outfile(node->red);
+	}
+	if (check_redin(node->red))
+	{
+        // close(node->cmd.infile);
+		node->cmd.infile = infile(node->red);
+	}
+}
+
 void    executer_tree(t_ast *root, t_ast *const_root, t_env *env)
 {
     if(root->type == token_cmd)
@@ -70,7 +84,7 @@ void    executer_tree(t_ast *root, t_ast *const_root, t_env *env)
         root->cmd.pid = fork();
         if(root->cmd.pid == 0)
         {
-            //close pipes
+			init_infile_outfile(root->red, root);
             executer_cmd(root->cmd, env, const_root);
         }
     }
