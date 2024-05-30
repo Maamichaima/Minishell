@@ -67,6 +67,7 @@ typedef struct s_token
 typedef struct s_str
 {
 	char			*str;
+	int				fd;
 	token_type		type;
 	struct s_str	*next;
 }					t_str;
@@ -97,7 +98,7 @@ char				**list_to_table(t_str *str);
 int					ft_strcmp(char *s1, char *s2);
 size_t				ft_strlen(const char *s);
 int					outfile(t_str *red);
-int					infile(t_str *red);
+void					infile(t_str *red);
 char				**ft_split(char const *s, char *c);
 void   				initialize_cmd(t_ast *node, t_env *env);
 t_env				*get_env_lst(char **env);

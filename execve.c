@@ -65,15 +65,23 @@ void    executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 
 void init_infile_outfile(t_str *red, t_ast *node)
 {
-	if (check_redout(node->red))
+	if (check_redout(red))
 	{
 		// close(node->cmd.outfile);
-		node->cmd.outfile = outfile(node->red);
+		node->cmd.outfile = outfile(red);
 	}
-	if (check_redin(node->red))
+	if (check_redin(red))
 	{
         // close(node->cmd.infile);
-		node->cmd.infile = infile(node->red);
+		infile(red);
+		while(red)
+		{
+			if(red->type == token_herd || red->type == token_red_input)
+			{
+				node->cmd.infile = red->fd;
+			}
+			red = red->next;
+		}
 	}
 }
 
@@ -95,19 +103,30 @@ void    executer_tree(t_ast *root, t_ast *const_root, t_env *env)
     }
 }
 
+void	fd_here_doc(t_str *red)
+{
+	while(red)//<<lim <inf
+	{
+		if(red->type == token_herd)//check_redherdoc(red))
+		{
+			red->fd = open_here_doc(red->str);
+			wait(NULL);
+		}
+		red = red->next;
+	}
+}
+
 void execut_all_here_doc(t_ast *root)
 {
+	t_str *r;
+
 	if(root->type == token_cmd)
 	{
-		while(root->red && check_redherdoc(root->red))
-		{
-			root->cmd.infile = open_here_doc(root->red->str);
-			root->red = root->red->next;
-		}
+		fd_here_doc(root->red);
 	}
 	else
 	{
-		execut_all_here_doc(root->right);
+		execut_all_here_doc(root->left);
 		execut_all_here_doc(root->right);
 	}
 }
