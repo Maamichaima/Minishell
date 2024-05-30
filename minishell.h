@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/28 22:46:51 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/29 18:21:21 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int					check_redin(t_str *red);
 int					check_redout(t_str *red);
 int					check_redherdoc(t_str *red);
 void 				execut_all_here_doc(t_ast *root);
+int					open_here_doc(char *del);
 
 #endif

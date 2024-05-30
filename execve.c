@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/28 22:51:03 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/29 21:51:55 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void    executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
     dup2(cmd.outfile, 1);
 	close_(const_root);
     execve(cmd.path, cmd.args, list_to_table_env(env));
-    exit (1);
+    exit(1);
 }
 
 void init_infile_outfile(t_str *red, t_ast *node)
@@ -99,9 +99,15 @@ void execut_all_here_doc(t_ast *root)
 {
 	if(root->type == token_cmd)
 	{
-		if(check_redherdoc())
+		while(root->red && check_redherdoc(root->red))
 		{
-			
+			root->cmd.infile = open_here_doc(root->red->str);
+			root->red = root->red->next;
 		}
+	}
+	else
+	{
+		execut_all_here_doc(root->right);
+		execut_all_here_doc(root->right);
 	}
 }

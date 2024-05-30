@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/28 22:52:37 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/29 22:10:16 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,13 @@ int	main(int c, char **av, char **env)
 		{
 			root = parse_and_or(head);
 			init_ast(root, v);
-			execut_all_here_doc(root);
+			pid_t pid = fork();
+			if(pid == 0)
+			{
+				execut_all_here_doc(root);
+				exit(1);
+			}
+			waitpid(pid, NULL, 0);
 			executer_tree(root, root, v);
 			close_(root);
 			wait_(root);

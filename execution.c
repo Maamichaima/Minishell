@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/05/28 22:33:03 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/29 18:29:11 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_redherdoc(t_str *red)
 {
 	while (red)
 	{
-		if (red->type == token_red_input)
+		if (red->type == token_herd)
 			return (1);
 		red = red->next;
 	}
