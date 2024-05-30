@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/27 20:27:33 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/28 22:38:20 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red)
 	l->red = red;
 	l->right = NULL;
 	l->left = NULL;
+	l->cmd.infile = 0;
+	l->cmd.outfile = 1;
 	return (l);
 }
 
@@ -86,7 +88,7 @@ t_str	*jbdi_cmd(t_token *lst)
 	while (lst)
 	{
 		if ((!lst->prev || !is_redirectien(lst->prev->type))
-			&& !is_redirectien(lst->type))	
+			&& !is_redirectien(lst->type))
 			ft_lstadd_back_str(&cmd, lst_new_str(lst->token, lst->type));
 		lst = lst->next;
 	}

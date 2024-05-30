@@ -1,4 +1,4 @@
-SRC = main.c lst.c get_token.c valide_syntax.c create_tree.c env.c set_env.c redirection.c cmd_path.c split.c execution.c
+SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c split.c create_tree.c env.c set_env.c redirection.c execution.c execve.c
 OBJ = ${SRC:.c=.o}
 
 LDFLAGS = -lreadline
@@ -16,4 +16,3 @@ fclean: clean
 	${RM} ${NAME}
 
 re: fclean all
-

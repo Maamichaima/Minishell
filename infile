@@ -1,0 +1,17 @@
+Makefile
+cmd_path.c
+create_tree.c
+env.c
+execution.c
+execve.c
+get_token.c
+infile
+lst.c
+main.c
+minishell
+minishell.h
+out
+redirection.c
+set_env.c
+split.c
+valide_syntax.c

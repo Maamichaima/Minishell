@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/27 20:45:27 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/29 18:21:21 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # define READLINE_LIBRARY
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <string.h>
+# include <unistd.h>
+#include <sys/wait.h>
 #include <sys/types.h>
-#include <unistd.h>
-# include <fcntl.h>
 
 typedef enum
 {
@@ -41,18 +42,19 @@ typedef enum
 
 typedef struct s_cmd
 {
-	int		infile;
-	int		outfile;
-	char	**args;
-	char	*path;
-}			t_cmd;
+	int				infile;
+	int				outfile;
+	char			**args;
+	char			*path;
+	pid_t			pid;
+}					t_cmd;
 
 typedef struct s_env
 {
-	char  *value;	
-	char  *key;
-	struct s_env *next;
-}				t_env;
+	char			*value;
+	char			*key;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_token
 {
@@ -91,23 +93,25 @@ t_ast				*parse_pipe(t_token *lst);
 t_str				*jbdi_red(t_token *lst);
 t_str				*jbdi_cmd(t_token *lst);
 t_ast				*parse_and_or(t_token *lst);
-t_env				*ft_lstnew_env(char *key , char *value);
-void				ft_lstadd_back_env(t_env **lst, t_env *new);
-t_env 				*get_env_lst(char **env);
-char				*get_key(char *env);
-char 				**list_to_table(t_str *str);
-char 				**get_paths(t_env *env);
+char				**list_to_table(t_str *str);
 int					ft_strcmp(char *s1, char *s2);
-char				**ft_split(char const *s, char *c);
-char				*alloc_word(const char *s, char *c);
-int					c_char(const char *s, char *c);
-int					count_word(char const *s, char *c);
-int					is_seperator(char s, char *c);
-void				*ft_free_split(int i, char **t);
-char				*ft_strjoin_pipe(char *s1, char *s2);
-char				*correct_path(char **path, char *v);
 size_t				ft_strlen(const char *s);
-void    			inisialiser_pipe(t_ast *root);
- void    			search_ast(t_ast *root,t_env *env);
-void   				initialize_cmd(t_ast *node,t_env *env);
+int					outfile(t_str *red);
+int					infile(t_str *red);
+char				**ft_split(char const *s, char *c);
+void   				initialize_cmd(t_ast *node, t_env *env);
+t_env				*get_env_lst(char **env);
+void    			init_ast(t_ast *root,t_env *env);
+char				*correct_path(char **path, char *v);
+char				**get_paths(t_env *env);
+void    			executer_tree(t_ast *root, t_ast *const_root, t_env *env);
+char				*ft_strjoin(char const *s1, char const *s2);
+char				**list_to_table_env(t_env *str);
+void				close_(t_ast *root);
+int					check_redin(t_str *red);
+int					check_redout(t_str *red);
+int					check_redherdoc(t_str *red);
+void 				execut_all_here_doc(t_ast *root);
+int					open_here_doc(char *del);
+
 #endif

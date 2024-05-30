@@ -12,19 +12,21 @@
 
 #include "minishell.h"
 
-char **get_paths(t_env *env)
+char	**get_paths(t_env *env)
 {
-    char **paths;
-    while(env)
-    {
-		if(ft_strcmp(env->key,"PATH") == 0)
+	char	**paths;
+
+	while (env)
+	{
+		if (ft_strcmp(env->key, "PATH") == 0)
 		{
-			paths = ft_split(env->value,":");
+			paths = ft_split(env->value, ":");
 		}
 		env = env->next;
-    }
-    return(paths);
+	}
+	return (paths);
 }
+
 char	*ft_strjoin_pipe(char *s1, char *s2)
 {
 	int		i;
@@ -50,10 +52,11 @@ char	*ft_strjoin_pipe(char *s1, char *s2)
 	str[j] = '\0';
 	return (str);
 }
+
 char	*correct_path(char **path, char *v)
 {
-	char	*tmp;
-	int		i;
+	char *tmp;
+	int i;
 
 	i = 0;
 	if (!v)

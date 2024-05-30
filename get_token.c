@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/25 19:00:46 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/05/25 16:54:59 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_whitespace(char c)
 
 int	is_symbol(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&') // || c == '('|| c == ')')
+	if (c == '|' || c == '<' || c == '>' || c == '&') // || c == '(' || c == ')')
 		return (1);
 	return (0);
 }
