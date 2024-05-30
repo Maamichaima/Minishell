@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/05/28 19:40:33 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/30 23:38:40 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_lstnew_env(char *key, char *value)
+t_env	*ft_lstnew_env(char *key, char *value, char *path)
 {
 	t_env	*new;
 
@@ -21,6 +21,7 @@ t_env	*ft_lstnew_env(char *key, char *value)
 		return (NULL);
 	new->key = key;
 	new->value = value;
+	new->path = path;
 	new->next = NULL;
 	// free(key);
 	return (new);
@@ -74,8 +75,9 @@ t_env	*get_env_lst(char **env)
 	i = 0;
 	while (env && env[i])
 	{
-		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])));
+		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])),env[i]);
 		ft_lstadd_back_env(&path, new);
+		printf("%s\n",new->path);
 		i++;
 	}
 	return (path);

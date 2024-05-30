@@ -26,19 +26,25 @@ int	open_here_doc(char *del)
 {
 	char	*tmp;
 	int		pipe_fd[2];
+	pid_t		pid;
 
 	pipe(pipe_fd);
-	while (1)
+	pid = fork();
+	if(pid == 0)
 	{
-		write(1, ">", 1);
-		tmp = readline("");
-		if (!tmp || ft_strcmp(tmp, del) == 0)
+		while (1)
 		{
-			free(tmp);
-			break ;
+			write(1, ">", 1);
+			tmp = readline("");
+			if (!tmp || ft_strcmp(tmp, del) == 0)
+			{
+				free(tmp);
+				break ;
+			}
+			write(pipe_fd[1], tmp, ft_strlen(tmp));
+			write(pipe_fd[1], "\n", 1);
 		}
-		write(pipe_fd[1], tmp, ft_strlen(tmp));
-		write(pipe_fd[1], "\n", 1);
+		exit(0);
 	}
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
@@ -73,16 +79,14 @@ int	outfile(t_str *red)
 	return (fd);
 }
 
-int	infile(t_str *red)
+void	infile(t_str *red)
 {
-	int	fd;
-
 	while (red)
 	{
 		if (red->type == token_red_input)
 		{
-			fd = open(red->str, O_WRONLY, 0644);
-			if (fd == -1)
+			red->fd = open(red->str, O_RDONLY, 0644);
+			if (red->fd == -1)
 			{
 				perror(red->str);
 				exit(1);
@@ -92,5 +96,4 @@ int	infile(t_str *red)
 		// 	fd = open_here_doc(red->str);
 		red = red->next;
 	}
-	return (fd);
 }

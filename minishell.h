@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/29 18:21:21 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/05/30 23:28:28 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_env
 {
 	char			*value;
 	char			*key;
+	char			*path;
 	struct s_env	*next;
 }					t_env;
 
@@ -67,6 +68,7 @@ typedef struct s_token
 typedef struct s_str
 {
 	char			*str;
+	int				fd;
 	token_type		type;
 	struct s_str	*next;
 }					t_str;
@@ -97,7 +99,7 @@ char				**list_to_table(t_str *str);
 int					ft_strcmp(char *s1, char *s2);
 size_t				ft_strlen(const char *s);
 int					outfile(t_str *red);
-int					infile(t_str *red);
+void					infile(t_str *red);
 char				**ft_split(char const *s, char *c);
 void   				initialize_cmd(t_ast *node, t_env *env);
 t_env				*get_env_lst(char **env);
