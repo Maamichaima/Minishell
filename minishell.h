@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/30 23:28:28 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/03 14:36:08 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_env
 	char			*value;
 	char			*key;
 	char			*path;
+	struct s_env	*prev;
 	struct s_env	*next;
 }					t_env;
 
@@ -103,6 +104,11 @@ void					infile(t_str *red);
 char				**ft_split(char const *s, char *c);
 void   				initialize_cmd(t_ast *node, t_env *env);
 t_env				*get_env_lst(char **env);
+t_env				*ft_lstnew_env(char *key, char *value, char *path);
+void				ft_lstadd_back_env(t_env **lst, t_env *new);
+char				*get_key(char *env);
+char				*get_value(char *env);
+t_env				*get_env_lst(char **env);
 void    			init_ast(t_ast *root,t_env *env);
 char				*correct_path(char **path, char *v);
 char				**get_paths(t_env *env);
@@ -115,5 +121,9 @@ int					check_redout(t_str *red);
 int					check_redherdoc(t_str *red);
 void 				execut_all_here_doc(t_ast *root);
 int					open_here_doc(char *del);
-
+void    			ft_export(t_ast *root, t_env *env);
+int 				is_builtin(t_str cmd);
+void 				ft_cd(t_ast *root,t_env *env);
+void    			ft_pwd(t_env *env);
+void    			ft_unset(t_ast *root, t_env **env);
 #endif
