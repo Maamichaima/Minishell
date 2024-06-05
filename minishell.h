@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/03 14:36:08 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:04:49 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,5 @@ int 				is_builtin(t_str cmd);
 void 				ft_cd(t_ast *root,t_env *env);
 void    			ft_pwd(t_env *env);
 void    			ft_unset(t_ast *root, t_env **env);
+void 				ft_env(t_env *env);
 #endif

@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/05 16:21:22 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:44:49 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void ft_cd(t_ast *root,t_env *env)
 
     tmp = env;
     old  = getcwd(NULL,0);
-    if(root->args == NULL && root->args->str == NULL)
+    if(root->args->next == NULL)
     {
         while(tmp)
         {
@@ -40,8 +40,9 @@ void ft_cd(t_ast *root,t_env *env)
             tmp = tmp->next;
         }
     }
-    else
-        chdir(root->args->str);
+    else 
+        chdir(root->args->next->str);
+    
     new = getcwd(NULL,0);
     while(env)
     {
@@ -94,6 +95,29 @@ int check_key_in_env(t_env *env, t_str *args)
     return 0;
 }
 
+int	ft_isnum(int arg)
+{
+	if ((arg >= '0' && arg <= '9'))
+		return (1);
+	else
+		return (0);
+}
+
+int valide_key(char *str)
+{
+    if(str[0] == '=' || str[0] == '+' || str[0] == '-' || ft_isnum(str[0]))
+    {
+        return 0;
+    }
+    return 1;    
+}
+
+void ft_error_export(char *str)
+{
+    write(2, "bash: export: ", 15);
+    write(2, str, ft_strlen(str));
+    write(2, ": not a valid identifier\n", 26);
+}
 //syntaxe error + sorting by ascii +norminette
 void    ft_export(t_ast *root, t_env *env)
 {
@@ -104,7 +128,7 @@ void    ft_export(t_ast *root, t_env *env)
     {
         while(env)
         {
-            printf("declare -x %s=\"%s\"\n",env->key,env->value);
+            printf("declare -x %s=\"%s\"\n", env->key, env->value);
             (env) = (env)->next;
         }
     }
@@ -113,17 +137,14 @@ void    ft_export(t_ast *root, t_env *env)
         root->args = root->args->next;
         while(root->args)
         {
-            if(!check_key_in_env(env, root->args))
+            if(valide_key(root->args->str) == 0)
+                ft_error_export(root->args->str);
+            else if(!check_key_in_env(env, root->args))
             {
                 new = ft_lstnew_env(get_key(root->args->str), get_value(root->args->str),root->args->str);
-                ft_lstadd_back_env(&tmp,new);
+                ft_lstadd_back_env(&tmp,new); 
             }
             root->args = root->args->next;
-        }
-        while(tmp)
-        {
-            // printf("%s\n",tmp->path);
-            tmp = tmp->next;
         }
     }
 }
@@ -143,7 +164,20 @@ void    ft_unset(t_ast *root, t_env **env)
     }
    
 }
-
+void ft_env(t_env *env)
+{
+    while(env)
+    {
+        if(env->value[0] == '\0')
+            (env) = (env)->next;
+        else  
+       { 
+        printf("%s=%s\n",env->key,env->value);
+        (env) = (env)->next;
+        }
+    }
+    return;
+}
 // #include<stdio.h> 
  
 // chdir function is declared 
