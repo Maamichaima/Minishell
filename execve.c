@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/29 21:51:55 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/05 16:20:00 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void    executer_tree(t_ast *root, t_ast *const_root, t_env *env)
 {
     if(root->type == token_cmd)
     {
+		//if cmd is builtin 
         root->cmd.pid = fork();
         if(root->cmd.pid == 0)
         {

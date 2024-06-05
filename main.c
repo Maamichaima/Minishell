@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/03 20:25:56 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:21:48 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,20 @@ int	main(int c, char **av, char **env)
 		lst_token(input, &head);
 		if (is_valid_token(head) == 0)
 			printf("pas valide\n");
-		else
+		else if(head)
 		{
 			root = parse_and_or(head);
 			init_ast(root, v);
-			ft_cd(root,v);
-			while(v)
-			{
-				printf("%s=%s\n",v->key,v->value);
-				v = v->next;
-			}
-			// execut_all_here_doc(root);
-			// executer_tree(root, root, v);
-			// close_(root);
-			// wait_(root);
+			// ft_cd(root,v);
+			// while(v)
+			// {
+			// 	printf("%s=%s\n",v->key,v->value);
+			// 	v = v->next;
+			// }
+			execut_all_here_doc(root);
+			executer_tree(root, root, v);
+			close_(root);
+			wait_(root);
 		}
 		free(input);
 	}

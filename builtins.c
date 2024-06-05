@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/03 20:38:31 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:21:22 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void ft_cd(t_ast *root,t_env *env)
 
     tmp = env;
     old  = getcwd(NULL,0);
-    if(root->args->str == NULL)
+    if(root->args == NULL && root->args->str == NULL)
     {
         while(tmp)
         {
@@ -46,9 +46,14 @@ void ft_cd(t_ast *root,t_env *env)
     while(env)
     {
         if(ft_strcmp(env->key, "PWD") == 0)
-            env->value = new;//path
-        if(ft_strcmp(env->key, "OLDPWD") == 0)
-            env->value = old;//path
+          {  
+            env->value = new;
+            printf("%s\n",env->value);//path
+            }
+        if(ft_strcmp(env->key, "OLDPWD") == 0)  
+          {  env->value = old;
+            printf("%s\n",env->value);//path
+            }
         env = env->next;
     }
 }
@@ -89,6 +94,7 @@ int check_key_in_env(t_env *env, t_str *args)
     return 0;
 }
 
+//syntaxe error + sorting by ascii +norminette
 void    ft_export(t_ast *root, t_env *env)
 {
     t_env *new = NULL;
@@ -137,10 +143,11 @@ void    ft_unset(t_ast *root, t_env **env)
     }
    
 }
-// // #include<stdio.h> 
+
+// #include<stdio.h> 
  
-// // chdir function is declared 
-// // inside this header 
+// chdir function is declared 
+// inside this header 
 // #include<unistd.h> 
 // int main() 
 // { 
