@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/05 17:04:49 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 00:02:05 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ t_ast				*parse_and_or(t_token *lst);
 char				**list_to_table(t_str *str);
 int					ft_strcmp(char *s1, char *s2);
 size_t				ft_strlen(const char *s);
+char				*ft_strdup(char *src);
 int					outfile(t_str *red);
 void					infile(t_str *red);
 char				**ft_split(char const *s, char *c);
@@ -127,4 +128,10 @@ void 				ft_cd(t_ast *root,t_env *env);
 void    			ft_pwd(t_env *env);
 void    			ft_unset(t_ast *root, t_env **env);
 void 				ft_env(t_env *env);
+void 				ft_echo(t_ast *root, t_env *env);
+int 				check_flag(char *flag);
+void 				ft_exit(t_ast *root);
+long				ft_atoi(char *str);
+int					ft_isnum(int arg);
+int 				str_is_num(char *str);
 #endif

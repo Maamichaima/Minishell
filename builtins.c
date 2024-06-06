@@ -6,22 +6,12 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/05 21:44:49 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 00:46:27 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-int is_builtin(t_str cmd)
-{
-    if(ft_strcmp(cmd.str,"cd") == 0 || ft_strcmp(cmd.str,"echo")  == 0|| 
-    ft_strcmp(cmd.str,"pwd")== 0 || ft_strcmp(cmd.str,"export")== 0 ||
-    ft_strcmp(cmd.str,"unset")== 0 || ft_strcmp(cmd.str,"env")== 0 || ft_strcmp(cmd.str,"exit")== 0)
-        return(1);
-    return(0);
-}
 
 void ft_cd(t_ast *root,t_env *env)
 {
@@ -95,14 +85,6 @@ int check_key_in_env(t_env *env, t_str *args)
     return 0;
 }
 
-int	ft_isnum(int arg)
-{
-	if ((arg >= '0' && arg <= '9'))
-		return (1);
-	else
-		return (0);
-}
-
 int valide_key(char *str)
 {
     if(str[0] == '=' || str[0] == '+' || str[0] == '-' || ft_isnum(str[0]))
@@ -128,7 +110,10 @@ void    ft_export(t_ast *root, t_env *env)
     {
         while(env)
         {
-            printf("declare -x %s=\"%s\"\n", env->key, env->value);
+            if(env->value == NULL)
+                printf("declare -x %s=\"\"\n", env->key);
+            else //ignore quotes
+                printf("declare -x %s=\"%s\"\n", env->key, env->value);
             (env) = (env)->next;
         }
     }
@@ -140,7 +125,7 @@ void    ft_export(t_ast *root, t_env *env)
             if(valide_key(root->args->str) == 0)
                 ft_error_export(root->args->str);
             else if(!check_key_in_env(env, root->args))
-            {
+            {//ignore quotes
                 new = ft_lstnew_env(get_key(root->args->str), get_value(root->args->str),root->args->str);
                 ft_lstadd_back_env(&tmp,new); 
             }
@@ -168,15 +153,79 @@ void ft_env(t_env *env)
 {
     while(env)
     {
-        if(env->value[0] == '\0')
+        if(env->value == NULL)
             (env) = (env)->next;
         else  
-       { 
+       {//ignore quotes
         printf("%s=%s\n",env->key,env->value);
         (env) = (env)->next;
         }
     }
     return;
+}
+
+int check_flag(char *flag)
+{
+    int i;
+
+    i = 0;
+    if(flag[i] == '-')
+    {
+        i++;
+        while(flag[i])
+        {
+            if(flag[i] != 'n')
+                return(1);
+            i++;
+        }
+    }
+    else
+        return(1);
+    return(0);    
+}
+
+void ft_echo(t_ast *root, t_env *env)
+{
+    int new_line;
+    t_str *cmd;
+    
+    new_line = 0;
+    cmd = root->args->next;
+    while (check_flag(cmd->str) == 0)
+    {
+        cmd = cmd->next;
+        new_line = 1;
+    }
+    while(cmd)
+    {
+            printf("%s",cmd->str);
+        if (cmd->next)
+            printf(" ");
+        cmd = cmd->next;
+    }
+    if(new_line != 1)
+        printf("\n");
+}
+
+void ft_exit(t_ast *root)
+{
+    if(root->args && root->args->next && root->args->next->next == NULL)
+    {
+        if(!str_is_num(root->args->next->str))
+            exit(ft_atoi(root->args->next->str));
+        else
+        {  
+            write(2,"exit\nbash: exit: ", 18);
+            write(2,root->args->next->str,ft_strlen(root->args->next->str));
+            write(2,": numeric argument required\n",29);
+            exit(2);
+        }
+    } 
+    else if (root->args && root->args->next && root->args->next->next != NULL)
+    {
+        write(2,"exit\n", 6);
+        write(2,"bash: exit: too many arguments\n",32);
+    }      
 }
 // #include<stdio.h> 
  

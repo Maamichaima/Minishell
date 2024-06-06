@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/05 15:43:57 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 00:33:42 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,19 @@ char	*get_value(char *env)
 
 	i = 0;
 	j = 0;
-	value = malloc(256);
+	
 	while(env[i] && env[i] != '=')
 	{
 		i++;
 	}
-	i++;
-	while(env[i])
+	if(env[i] == '\0')
+		value = NULL;
+	else
 	{
-		value[j] = env[i];
 		i++;
-		j++;
+		value = ft_strdup(&env[i]);
 	}
-	value[j]='\0';
+	//printf("%s \n",value);
 	return(value);
 }
 t_env	*get_env_lst(char **env)

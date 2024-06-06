@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/05 21:17:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 00:34:39 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ int	main(int c, char **av, char **env)
 		{
 			root = parse_and_or(head);
 			init_ast(root, v);
+			//ft_exit(root);
 			//ft_cd(root,v);
 			ft_export(root,v);
-			// ft_env(v);
+			 ft_env(v);
 			// while(v)
 			// {
 			// 	printf("%s=%s\n",v->key,v->value);
