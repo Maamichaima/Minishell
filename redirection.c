@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/29 18:53:41 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/07 23:37:28 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
@@ -26,11 +28,11 @@ int	open_here_doc(char *del)
 {
 	char	*tmp;
 	int		pipe_fd[2];
-	pid_t		pid;
+	pid_t	pid;
 
 	pipe(pipe_fd);
 	pid = fork();
-	if(pid == 0)
+	if (pid == 0)
 	{
 		while (1)
 		{
@@ -50,16 +52,14 @@ int	open_here_doc(char *del)
 	return (pipe_fd[0]);
 }
 
-int	outfile(t_str *red)
+void	outfile(t_str *red)
 {
-	int	fd;
-
 	while (red)
 	{
 		if (red->type == token_apend)
 		{
-			fd = open(red->str, O_CREAT | O_APPEND | O_WRONLY, 0644);
-			if (fd == -1)
+			red->fd = open(red->str, O_CREAT | O_APPEND | O_WRONLY, 0644);
+			if (red->fd == -1)
 			{
 				perror(red->str);
 				exit(1);
@@ -67,8 +67,8 @@ int	outfile(t_str *red)
 		}
 		else if (red->type == token_red_output)
 		{
-			fd = open(red->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-			if (fd == -1)
+			red->fd = open(red->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+			if (red->fd == -1)
 			{
 				perror(red->str);
 				exit(1);
@@ -76,7 +76,6 @@ int	outfile(t_str *red)
 		}
 		red = red->next;
 	}
-	return (fd);
 }
 
 void	infile(t_str *red)
@@ -92,8 +91,6 @@ void	infile(t_str *red)
 				exit(1);
 			}
 		}
-		// else if (red->type == token_herd)
-		// 	fd = open_here_doc(red->str);
 		red = red->next;
 	}
 }

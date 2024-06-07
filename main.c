@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/29 22:10:16 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/07 23:16:29 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	print(t_ast *root)
 {
 	printf("        %d       \n", root->type);
 	if (root->left && root->right)
-		printf(" %s           %s \n", root->left->cmd.path, root->right->cmd.path);
+		printf(" %s           %s \n", root->left->cmd.path,
+			root->right->cmd.path);
 }
 
 void	printf_tree(t_ast *root)
@@ -47,29 +48,29 @@ void	printf_tree(t_ast *root)
 
 void	wait_(t_ast *root)
 {
-	if(root->type == token_cmd)
+	if (root->type == token_cmd)
 		waitpid(root->cmd.pid, NULL, 0);
-    else
-    {
-        wait_(root->left);
-        wait_(root->right);
-    }
+	else
+	{
+		wait_(root->left);
+		wait_(root->right);
+	}
 }
 
 void	close_(t_ast *root)
 {
-	if(root->type == token_cmd)
+	if (root->type == token_cmd)
 	{
 		if (root->cmd.infile != 0)
 			close(root->cmd.infile);
 		if (root->cmd.outfile != 1)
 			close(root->cmd.outfile);
 	}
-    else
-    {
-        close_(root->left);
-        close_(root->right);
-    }
+	else
+	{
+		close_(root->left);
+		close_(root->right);
+	}
 }
 
 int	main(int c, char **av, char **env)
@@ -77,11 +78,9 @@ int	main(int c, char **av, char **env)
 	char	*input;
 	t_token	*head;
 	t_ast	*root;
-	t_str	*red;
-	t_str	*cmd;
-	char	**tb;
-	t_env *v = get_env_lst(env);
+	t_env	*v;
 
+	v = get_env_lst(env);
 	while (1)
 	{
 		input = readline("bash$ ");
@@ -93,12 +92,12 @@ int	main(int c, char **av, char **env)
 		lst_token(input, &head);
 		if (is_valid_token(head) == 0)
 			printf("pas valide\n");
-		else
+		else if (head)
 		{
 			root = parse_and_or(head);
 			init_ast(root, v);
 			execut_all_here_doc(root);
-			executer_tree(root, root, v);
+			executer_tree(root, root, &v);
 			close_(root);
 			wait_(root);
 		}

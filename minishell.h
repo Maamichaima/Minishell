@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/29 18:21:21 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/07 23:29:18 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
-#include <sys/wait.h>
-#include <sys/types.h>
 
 typedef enum
 {
@@ -53,6 +53,8 @@ typedef struct s_env
 {
 	char			*value;
 	char			*key;
+	char			*path;
+	struct s_env	*prev;
 	struct s_env	*next;
 }					t_env;
 
@@ -97,22 +99,42 @@ t_ast				*parse_and_or(t_token *lst);
 char				**list_to_table(t_str *str);
 int					ft_strcmp(char *s1, char *s2);
 size_t				ft_strlen(const char *s);
-int					outfile(t_str *red);
-void					infile(t_str *red);
+char				*ft_strdup(char *src);
+void				outfile(t_str *red);
+void				infile(t_str *red);
 char				**ft_split(char const *s, char *c);
-void   				initialize_cmd(t_ast *node, t_env *env);
+void				initialize_cmd(t_ast *node, t_env *env);
 t_env				*get_env_lst(char **env);
-void    			init_ast(t_ast *root,t_env *env);
+t_env				*ft_lstnew_env(char *key, char *value, char *path);
+void				ft_lstadd_back_env(t_env **lst, t_env *new);
+char				*get_key(char *env);
+char				*get_value(char *env);
+t_env				*get_env_lst(char **env);
+void				init_ast(t_ast *root, t_env *env);
 char				*correct_path(char **path, char *v);
 char				**get_paths(t_env *env);
-void    			executer_tree(t_ast *root, t_ast *const_root, t_env *env);
+void				executer_tree(t_ast *root, t_ast *const_root, t_env **env);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				**list_to_table_env(t_env *str);
 void				close_(t_ast *root);
 int					check_redin(t_str *red);
 int					check_redout(t_str *red);
 int					check_redherdoc(t_str *red);
-void 				execut_all_here_doc(t_ast *root);
+void				execut_all_here_doc(t_ast *root);
 int					open_here_doc(char *del);
+void				ft_export(t_ast *root, t_env *env);
+int					is_builtin(t_str cmd);
+void				ft_cd(t_ast *root, t_env *env);
+void				ft_pwd(t_env *env);
+void				ft_unset(t_ast *root, t_env **env);
+void				ft_env(t_env *env);
+void				ft_echo(t_ast *root, t_env *env);
+int					check_flag(char *flag);
+void				ft_exit(t_ast *root);
+long				ft_atoi(char *str);
+int					ft_isnum(int arg);
+int					str_is_num(char *str);
+void				execut_bultin(t_ast *root, t_env **env);
+char				*ignor(char *str);
 
 #endif

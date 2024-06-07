@@ -24,16 +24,16 @@ void	inisialiser_pipe(t_ast *root)
 		root->right->left->cmd.infile = pip[0];
 }
 
-void    init_ast(t_ast *root, t_env *env)
+void	init_ast(t_ast *root, t_env *env)
 {
-    if(root->type == token_pipe)
-    {
-        inisialiser_pipe(root);
-        initialize_cmd(root->left, env);
-        init_ast(root->right,env);
-    }
-    else
-        initialize_cmd(root, env);
+	if (root->type == token_pipe)
+	{
+		inisialiser_pipe(root);
+		initialize_cmd(root->left, env);
+		init_ast(root->right, env);
+	}
+	else
+		initialize_cmd(root, env);
 }
 
 int	check_redout(t_str *red)
@@ -69,8 +69,8 @@ int	check_redherdoc(t_str *red)
 	return (0);
 }
 
-void   initialize_cmd(t_ast *node, t_env *env)
+void	initialize_cmd(t_ast *node, t_env *env)
 {
 	node->cmd.args = list_to_table(node->args);
-    node->cmd.path = correct_path(get_paths(env),node->cmd.args[0]);
+	node->cmd.path = correct_path(get_paths(env), node->cmd.args[0]);
 }
