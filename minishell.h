@@ -136,5 +136,8 @@ int					ft_isnum(int arg);
 int					str_is_num(char *str);
 void				execut_bultin(t_ast *root, t_env **env);
 char				*ignor(char *str);
-
+char				**table_of_key(t_env *env);
+char 				**sort_table(char **str);
+char 				*get_value_(char *key, t_env *env);
+void 				ft_write_export(char **key, t_env *env);
 #endif

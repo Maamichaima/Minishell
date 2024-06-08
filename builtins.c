@@ -14,44 +14,6 @@
 
 // char *get_content(char *key) --> i9leb fl HOME
 // void  set_content(char *key, char *content)
-// void ft_cd(char **arg,t_env *env)
-// {
-//     char *old;
-//     char *new;
-//     t_env *tmp;
-
-//     tmp = env;
-//     old  = getcwd(NULL,0);
-//     if(arg[0] == NULL)
-//     {
-//         while(tmp)
-//         {
-//             if(ft_strcmp(tmp->key, "HOME") == 0)
-//                 chdir(tmp->value);
-//             tmp = tmp->next;
-//         }
-//     }
-//     else
-//     {
-//         if (chdir(arg[0]) == -1)
-//             perror("cd");
-//     }
-//     new = getcwd(NULL,0);//mssage error
-//     while(env)
-//     {
-//         if(ft_strcmp(env->key, "PWD") == 0)
-//         {
-//             env->value = new;
-//             // printf("%s\n",env->value);//path
-//         }
-//         if(ft_strcmp(env->key, "OLDPWD") == 0)
-//         {
-//             env->value = old;
-//             // printf("%s\n",env->value);//path
-//         }
-//         env = env->next;
-//     }
-// }
 
 void	ft_cd(t_ast *root, t_env *env)
 {
@@ -126,13 +88,19 @@ int	check_key_in_env(t_env *env, t_str *args)
 	return (0);
 }
 
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
+}
+
 int	valide_key(char *str)
 {
-	if (str[0] == '=' || str[0] == '+' || str[0] == '-' || ft_isnum(str[0]))
-	{
-		return (0);
-	}
-	return (1);
+	if (str[0] == '_' || ft_isalpha(str[0]))
+		return (1);
+	return (0);
 }
 
 void	ft_error_export(char *str)
@@ -146,19 +114,14 @@ void	ft_export(t_ast *root, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
+	char **key;
 
 	new = NULL;
 	tmp = env;
 	if (root->args && root->args->str && root->args->next == NULL)
 	{
-		while (env)
-		{
-			if (env->value == NULL)
-				printf("declare -x %s\n", env->key);
-			else
-				printf("declare -x %s=\"%s\"\n", env->key, ignor(env->value));
-			(env) = (env)->next;
-		}
+		key = sort_table(table_of_key(env));
+		ft_write_export(key, env);
 	}
 	else
 	{
@@ -189,11 +152,14 @@ void	ft_unset(t_ast *root, t_env **env)
 			return ;
 		if (ft_strcmp(get_key(root->args->next->str), (new)->key) == 0)
 		{
+			
 			if ((new)->prev == NULL)
 			{
 				(*env) = (*env)->next;
 				(*env)->prev = NULL;
 			}
+			else if(!new->next)
+				new = NULL;//_hadi makhasehach tmseh
 			else
 			{
 				(new)->prev->next = (new)->next;
@@ -211,7 +177,7 @@ void	ft_env(t_env *env)
 		if (env->value == NULL)
 			(env) = (env)->next;
 		else
-		{ // ignore quotes
+		{
 			printf("%s=%s\n", env->key, env->value);
 			(env) = (env)->next;
 		}
@@ -224,19 +190,19 @@ int	check_flag(char *flag)
 	int	i;
 
 	i = 0;
-	if (flag[i] == '-')
+	if (flag[i] == '-' && flag[i])
 	{
 		i++;
-		while (flag[i])
+		if(flag[i] == '\0')
+			return (1);
+		while (flag[i] && flag[i] == 'n')
 		{
-			if (flag[i] != 'n')
-				return (1);
 			i++;
 		}
+		if(flag[i] == '\0')
+			return (0);
 	}
-	else
-		return (1);
-	return (0);
+	return (1);
 }
 
 void	ft_echo(t_ast *root, t_env *env)
@@ -251,7 +217,8 @@ void	ft_echo(t_ast *root, t_env *env)
 	}
 	new_line = 0;
 	cmd = root->args->next;
-	while (check_flag(cmd->str) == 0)
+
+	while (cmd && check_flag(cmd->str) == 0)
 	{
 		cmd = cmd->next;
 		new_line = 1;

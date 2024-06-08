@@ -54,7 +54,7 @@ char	**list_to_table(t_str *str)
 		if (!t[i])
 			return (NULL);
 		t[i] = ft_strcpy(t[i], str->str);
-		t[i] = ignor(t[i]); // ignor_quotes
+		//t[i] = ignor(t[i]); // ignor_quotes
 		str = str->next;
 		i++;
 	}

@@ -36,8 +36,7 @@ int	open_here_doc(char *del)
 	{
 		while (1)
 		{
-			write(1, ">", 1);
-			tmp = readline("");
+			tmp = readline("> ");
 			if (!tmp || ft_strcmp(tmp, del) == 0)
 			{
 				free(tmp);
@@ -46,6 +45,8 @@ int	open_here_doc(char *del)
 			write(pipe_fd[1], tmp, ft_strlen(tmp));
 			write(pipe_fd[1], "\n", 1);
 		}
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
 		exit(0);
 	}
 	close(pipe_fd[1]);

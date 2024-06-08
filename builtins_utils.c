@@ -31,6 +31,7 @@ char	*ft_strdup(char *src)
 	dest[i] = '\0';
 	return (dest);
 }
+
 long	ft_atoi(char *str)
 {
 	int		i;

@@ -89,7 +89,7 @@ t_str	*jbdi_cmd(t_token *lst)
 	{
 		if ((!lst->prev || !is_redirectien(lst->prev->type))
 			&& !is_redirectien(lst->type))
-			ft_lstadd_back_str(&cmd, lst_new_str(lst->token, lst->type));
+			ft_lstadd_back_str(&cmd, lst_new_str(ignor(lst->token), lst->type));//////ignor
 		lst = lst->next;
 	}
 	return (cmd);
