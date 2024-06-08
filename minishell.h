@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/07 00:02:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 23:42:43 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,4 +134,5 @@ void 				ft_exit(t_ast *root);
 long				ft_atoi(char *str);
 int					ft_isnum(int arg);
 int 				str_is_num(char *str);
+int 				count_cmd(t_ast *root);
 #endif

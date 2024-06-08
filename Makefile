@@ -1,4 +1,4 @@
-SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c split.c create_tree.c env.c set_env.c redirection.c execution.c execve.c builtins.c builtins_utils.c
+SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c split.c create_tree.c env.c set_env.c redirection.c execution.c execve.c builtins.c builtins_utils.c count_cmd.c
 OBJ = ${SRC:.c=.o}
 
 LDFLAGS = -lreadline
