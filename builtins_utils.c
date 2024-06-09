@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buitins_utils.c                                    :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 23:57:39 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 00:00:36 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 16:13:58 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,28 @@ int	ft_isnum(int arg)
 	else
 		return (0);
 }
-int str_is_num(char *str)
+
+int	str_is_num(char *str)
 {
-    while(*str)
-    {
-        if(!ft_isnum(*str))
-            return(1);
-        str++;
-    }
-    return(0);
+	if (*str == '-' || *str == '+')
+		str++;
+	if (*str == '\0')
+		return (1);
+	while (*str)
+	{
+		if (!ft_isnum(*str))
+			return (1);
+		str++;
+	}
+	return (0);
 }
 
-int is_builtin(t_str cmd)
+int	is_builtin(t_str cmd)
 {
-    if(ft_strcmp(cmd.str,"cd") == 0 || ft_strcmp(cmd.str,"echo")  == 0|| 
-    ft_strcmp(cmd.str,"pwd")== 0 || ft_strcmp(cmd.str,"export")== 0 ||
-    ft_strcmp(cmd.str,"unset")== 0 || ft_strcmp(cmd.str,"env")== 0 || ft_strcmp(cmd.str,"exit")== 0)
-        return(1);
-    return(0);
+	if (ft_strcmp(cmd.str, "cd") == 0 || ft_strcmp(cmd.str, "echo") == 0
+		|| ft_strcmp(cmd.str, "pwd") == 0 || ft_strcmp(cmd.str, "export") == 0
+		|| ft_strcmp(cmd.str, "unset") == 0 || ft_strcmp(cmd.str, "env") == 0
+		|| ft_strcmp(cmd.str, "exit") == 0)
+		return (1);
+	return (0);
 }

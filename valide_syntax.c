@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/23 23:34:52 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/07 16:52:36 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int	is_valid_token(t_token *lst)
 			if ((lst->prev->type != token_word)
 				|| (lst->next->type != token_word
 					&& !is_redirectien(lst->next->type)))
+				return (0);
+		}
+		if (lst->type == token_word)
+		{
+			if (!is_valid_word(lst->token))
 				return (0);
 		}
 		lst = lst->next;
