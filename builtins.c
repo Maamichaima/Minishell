@@ -15,41 +15,52 @@
 // char *get_content(char *key) --> i9leb fl HOME
 // void  set_content(char *key, char *content)
 
+void error_cd(int a, char *str)
+{
+	if(a == 0)
+	{
+		write(2, "bash: cd:",10);
+		write(2, " HOME not set\n", 14);
+	}
+	else 
+	{
+		write(2,"bash: cd: ",11);
+		perror(str);
+	}
+}
+
 void	ft_cd(t_ast *root, t_env *env)
 {
 	char	*old;
 	char	*new;
-	t_env	*tmp;
+	char	*val;
 
-	tmp = env;
 	old = getcwd(NULL, 0);
 	if (root->args->next == NULL)
-	{
-		while (tmp)
-		{
-			if (ft_strcmp(tmp->key, "HOME") == 0)
-				chdir(tmp->value);
-			tmp = tmp->next;
-		}
-	}
+		val = get_value_("HOME", env);
 	else
-		chdir(root->args->next->str);
+		val = root->args->next->str;
+	if(!val)
+	{
+		error_cd(0, val);
+		return ;
+	}
+	else if (chdir(val) == -1)
+	{
+		error_cd(1, val);
+		return ;
+	}
 	new = getcwd(NULL, 0);
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PWD") == 0)
-		{
 			env->value = new;
-			// printf("%s\n",env->value);//path
-		}
 		if (ft_strcmp(env->key, "OLDPWD") == 0)
-		{
 			env->value = old;
-			// printf("%s\n",env->value);//path
-		}
 		env = env->next;
 	}
 }
+
 void	ft_pwd(t_env *env)
 {
 	printf("%s\n", getcwd(NULL, 0));
@@ -141,32 +152,47 @@ void	ft_export(t_ast *root, t_env *env)
 	}
 }
 
-void	ft_unset(t_ast *root, t_env **env)
+void supp(t_ast *root, t_env **env)
 {
 	t_env	*new;
 
 	new = *env;
 	while (new)
 	{
-		if (!root->args->next)
-			return ;
-		if (ft_strcmp(get_key(root->args->next->str), (new)->key) == 0)
+		if (ft_strcmp(get_key(root->args->str), new->key) == 0)
 		{
-			
 			if ((new)->prev == NULL)
 			{
 				(*env) = (*env)->next;
 				(*env)->prev = NULL;
 			}
 			else if(!new->next)
-				new = NULL;//_hadi makhasehach tmseh
+			{
+				new->prev->next = NULL;//_hadi makhasehach tmseh
+				return;
+			}
 			else
 			{
-				(new)->prev->next = (new)->next;
-				(new)->next->prev = (new)->prev;
+				new->prev->next = new->next;
+				new->next->prev = new->prev;
 			}
 		}
-		(new) = (new)->next;
+		new = new->next;
+	}
+}
+
+void	ft_unset(t_ast *root, t_env **env)
+{
+	t_env	*new;
+
+	new = *env;
+	if (!root->args->next)
+			return;
+	root->args = root->args->next;
+	while(root->args)
+	{
+		supp(root, env);
+		root->args = root->args->next;
 	}
 }
 

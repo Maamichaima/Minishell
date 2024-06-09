@@ -32,3 +32,8 @@ void	execut_bultin(t_ast *root, t_env **env)
 	else if (ft_strcmp(cmd.args[0], "env") == 0)
 		ft_env(*env);
 }
+
+void	check_bultins(t_ast *root)
+{
+	if()
+}
