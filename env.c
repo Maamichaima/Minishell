@@ -86,7 +86,8 @@ char	**list_to_table_env(t_env *str)
 		return (NULL);
 	while (str)
 	{
-		t[i] = ft_strjoin(str->key, str->value);
+		t[i] = ft_strjoin(str->key, "=");
+		t[i] = ft_strjoin(t[i], str->value);
 		str = str->next;
 		i++;
 	}

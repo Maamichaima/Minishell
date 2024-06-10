@@ -157,6 +157,8 @@ void supp(t_ast *root, t_env **env)
 	t_env	*new;
 
 	new = *env;
+	if(ft_strcmp(root->args->str, "_") == 0)
+		return;
 	while (new)
 	{
 		if (ft_strcmp(get_key(root->args->str), new->key) == 0)
@@ -168,7 +170,7 @@ void supp(t_ast *root, t_env **env)
 			}
 			else if(!new->next)
 			{
-				new->prev->next = NULL;//_hadi makhasehach tmseh
+				new->prev->next = NULL;
 				return;
 			}
 			else
@@ -243,7 +245,6 @@ void	ft_echo(t_ast *root, t_env *env)
 	}
 	new_line = 0;
 	cmd = root->args->next;
-
 	while (cmd && check_flag(cmd->str) == 0)
 	{
 		cmd = cmd->next;

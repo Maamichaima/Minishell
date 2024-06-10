@@ -98,7 +98,6 @@ int	main(int c, char **av, char **env)
 			init_ast(root, v);
 			execut_all_here_doc(root);
 			executer_tree(root, root, &v);
-			
 			close_(root);
 			wait_(root);
 		}
