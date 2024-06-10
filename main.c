@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/07 23:16:29 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/10 01:36:05 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int c, char **av, char **env)
 	t_token	*head;
 	t_ast	*root;
 	t_env	*v;
-
+	
 	v = get_env_lst(env);
 	while (1)
 	{
@@ -98,6 +98,7 @@ int	main(int c, char **av, char **env)
 			init_ast(root, v);
 			execut_all_here_doc(root);
 			executer_tree(root, root, &v);
+			
 			close_(root);
 			wait_(root);
 		}

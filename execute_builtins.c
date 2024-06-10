@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_bultins.c                                  :+:      :+:    :+:   */
+/*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/07 22:37:05 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/10 01:41:31 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,30 @@ void	execut_bultin(t_ast *root, t_env **env)
 		ft_env(*env);
 }
 
-void	check_bultins(t_ast *root)
+void	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
 {
-	if()
+	int fd = 1000;
+	if(count_cmd(const_root) > 1)
+	{
+		root->cmd.pid = fork();
+		if(root->cmd.pid == 0)
+		{
+			init_infile_outfile(root->red, root);
+			dup2(root->cmd.infile, 0);
+			dup2(root->cmd.outfile, 1);
+			close_(const_root);
+			execut_bultin(root, env);
+			exit(0);
+		}
+	}
+	else 
+	{
+		init_infile_outfile(root->red, root);
+		dup2(root->cmd.infile, 0);
+		dup2(1,fd);
+		dup2(root->cmd.outfile, 1);
+		execut_bultin(root, env);
+		close(root->cmd.outfile);
+		dup2(fd,1);
+	}
 }

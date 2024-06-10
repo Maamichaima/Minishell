@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 22:50:50 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/10 01:53:17 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_error_export(char *str)
 	write(2, str, ft_strlen(str));
 	write(2, ": not a valid identifier\n", 26);
 }
-// syntaxe error + sorting by ascii +norminette
+
 void	ft_export(t_ast *root, t_env *env)
 {
 	t_env	*new;

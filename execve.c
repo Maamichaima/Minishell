@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/07 23:38:31 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/09 21:09:56 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 		if(root->args != NULL)
 		{
 			if (is_builtin(*(root->args)))
-				execut_bultin(root, env);
+				check_bultins(root, const_root, env);
 			else
 			{
 				root->cmd.pid = fork();
