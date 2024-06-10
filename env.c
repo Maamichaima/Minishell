@@ -54,7 +54,7 @@ char	**list_to_table(t_str *str)
 		if (!t[i])
 			return (NULL);
 		t[i] = ft_strcpy(t[i], str->str);
-		t[i] = ignor(t[i]); // ignor_quotes
+		//t[i] = ignor(t[i]); // ignor_quotes
 		str = str->next;
 		i++;
 	}
@@ -86,7 +86,8 @@ char	**list_to_table_env(t_env *str)
 		return (NULL);
 	while (str)
 	{
-		t[i] = ft_strjoin(str->key, str->value);
+		t[i] = ft_strjoin(str->key, "=");
+		t[i] = ft_strjoin(t[i], str->value);
 		str = str->next;
 		i++;
 	}

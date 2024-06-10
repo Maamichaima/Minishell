@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/07 23:38:31 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/09 21:09:56 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,33 +65,34 @@ void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 	exit(127);
 }
 
+int get_last_fd(t_str *red, char c)
+{
+	int f;
+
+	while (red)
+	{
+		if (c == 'o' && (red->type == token_apend || red->type == token_red_output))
+			f = red->fd;
+		if (c == 'i' && (red->type == token_herd || red->type == token_red_input))
+			f = red->fd;
+		red = red->next;
+	}
+	return(f);
+}
+
 void	init_infile_outfile(t_str *red, t_ast *node)
 {
-	t_str	*tmp;
-
-	tmp = red;
 	if (check_redout(red))
 	{
 		// close(node->cmd.outfile);
 		outfile(red);
-		while (red)
-		{
-			if (red->type == token_apend || red->type == token_red_output)
-				node->cmd.outfile = red->fd;
-			red = red->next;
-		}
-		printf("li khase ikon hwa hadaa -> %d \n", node->cmd.outfile);
+		node->cmd.outfile = get_last_fd(red, 'o');
 	}
-	if (check_redin(tmp))
+	if (check_redin(red))
 	{
 		// close(node->cmd.infile);
-		infile(tmp);
-		while (tmp)
-		{
-			if (tmp->type == token_herd || tmp->type == token_red_input)
-				node->cmd.infile = tmp->fd;
-			tmp = tmp->next;
-		}
+		infile(red);
+		node->cmd.infile = get_last_fd(red, 'i');
 	}
 }
 
@@ -99,15 +100,18 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
 	if (root->type == token_cmd)
 	{
-		if (is_builtin(*(root->args)))
-			execut_bultin(root, env);
-		else
+		if(root->args != NULL)
 		{
-			root->cmd.pid = fork();
-			if (root->cmd.pid == 0)
+			if (is_builtin(*(root->args)))
+				check_bultins(root, const_root, env);
+			else
 			{
-				init_infile_outfile(root->red, root);
-				executer_cmd(root->cmd, *env, const_root);
+				root->cmd.pid = fork();
+				if (root->cmd.pid == 0)
+				{
+					init_infile_outfile(root->red, root);
+					executer_cmd(root->cmd, *env, const_root);
+				}
 			}
 		}
 	}
@@ -136,9 +140,7 @@ void	execut_all_here_doc(t_ast *root)
 	t_str	*r;
 
 	if (root->type == token_cmd)
-	{
 		fd_here_doc(root->red);
-	}
 	else
 	{
 		execut_all_here_doc(root->left);

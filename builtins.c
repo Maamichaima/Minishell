@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/08 20:42:24 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/10 01:53:17 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,80 +14,53 @@
 
 // char *get_content(char *key) --> i9leb fl HOME
 // void  set_content(char *key, char *content)
-// void ft_cd(char **arg,t_env *env)
-// {
-//     char *old;
-//     char *new;
-//     t_env *tmp;
 
-//     tmp = env;
-//     old  = getcwd(NULL,0);
-//     if(arg[0] == NULL)
-//     {
-//         while(tmp)
-//         {
-//             if(ft_strcmp(tmp->key, "HOME") == 0)
-//                 chdir(tmp->value);
-//             tmp = tmp->next;
-//         }
-//     }
-//     else
-//     {
-//         if (chdir(arg[0]) == -1)
-//             perror("cd");
-//     }
-//     new = getcwd(NULL,0);//mssage error
-//     while(env)
-//     {
-//         if(ft_strcmp(env->key, "PWD") == 0)
-//         {
-//             env->value = new;
-//             // printf("%s\n",env->value);//path
-//         }
-//         if(ft_strcmp(env->key, "OLDPWD") == 0)
-//         {
-//             env->value = old;
-//             // printf("%s\n",env->value);//path
-//         }
-//         env = env->next;
-//     }
-// }
+void error_cd(int a, char *str)
+{
+	if(a == 0)
+	{
+		write(2, "bash: cd:",10);
+		write(2, " HOME not set\n", 14);
+	}
+	else 
+	{
+		write(2,"bash: cd: ",11);
+		perror(str);
+	}
+}
 
 void	ft_cd(t_ast *root, t_env *env)
 {
 	char	*old;
 	char	*new;
-	t_env	*tmp;
+	char	*val;
 
-	tmp = env;
 	old = getcwd(NULL, 0);
 	if (root->args->next == NULL)
-	{
-		while (tmp)
-		{
-			if (ft_strcmp(tmp->key, "HOME") == 0)
-				chdir(tmp->value);
-			tmp = tmp->next;
-		}
-	}
+		val = get_value_("HOME", env);
 	else
-		chdir(root->args->next->str);//path don't existe
+		val = root->args->next->str;
+	if(!val)
+	{
+		error_cd(0, val);
+		return ;
+	}
+	else if (chdir(val) == -1)
+	{
+		error_cd(1, val);
+		return ;
+	}
 	new = getcwd(NULL, 0);
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PWD") == 0)
-		{
 			env->value = new;
-			// printf("%s\n",env->value);//path
-		}
 		if (ft_strcmp(env->key, "OLDPWD") == 0)
-		{
 			env->value = old;
-			// printf("%s\n",env->value);//path
-		}
 		env = env->next;
 	}
 }
+
 void	ft_pwd(t_env *env)
 {
 	printf("%s\n", getcwd(NULL, 0));
@@ -126,13 +99,19 @@ int	check_key_in_env(t_env *env, t_str *args)
 	return (0);
 }
 
+int	ft_isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
+}
+
 int	valide_key(char *str)
 {
-	if (str[0] == '=' || str[0] == '+' || str[0] == '-' || ft_isnum(str[0]))
-	{
-		return (0);
-	}
-	return (1);
+	if (str[0] == '_' || ft_isalpha(str[0]))
+		return (1);
+	return (0);
 }
 
 void	ft_error_export(char *str)
@@ -141,24 +120,19 @@ void	ft_error_export(char *str)
 	write(2, str, ft_strlen(str));
 	write(2, ": not a valid identifier\n", 26);
 }
-// syntaxe error + sorting by ascii +norminette
+
 void	ft_export(t_ast *root, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
+	char **key;
 
 	new = NULL;
 	tmp = env;
 	if (root->args && root->args->str && root->args->next == NULL)
 	{
-		while (env)
-		{
-			if (env->value == NULL)
-				printf("declare -x %s\n", env->key);
-			else
-				printf("declare -x %s=\"%s\"\n", env->key, ignor(env->value));
-			(env) = (env)->next;
-		}
+		key = sort_table(table_of_key(env));
+		ft_write_export(key, env);
 	}
 	else
 	{
@@ -178,36 +152,49 @@ void	ft_export(t_ast *root, t_env *env)
 	}
 }
 
+void supp(t_ast *root, t_env **env)
+{
+	t_env	*new;
+
+	new = *env;
+	if(ft_strcmp(root->args->str, "_") == 0)
+		return;
+	while (new)
+	{
+		if (ft_strcmp(get_key(root->args->str), new->key) == 0)
+		{
+			if ((new)->prev == NULL)
+			{
+				(*env) = (*env)->next;
+				(*env)->prev = NULL;
+			}
+			else if(!new->next)
+			{
+				new->prev->next = NULL;
+				return;
+			}
+			else
+			{
+				new->prev->next = new->next;
+				new->next->prev = new->prev;
+			}
+		}
+		new = new->next;
+	}
+}
+
 void	ft_unset(t_ast *root, t_env **env)
 {
 	t_env	*new;
 
 	new = *env;
 	if (!root->args->next)
-		return ;
+			return;
 	root->args = root->args->next;
 	while(root->args)
 	{
-		while (new)
-		{
-			
-			if (ft_strcmp(get_key(root->args->str), (new)->key) == 0)
-			{
-				if ((new)->prev == NULL)
-				{
-					(*env) = (*env)->next;
-					(*env)->prev = NULL;
-				}
-				else
-				{
-					(new)->prev->next = (new)->next;
-					(new)->next->prev = (new)->prev;
-				}
-				break;
-			}
-			(new) = (new)->next;
-		}
-	root->args = root->args->next;
+		supp(root, env);
+		root->args = root->args->next;
 	}
 }
 
@@ -218,7 +205,7 @@ void	ft_env(t_env *env)
 		if (env->value == NULL)
 			(env) = (env)->next;
 		else
-		{ // ignore quotes
+		{
 			printf("%s=%s\n", env->key, env->value);
 			(env) = (env)->next;
 		}
@@ -231,22 +218,21 @@ int	check_flag(char *flag)
 	int	i;
 
 	i = 0;
-	if (flag[i] == '-')
+	if (flag[i] == '-' && flag[i])
 	{
 		i++;
-		while (flag[i])
+		if(flag[i] == '\0')
+			return (1);
+		while (flag[i] && flag[i] == 'n')
 		{
-			if (flag[i] != 'n')
-				return (1);
 			i++;
 		}
+		if(flag[i] == '\0')
+			return (0);
 	}
-	else
-		return (1);
-	return (0);
+	return (1);
 }
-//ignor quotes
-// echo - hello
+
 void	ft_echo(t_ast *root, t_env *env)
 {
 	int		new_line;
@@ -259,7 +245,7 @@ void	ft_echo(t_ast *root, t_env *env)
 	}
 	new_line = 0;
 	cmd = root->args->next;
-	while (check_flag(cmd->str) == 0)
+	while (cmd && check_flag(cmd->str) == 0)
 	{
 		cmd = cmd->next;
 		new_line = 1;
@@ -274,7 +260,7 @@ void	ft_echo(t_ast *root, t_env *env)
 	if (new_line != 1)
 		printf("\n");
 }
-//long long 
+
 void	ft_exit(t_ast *root)
 {
 	if (root->args && root->args->next && root->args->next->next == NULL)

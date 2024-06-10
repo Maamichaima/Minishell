@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/08 19:58:59 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/10 18:12:02 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,13 @@ int					ft_isnum(int arg);
 int					str_is_num(char *str);
 void				execut_bultin(t_ast *root, t_env **env);
 char				*ignor(char *str);
-int                 count_cmd(t_ast *root);
-
+char				**table_of_key(t_env *env);
+char 				**sort_table(char **str);
+char 				*get_value_(char *key, t_env *env);
+void 				ft_write_export(char **key, t_env *env);
+int 				count_cmd(t_ast *root);
+void				init_infile_outfile(t_str *red, t_ast *node);
+void 				check_bultins(t_ast *root, t_ast *const_root, t_env **env);
+char				*ft_strchr(const char *s, int c);
+char				*ft_strdup(char *src);
 #endif

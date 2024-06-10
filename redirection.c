@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/07 23:37:28 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/09 20:53:33 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	open_here_doc(char *del)
 	{
 		while (1)
 		{
-			write(1, ">", 1);
-			tmp = readline("");
+			tmp = readline("> ");
 			if (!tmp || ft_strcmp(tmp, del) == 0)
 			{
 				free(tmp);
@@ -46,6 +45,8 @@ int	open_here_doc(char *del)
 			write(pipe_fd[1], tmp, ft_strlen(tmp));
 			write(pipe_fd[1], "\n", 1);
 		}
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
 		exit(0);
 	}
 	close(pipe_fd[1]);

@@ -51,7 +51,7 @@ int	check_redin(t_str *red)
 {
 	while (red)
 	{
-		if (red->type == token_red_input)
+		if (red->type == token_red_input || red->type == token_herd)
 			return (1);
 		red = red->next;
 	}
