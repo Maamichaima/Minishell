@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/07 15:05:10 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/12 20:48:42 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_lstsize(t_str *lst)
 	return (i);
 }
 
-char	**list_to_table(t_str *str)
+char	**list_to_table(t_str *str,t_env *env)
 {
 	char	**t;
 	int		i;
@@ -53,8 +53,8 @@ char	**list_to_table(t_str *str)
 		t[i] = malloc(sizeof(char) * (ft_strlen(str->str) + 1));
 		if (!t[i])
 			return (NULL);
-		t[i] = ft_strcpy(t[i], str->str);
-		//t[i] = ignor(t[i]); // ignor_quotes
+		t[i] = ft_strcpy(t[i], expand(str->str,env));//expand
+		//printf("%s\n",t[i]);// ignor_quotes
 		str = str->next;
 		i++;
 	}

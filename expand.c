@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/10 22:59:20 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/12 20:48:18 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,42 +61,48 @@ char *get_expand_value(char *str)
     return(val);
 }
 
-void    expand(char *str)//
+char    *expand(char *str, t_env *env)//
 {
     int i;
     int k;
-   
     char *key;
     char *val;
     char *tmp = malloc(sizeof(char ) *256);
+    
     i = 0;
     k = 0;
-    while(str[i])
-    {
-        
-        if(str[i] == '$')
+    if(ft_strchr(str,'$'))
+    {   
+        while(str[i])
         {
-            i++;
-            key = get_expand_value(str + i);        
-            val = getenv(key);
-            tmp = ft_strjoin(tmp ,val);
-            k += strlen(val);
-            i += strlen(key) ;
+            if(str[i] == '$')
+            {
+                i++;
+                key = get_expand_value(str + i);        
+                val = get_value_(key,env);
+                tmp = ft_strjoin(tmp ,val);
+                //printf("%s  %s\n",val,key);
+                k += strlen(val);
+                i += strlen(key);
+            }
+            else
+            {
+                tmp[k] = str[i];
+                i++;
+                k++;
+            }
         }
-        else
-        {
-            tmp[k] = str[i];
-            i++;
-            k++;
-        }
+        tmp[k] = '\0';
+        //printf("%s\n",tmp);
+    return(tmp);
     }
-    tmp[k] = '\0';
-    printf("%s\n",tmp);
+    else
+       return(str);
 }
 
-int main(int ac, char **av, char **env)
-{
+// int main(int ac, char **av, char **env)
+// {
     
-    expand("hello$PWD$HOME");
+//     expand("hello$PWD$HOME");
     
-}
+// }

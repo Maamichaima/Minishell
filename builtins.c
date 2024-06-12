@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/10 01:53:17 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:10:54 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	check_key_in_env(t_env *env, t_str *args)
 			}
 			else if (args->str[i] == '=')
 			{
-				env->value = get_value(args->str);
+				env->value = ignor(get_value(args->str));
 				env->path = args->str;
 			}
 			return (1);
@@ -144,7 +144,7 @@ void	ft_export(t_ast *root, t_env *env)
 			else if (!check_key_in_env(env, root->args))
 			{
 				new = ft_lstnew_env(get_key(root->args->str),
-						get_value(root->args->str), root->args->str);
+						ignor(get_value(root->args->str)), root->args->str);
 				ft_lstadd_back_env(&tmp, new);
 			}
 			root->args = root->args->next;

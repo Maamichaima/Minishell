@@ -1,6 +1,6 @@
 SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c split.c create_tree.c env.c set_env.c\
  redirection.c execution.c execve.c builtins.c builtins_utils.c quotes.c execute_builtins.c\
- sort_export.c count_cmd.c
+ sort_export.c count_cmd.c expand.c
 OBJ = ${SRC:.c=.o}
 
 LDFLAGS = -lreadline

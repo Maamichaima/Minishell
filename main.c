@@ -6,12 +6,12 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/10 16:35:19 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:18:55 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+t_env	*v;
 void	lst_token(char *ligne, t_token **head)
 {
 	char	*token;
@@ -78,7 +78,7 @@ int	main(int c, char **av, char **env)
 	char	*input;
 	t_token	*head;
 	t_ast	*root;
-	t_env	*v;
+	
 	
 	v = get_env_lst(env);
 	while (1)

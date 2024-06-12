@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/10 18:12:02 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:00:10 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_ast				*parse_pipe(t_token *lst);
 t_str				*jbdi_red(t_token *lst);
 t_str				*jbdi_cmd(t_token *lst);
 t_ast				*parse_and_or(t_token *lst);
-char				**list_to_table(t_str *str);
+char				**list_to_table(t_str *str,t_env *env);
 int					ft_strcmp(char *s1, char *s2);
 size_t				ft_strlen(const char *s);
 char				*ft_strdup(char *src);
@@ -145,4 +145,7 @@ void				init_infile_outfile(t_str *red, t_ast *node);
 void 				check_bultins(t_ast *root, t_ast *const_root, t_env **env);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(char *src);
+char				*expand(char *str,t_env *env);
+int					check_quotes(char *str, int c);
+char				*get_expand_value(char *str);
 #endif
