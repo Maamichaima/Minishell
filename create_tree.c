@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/28 22:38:20 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/21 17:19:27 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_str	*jbdi_cmd(t_token *lst)
 	{
 		if ((!lst->prev || !is_redirectien(lst->prev->type))
 			&& !is_redirectien(lst->type))
-			ft_lstadd_back_str(&cmd, lst_new_str(ignor(lst->token), lst->type));//////ignor
+			ft_lstadd_back_str(&cmd, lst_new_str(lst->token, lst->type));
 		lst = lst->next;
 	}
 	return (cmd);

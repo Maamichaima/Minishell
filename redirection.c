@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 20:53:33 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/24 22:15:28 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-int	open_here_doc(char *del)
+int	open_here_doc(char *del, t_env *env)
 {
 	char	*tmp;
 	int		pipe_fd[2];
@@ -42,7 +30,8 @@ int	open_here_doc(char *del)
 				free(tmp);
 				break ;
 			}
-			write(pipe_fd[1], tmp, ft_strlen(tmp));
+			write(pipe_fd[1], expand(tmp, env), ft_strlen(expand(tmp, env)));
+			// write(pipe_fd[1], tmp, ft_strlen(tmp));
 			write(pipe_fd[1], "\n", 1);
 		}
 		close(pipe_fd[1]);
@@ -59,7 +48,7 @@ void	outfile(t_str *red)
 	{
 		if (red->type == token_apend)
 		{
-			red->fd = open(red->str, O_CREAT | O_APPEND | O_WRONLY, 0644);
+			red->fd = open(ignor(red->str), O_CREAT | O_APPEND | O_WRONLY, 0644);
 			if (red->fd == -1)
 			{
 				perror(red->str);
@@ -68,7 +57,7 @@ void	outfile(t_str *red)
 		}
 		else if (red->type == token_red_output)
 		{
-			red->fd = open(red->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+			red->fd = open(ignor(red->str), O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			if (red->fd == -1)
 			{
 				perror(red->str);
@@ -85,7 +74,7 @@ void	infile(t_str *red)
 	{
 		if (red->type == token_red_input)
 		{
-			red->fd = open(red->str, O_RDONLY, 0644);
+			red->fd = open(ignor(red->str), O_RDONLY, 0644);
 			if (red->fd == -1)
 			{
 				perror(red->str);

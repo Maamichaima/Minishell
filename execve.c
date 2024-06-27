@@ -3,56 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 21:09:56 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/24 21:12:24 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+void	message_error(char *str)
 {
-	size_t	i;
-	size_t	j;
-	size_t	d;
-	size_t	s;
-
-	i = 0;
-	s = ft_strlen(src);
-	if (dstsize == 0 || dstsize <= ft_strlen(dst))
-		return (s + dstsize);
-	d = ft_strlen(dst);
-	j = d;
-	while (src[i] != '\0' && i < dstsize - d - 1)
+	if (ft_strchr(str, '/'))
 	{
-		dst[j] = src[i];
-		i++;
-		j++;
+		if (access(str, F_OK) == -1)
+		{
+			perror(str);
+			exit(127);
+		}
+		if (access(str, X_OK) == -1)
+		{
+			perror(str);
+			exit(126);
+		}
 	}
-	dst[j] = '\0';
-	return (d + s);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		ls1;
-	int		ls2;
-	char	*p;
-
-	if (!s1 || !s2)
-		return (NULL);
-	ls1 = ft_strlen(s1);
-	ls2 = ft_strlen(s2);
-	p = malloc(sizeof(char) * (ls1 + ls2 + 1));
-	if (!p)
-		return (NULL);
-	p[0] = '\0';
-	ft_strlcat(p, s1, ls1 + 1);
-	ft_strlcat(p, s2, ls1 + ls2 + 1);
-	return (p);
-}
+	write(2, str, ft_strlen(str));
+	write(2, ": command not found\n", 21);
+	exit(127);
+} 
 
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
@@ -60,24 +38,24 @@ void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 	dup2(cmd.outfile, 1);
 	close_(const_root);
 	execve(cmd.path, cmd.args, list_to_table_env(env));
-	write(2, cmd.args[0], ft_strlen(cmd.args[0]));
-	write(2, ": command not found\n", 21);
-	exit(127);
+	message_error(cmd.args[0]);
 }
 
-int get_last_fd(t_str *red, char c)
+int	get_last_fd(t_str *red, char c)
 {
-	int f;
+	int	f;
 
 	while (red)
 	{
-		if (c == 'o' && (red->type == token_apend || red->type == token_red_output))
+		if (c == 'o' && (red->type == token_apend
+				|| red->type == token_red_output))
 			f = red->fd;
-		if (c == 'i' && (red->type == token_herd || red->type == token_red_input))
+		if (c == 'i' && (red->type == token_herd
+				|| red->type == token_red_input))
 			f = red->fd;
 		red = red->next;
 	}
-	return(f);
+	return (f);
 }
 
 void	init_infile_outfile(t_str *red, t_ast *node)
@@ -100,7 +78,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
 	if (root->type == token_cmd)
 	{
-		if(root->args != NULL)
+		if (root->args != NULL)
 		{
 			if (is_builtin(*(root->args)))
 				check_bultins(root, const_root, env);
@@ -109,7 +87,10 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				root->cmd.pid = fork();
 				if (root->cmd.pid == 0)
 				{
+					expand_node(root, *env);
 					init_infile_outfile(root->red, root);
+					root->cmd.args = list_to_table(root->args);
+					root->cmd.path = correct_path(get_paths(*env), root->cmd.args[0]);
 					executer_cmd(root->cmd, *env, const_root);
 				}
 			}
@@ -122,28 +103,28 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 	}
 }
 
-void	fd_here_doc(t_str *red)
+void	fd_here_doc(t_str *red, t_env *env)
 {
 	while (red)
 	{
 		if (red->type == token_herd)
 		{
-			red->fd = open_here_doc(red->str);
+			red->fd = open_here_doc(ignor(red->str), env);
 			wait(NULL);
 		}
 		red = red->next;
 	}
 }
 
-void	execut_all_here_doc(t_ast *root)
+void	execut_all_here_doc(t_ast *root, t_env *env)
 {
 	t_str	*r;
 
 	if (root->type == token_cmd)
-		fd_here_doc(root->red);
+		fd_here_doc(root->red, env);
 	else
 	{
-		execut_all_here_doc(root->left);
-		execut_all_here_doc(root->right);
+		execut_all_here_doc(root->left, env);
+		execut_all_here_doc(root->right, env);
 	}
 }

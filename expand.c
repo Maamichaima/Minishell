@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 17:39:41 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/10 22:55:49 by maamichaima      ###   ########.fr       */
+/*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
+/*   Updated: 2024/06/27 00:49:39 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,78 @@ int	check_quotes(char *str, int c)
 		return 0;
 }
 
-// int main ()
-// {
-// 	char *input;
+char *get_expand_value(char *str)
+{
+    int j;
+    
+    char *val = malloc(sizeof(char ) *256);
+    j = 0;
+    while(*str && (ft_isalpha(*str) || *str =='_'))
+    {     
+        val[j++] = *str;
+        str++;
+    }
+    val[j] = '\0';
+    return(val);
+}
 
-// 	while(1)
-// 	{
-// 		input = readline(">");
-// 		if (*input)
-// 			add_history(input);
-// 		printf("%d \n", check_quotes(input, 5));
-// 	}
+char    *expand(char *str, t_env *env)
+{
+    int i;
+    int k;
+    char *key;
+    char *val;
+    char *tmp = malloc(sizeof(char ) * 256);
+    
+    i = 0;
+    k = 0;
+	tmp[0] = '\0';
+    if(ft_strchr(str, '$'))
+    {   
+        while(str[i])
+        {
+            if(str[i] == '$' && check_quotes(str, i) != -1)
+            {
+                i++;
+                key = get_expand_value(str + i);        
+                val = get_value_(key, env);
+                tmp = ft_strjoin(tmp, val);
+                k += ft_strlen(val);
+                i += ft_strlen(key);
+            }
+            else
+                tmp[k++] = str[i++];
+			tmp[k] = '\0';
+        }
+    	return(tmp);
+    }
+    else
+       return(str);
+}
+
+void expand_node(t_ast *root, t_env *env)
+{
+	t_str *arg;
+	t_str *red;
+
+	arg = root->args;
+	red = root->red;
+	while(arg)
+	{
+		arg->str = expand(arg->str, env);
+		arg = arg->next;
+	}
+	while(red)
+	{
+		if(red->type != token_herd)
+			red->str = expand(red->str, env);
+		red = red->next;
+	}
+}
+
+// int main(int ac, char **av, char **env)
+// {
+    
+//     expand("hello$PWD$HOME", );
+    
 // }

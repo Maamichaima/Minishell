@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/05/29 18:29:11 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/21 17:36:32 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_ast(t_ast *root, t_env *env)
 	if (root->type == token_pipe)
 	{
 		inisialiser_pipe(root);
-		initialize_cmd(root->left, env);
+		// initialize_cmd(root->left, env);
 		init_ast(root->right, env);
 	}
 	else
