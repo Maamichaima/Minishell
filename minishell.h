@@ -90,7 +90,7 @@ void				ft_lstadd_back(t_token **lst, t_token *new);
 int					is_symbol(char c);
 char				*get_next_token(char *s);
 int					is_redirectien(token_type type);
-int					is_valid_token(t_token *lst);
+t_token				*is_valid_token(t_token *lst);
 int					is_valid_word(char *s);
 t_ast				*parse_pipe(t_token *lst);
 t_str				*jbdi_red(t_token *lst);
@@ -147,6 +147,6 @@ int					ft_isalpha(char c);
 char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 void 				expand_node(t_ast *root, t_env *env);
-char    			*expand(char *str, t_env *env);
+char    			*expand(char *str, t_env *env, char c);
 
 #endif

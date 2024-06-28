@@ -73,12 +73,26 @@ void	close_(t_ast *root)
 	}
 }
 
+void error_syntax(t_token *t)
+{
+	printf("hh\n");
+	if(t)
+	{
+		write(2, "bash: syntax error near unexpected token '", 42);
+		write(2, t->token, ft_strlen(t->token));
+		write(2, "'\n", 2);
+	}
+	else if(t == NULL)
+		write(2, "bash: syntax error near unexpected token `newline'\n", 52);
+}
+
 int	main(int c, char **av, char **env)
 {
 	char	*input;
 	t_token	*head;
 	t_ast	*root;
 	t_env	*v;
+	t_token *t;
 
 	v = get_env_lst(env);
 	while (1)
@@ -90,8 +104,9 @@ int	main(int c, char **av, char **env)
 			add_history(input);
 		head = NULL;
 		lst_token(input, &head);
-		if (is_valid_token(head) == 0)
-			printf("pas valide\n");
+		// t = is_valid_token(head)
+		if ((t = is_valid_token(head)))//SGV
+			error_syntax(t);
 		else if (head)
 		{
 			root = parse_and_or(head);

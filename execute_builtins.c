@@ -16,7 +16,10 @@ void	execut_bultin(t_ast *root, t_env **env)
 {
 	t_cmd	cmd;
 
+	root->cmd.args = list_to_table(root->args);
+	expand_node(root, *env);
 	cmd = root->cmd;
+	//args ??
 	if (ft_strcmp(cmd.args[0], "export") == 0)
 		ft_export(root->cmd.args, *env);
 	else if (ft_strcmp(cmd.args[0], "cd") == 0)

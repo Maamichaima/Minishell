@@ -74,6 +74,15 @@ void	init_infile_outfile(t_str *red, t_ast *node)
 	}
 }
 
+void prepare_cmd(t_ast *root, t_env *env)
+{
+	root->cmd.args = list_to_table(root->args);
+	printf("%s\n",root->cmd.args[0]);
+	expand_node(root, env);
+	init_infile_outfile(root->red, root);
+	root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
+}
+
 void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
 	if (root->type == token_cmd)
@@ -84,13 +93,11 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				check_bultins(root, const_root, env);
 			else
 			{
+				
 				root->cmd.pid = fork();
 				if (root->cmd.pid == 0)
 				{
-					expand_node(root, *env);
-					init_infile_outfile(root->red, root);
-					root->cmd.args = list_to_table(root->args);
-					root->cmd.path = correct_path(get_paths(*env), root->cmd.args[0]);
+					prepare_cmd(root, *env);
 					executer_cmd(root->cmd, *env, const_root);
 				}
 			}

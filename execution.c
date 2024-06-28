@@ -32,8 +32,8 @@ void	init_ast(t_ast *root, t_env *env)
 		// initialize_cmd(root->left, env);
 		init_ast(root->right, env);
 	}
-	else
-		initialize_cmd(root, env);
+	// else
+	// 	initialize_cmd(root, env);
 }
 
 int	check_redout(t_str *red)

@@ -30,8 +30,7 @@ int	open_here_doc(char *del, t_env *env)
 				free(tmp);
 				break ;
 			}
-			write(pipe_fd[1], expand(tmp, env), ft_strlen(expand(tmp, env)));
-			// write(pipe_fd[1], tmp, ft_strlen(tmp));
+			write(pipe_fd[1], expand(tmp, env, 'h'), ft_strlen(expand(tmp, env, 'h')));
 			write(pipe_fd[1], "\n", 1);
 		}
 		close(pipe_fd[1]);

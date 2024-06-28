@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	check_quotes(char *str, int c)
+int	check_quotes(char *str, int c, char h)
 {
 	int lock;
 	int i;
@@ -37,7 +37,7 @@ int	check_quotes(char *str, int c)
 		}
 		i++;
 	}
-	if(lock == '\"')
+	if(lock == '\"' || h == 'h')
 		return 1;
 	else if(lock == '\'')
 		return -1;
@@ -60,7 +60,7 @@ char *get_expand_value(char *str)
     return(val);
 }
 
-char    *expand(char *str, t_env *env)
+char    *expand(char *str, t_env *env, char c)
 {
     int i;
     int k;
@@ -75,7 +75,7 @@ char    *expand(char *str, t_env *env)
     {   
         while(str[i])
         {
-            if(str[i] == '$' && check_quotes(str, i) != -1)
+            if(str[i] == '$' && check_quotes(str, i, c) != -1)
             {
                 i++;
                 key = get_expand_value(str + i);        
@@ -96,20 +96,19 @@ char    *expand(char *str, t_env *env)
 
 void expand_node(t_ast *root, t_env *env)
 {
-	t_str *arg;
 	t_str *red;
+	int i = 0;
 
-	arg = root->args;
 	red = root->red;
-	while(arg)
+	while (root->cmd.args[i])
 	{
-		arg->str = expand(arg->str, env);
-		arg = arg->next;
+		root->cmd.args[i] = expand(root->cmd.args[i], env, 'a');
+		i++;
 	}
 	while(red)
 	{
 		if(red->type != token_herd)
-			red->str = expand(red->str, env);
+			red->str = expand(red->str, env, 'a');
 		red = red->next;
 	}
 }

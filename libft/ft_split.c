@@ -12,7 +12,21 @@
 
 #include "libft.h"
 
-static int	count_word(char const *s, char c)
+int	is_seperator(char s, char *c)
+{
+	int	i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] == s)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	count_word(char const *s, char *c)
 {
 	int	i;
 	int	count;
@@ -21,27 +35,27 @@ static int	count_word(char const *s, char c)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		while (s[i] != '\0' && s[i] == c)
+		while (s[i] != '\0' && is_seperator(s[i], c))
 			i++;
 		if (s[i] != '\0')
 			count++;
-		while (s[i] != '\0' && s[i] != c)
+		while (s[i] != '\0' && !is_seperator(s[i], c))
 			i++;
 	}
 	return (count);
 }
 
-static int	c_char(const char *s, char c)
+int	c_char(const char *s, char *c)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0' && s[i] != c)
+	while (s[i] != '\0' && !is_seperator(s[i], c))
 		i++;
 	return (i);
 }
 
-static char	*alloc_word(const char *s, char c)
+char	*alloc_word(const char *s, char *c)
 {
 	int		i;
 	char	*p;
@@ -50,7 +64,7 @@ static char	*alloc_word(const char *s, char c)
 	p = malloc(sizeof(char) * (c_char(s, c) + 1));
 	if (!p)
 		return (NULL);
-	while (s[i] && s[i] != c)
+	while (s[i] && !is_seperator(s[i], c))
 	{
 		p[i] = s[i];
 		i++;
@@ -59,7 +73,7 @@ static char	*alloc_word(const char *s, char c)
 	return (p);
 }
 
-static void	*ft_fr(int i, char **t)
+void	*ft_free_split(int i, char **t)
 {
 	while (i > 0)
 	{
@@ -70,7 +84,7 @@ static void	*ft_fr(int i, char **t)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *c)
 {
 	int		i;
 	char	**tab;
@@ -83,16 +97,16 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	while (*s)
 	{
-		while (*s == c)
+		while (is_seperator(*s, c))
 			s++;
 		if (*s != '\0')
 		{
 			tab[i] = alloc_word(s, c);
 			if (tab[i] == NULL)
-				return (ft_fr(i, tab));
+				return (ft_free_split(i, tab));
 			i++;
 		}
-		while (*s && *s != c)
+		while (*s && !is_seperator(*s, c))
 			s++;
 	}
 	tab[i] = NULL;
