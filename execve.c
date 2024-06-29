@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/29 13:46:43 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/29 18:18:47 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,17 @@ void	message_error(char *str)
 			exit(126);
 		}
 	}
-	write(2, str, ft_strlen(str));
-	write(2, ": command not found\n", 21);
+	if(access(str, F_OK) == 0)
+	{
+		write(2, "bash: ",7);
+		write(2, str, ft_strlen(str));
+		write(2, ": Is a directory\n", 18);
+	}
+	else
+	{
+		write(2, str, ft_strlen(str));
+		write(2, ": command not found\n", 21);
+	}
 	exit(127);
 } 
 

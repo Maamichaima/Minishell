@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/29 17:31:38 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/29 20:27:54 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char    *expand(char *str, t_env *env, char c)
     i = 0;
     k = 0;
 	tmp[0] = '\0';
+	//printf("%s\n",str);
     if(ft_strchr(str, '$'))
     {   
         while(str[i])
@@ -81,10 +82,7 @@ char    *expand(char *str, t_env *env, char c)
                 key = get_expand_value(str + i);
                 val = get_value_(key, env);
 				if(val == NULL && ft_isnum(key[0]))
-				{
 					val = key + 1;
-					//i++;
-				}
                 tmp = ft_strjoin(tmp, val);
                 k += ft_strlen(val);
                 i += ft_strlen(key);
@@ -93,9 +91,9 @@ char    *expand(char *str, t_env *env, char c)
                 tmp[k++] = str[i++];
 			tmp[k] = '\0';
         }
-		if(!val && tmp[0] == '\0')
+		if(tmp[0] == '\0'|| tmp[1] == '\"')
 			return NULL;
-    	return(tmp);
+    	return(ignor(tmp));
     }
     else
        return(str);

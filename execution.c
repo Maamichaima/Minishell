@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/21 17:36:32 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/29 18:54:29 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	check_redherdoc(t_str *red)
 	return (0);
 }
 
-void	initialize_cmd(t_ast *node, t_env *env)
-{
-	node->cmd.args = list_to_table(node->args);
-	node->cmd.path = correct_path(get_paths(env), node->cmd.args[0]);
-}
+// void	initialize_cmd(t_ast *node, t_env *env)
+// {
+// 	node->cmd.args = list_to_table(node->args);
+// 	node->cmd.path = correct_path(get_paths(env), node->cmd.args[0]);
+// }

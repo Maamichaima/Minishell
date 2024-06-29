@@ -10,4 +10,12 @@ builtins expand -------------> (done)
 
 valid syntax (makamlach)
 
+GARBAGE-COLLECTION
+
+SIGNALS
+
+export(last variable)
+
+expand( space in variable example {var = "ls -al"})
+
 !!!!!!!!!!!!!!!!!!!!
