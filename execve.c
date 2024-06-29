@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/24 21:12:24 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/29 13:46:43 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	init_infile_outfile(t_str *red, t_ast *node)
 void prepare_cmd(t_ast *root, t_env *env)
 {
 	root->cmd.args = list_to_table(root->args);
-	printf("%s\n",root->cmd.args[0]);
 	expand_node(root, env);
 	init_infile_outfile(root->red, root);
 	root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/27 00:49:39 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/29 17:31:38 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char *get_expand_value(char *str)
     
     char *val = malloc(sizeof(char ) *256);
     j = 0;
-    while(*str && (ft_isalpha(*str) || *str =='_'))
+    while(*str && (ft_isalpha(*str) || ft_isnum(*str) || *str =='_'))
     {     
         val[j++] = *str;
         str++;
@@ -78,8 +78,13 @@ char    *expand(char *str, t_env *env, char c)
             if(str[i] == '$' && check_quotes(str, i, c) != -1)
             {
                 i++;
-                key = get_expand_value(str + i);        
+                key = get_expand_value(str + i);
                 val = get_value_(key, env);
+				if(val == NULL && ft_isnum(key[0]))
+				{
+					val = key + 1;
+					//i++;
+				}
                 tmp = ft_strjoin(tmp, val);
                 k += ft_strlen(val);
                 i += ft_strlen(key);
@@ -88,6 +93,8 @@ char    *expand(char *str, t_env *env, char c)
                 tmp[k++] = str[i++];
 			tmp[k] = '\0';
         }
+		if(!val && tmp[0] == '\0')
+			return NULL;
     	return(tmp);
     }
     else

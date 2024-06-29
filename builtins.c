@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/27 13:51:46 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/29 17:26:58 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	check_key_in_env(t_env *env, char *args)
 			}
 			else if (args[i] == '=')
 			{
-				env->value = get_value(args);
+				env->value = ignor(get_value(args));
 				env->path = args;
 			}
 			return (1);
@@ -141,7 +141,7 @@ void	ft_export(char **args, t_env *env)
 			else if (!check_key_in_env(env, args[i]))
 			{
 				new = ft_lstnew_env(get_key(args[i]),
-						get_value(args[i]), args[i]);
+						ignor(get_value(args[i])), args[i]);
 				ft_lstadd_back_env(&tmp, new);
 			}
 			i++;

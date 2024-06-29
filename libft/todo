@@ -1,4 +1,4 @@
-export p12=jjjj
+export p12=jjjj -->(DONE)
 
 heredoc --> " | ' (del) --> expand
 
