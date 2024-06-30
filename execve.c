@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/30 15:51:41 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/29 18:18:47 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ void prepare_cmd(t_ast *root, t_env *env)
 {
 	root->cmd.args = list_to_table(root->args);
 	expand_node(root, env);
+	ignor_args(root->cmd.args);
 	init_infile_outfile(root->red, root);
 	root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
 }
+
 void set_last_env_value(t_ast *root ,t_env *env)
 {
 	while(env)
@@ -136,7 +138,7 @@ void	fd_here_doc(t_str *red, t_env *env)
 	{
 		if (red->type == token_herd)
 		{
-			red->fd = open_here_doc(ignor(red->str), env);
+			red->fd = open_here_doc(red->str, env);
 			wait(NULL);
 		}
 		red = red->next;

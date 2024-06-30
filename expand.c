@@ -71,7 +71,6 @@ char    *expand(char *str, t_env *env, char c)
     i = 0;
     k = 0;
 	tmp[0] = '\0';
-	//printf("%s\n",str);
     if(ft_strchr(str, '$'))
     {   
         while(str[i])
@@ -93,7 +92,7 @@ char    *expand(char *str, t_env *env, char c)
         }
 		if(tmp[0] == '\0'|| tmp[1] == '\"')
 			return NULL;
-    	return(ignor(tmp));
+    	return(tmp);
     }
     else
        return(str);

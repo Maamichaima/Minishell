@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/30 16:04:55 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/27 13:52:12 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,7 @@ char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 void 				expand_node(t_ast *root, t_env *env);
 char    			*expand(char *str, t_env *env, char c);
-void 				set_last_env_value(t_ast *root ,t_env *env);
+int					check_quotes(char *str, int c, char h);
+char				*ft_strcpy(char *s1, char *s2);
+void 				ignor_args(char **args);
 #endif
