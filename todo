@@ -14,7 +14,7 @@ GARBAGE-COLLECTION
 
 SIGNALS
 
-export(last variable)
+export(last variable)------------->(done)
 
 expand( space in variable example {var = "ls -al"})
 

@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/29 18:18:47 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/30 15:51:41 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,19 @@ void prepare_cmd(t_ast *root, t_env *env)
 	init_infile_outfile(root->red, root);
 	root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
 }
-
+void set_last_env_value(t_ast *root ,t_env *env)
+{
+	while(env)
+	{
+		if(ft_strcmp("_",env->key) == 0)
+		{
+			while(root->args->next)
+				root->args = root->args->next;
+			env->value = root->args->str;
+		}
+		env= env->next;
+	}
+}
 void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
 	if (root->type == token_cmd)
@@ -101,7 +113,6 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				check_bultins(root, const_root, env);
 			else
 			{
-				
 				root->cmd.pid = fork();
 				if (root->cmd.pid == 0)
 				{
@@ -110,6 +121,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				}
 			}
 		}
+		set_last_env_value(root,*env);
 	}
 	else
 	{

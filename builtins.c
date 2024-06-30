@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/29 17:26:58 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/30 15:56:36 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,11 +202,11 @@ void	ft_env(t_env *env)
 	{
 		if (env->value == NULL)
 			(env) = (env)->next;
+		else if(ft_strcmp("_",env->key) == 0)
+			printf("%s=/usr/bin/env\n", env->key);
 		else
-		{
 			printf("%s=%s\n", env->key, env->value);
-			(env) = (env)->next;
-		}
+		(env) = (env)->next;
 	}
 	return ;
 }
