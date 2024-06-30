@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/27 13:52:12 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/30 18:47:40 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,4 +151,8 @@ char    			*expand(char *str, t_env *env, char c);
 int					check_quotes(char *str, int c, char h);
 char				*ft_strcpy(char *s1, char *s2);
 void 				ignor_args(char **args);
+void				ft_lstadd_back_str(t_str **lst, t_str *new);
+t_str				*lst_new_str(char *content, token_type type);
+
+
 #endif

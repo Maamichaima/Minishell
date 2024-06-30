@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/29 20:27:54 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/30 19:31:44 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,29 @@ char    *expand(char *str, t_env *env, char c)
 void expand_node(t_ast *root, t_env *env)
 {
 	t_str *red;
+	t_str *arg;
+	t_str *new = NULL;
 	int i = 0;
+	char **tmp;
 
 	red = root->red;
-	while (root->cmd.args[i])
+	arg = root->args;
+	
+	while(arg)
 	{
-		root->cmd.args[i] = expand(root->cmd.args[i], env, 'a');
-		i++;
+		if(ft_strchr(arg->str,'='))
+			tmp[i] = expand(arg->str, env, 'a');
+		else
+			tmp = ft_split(expand(arg->str, env, 'a'), " \n\t\f");
+		while(tmp[i])
+		{
+			ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));
+			i++;
+		}
+		i = 0;
+		arg = arg->next;
 	}
+	root->args = new;
 	while(red)
 	{
 		if(red->type != token_herd)
