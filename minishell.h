@@ -84,6 +84,12 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
+typedef struct s_garbage
+{
+	void				*p;
+	struct s_garbage 	*next;
+} t_garbage;
+
 t_token				*ft_lstnew(char *content);
 t_token				*ft_lstlast(t_token *lst);
 void				ft_lstadd_back(t_token **lst, t_token *new);
