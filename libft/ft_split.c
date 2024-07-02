@@ -61,7 +61,7 @@ char	*alloc_word(const char *s, char *c)
 	char	*p;
 
 	i = 0;
-	p = malloc(sizeof(char) * (c_char(s, c) + 1));
+	p = ft_malloc(sizeof(char) * (c_char(s, c) + 1), 'a');
 	if (!p)
 		return (NULL);
 	while (s[i] && !is_seperator(s[i], c))
@@ -92,7 +92,7 @@ char	**ft_split(char const *s, char *c)
 	if (!s)
 		return (NULL);
 	i = 0;
-	tab = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1));
+	tab = (char **)ft_malloc(sizeof(char *) * (count_word(s, c) + 1), 'a');
 	if (!tab)
 		return (NULL);
 	while (*s)

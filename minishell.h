@@ -159,6 +159,6 @@ char				*ft_strcpy(char *s1, char *s2);
 void 				ignor_args(char **args);
 void				ft_lstadd_back_str(t_str **lst, t_str *new);
 t_str				*lst_new_str(char *content, token_type type);
-
+void 				*ft_malloc(int size, char c);
 
 #endif

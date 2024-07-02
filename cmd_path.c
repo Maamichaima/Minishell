@@ -37,7 +37,7 @@ char	*ft_strjoin_pipe(char *s1, char *s2)
 	lg = ft_strlen(s1) + ft_strlen(s2) + 2;
 	i = 0;
 	j = 0;
-	str = (char *)malloc(lg * sizeof(char));
+	str = (char *)ft_malloc(lg * sizeof(char), 'a');
 	if (str == NULL)
 		return (0);
 	while (s1[i])

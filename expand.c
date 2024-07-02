@@ -66,7 +66,7 @@ char    *expand(char *str, t_env *env, char c)
     int k;
     char *key;
     char *val;
-    char *tmp = malloc(sizeof(char ) * 256);
+    char *tmp = ft_malloc(sizeof(char ) * 256, 'a');
     
     i = 0;
     k = 0;

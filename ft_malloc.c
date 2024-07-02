@@ -50,30 +50,46 @@ void ft_lstadd_back_garbage(t_garbage **lst, t_garbage *new)
     }
 }
 
-void *ft_malloc(int x)
+void *ft_malloc(int size, char c)
 {
-    static t_garbage *head = NULL;
+    static t_garbage *head;
+    t_garbage *tmp;
     void *ptr;
 
-    ptr = malloc(x);
-    ft_lstadd_back_garbage(&head, ft_lstnew_garbage(ptr));
+    if(c == 'f')
+    {
+        while(head)
+        {
+            tmp = head;
+            head = head->next;
+            free(tmp->p);
+            free(tmp);
+        }
+        head = NULL;
+        return NULL;
+    }
+    else
+    {
+        ptr = malloc(size);
+        ft_lstadd_back_garbage(&head, ft_lstnew_garbage(ptr));
+    }
     return ptr;
 }
 
-int main()
-{
-    int *t;
-    int i = 0;
+// int main()
+// {
+//     int *t;
+//     int i = 0;
 
-    t = (int *)ft_malloc(sizeof(int) * 5);
-    t = (int *)ft_malloc(sizeof(int) * 5);
-    while (i < 5)
-    {
-        t[i] = i;
-        printf("%d\n", t[i]);
-        i++;
-    }
-    
+//     t = (int *)ft_malloc(sizeof(int) * 5, 'a');
+//     t = (int *)ft_malloc(sizeof(int) * 5, 'a');
+//     while (i < 5)
+//     {
+//         t[i] = i;
+//         printf("%d\n", t[i]);
+//         i++;
+//     }
+//     // t = ft_malloc(0, 'f');
 
-    return 0;
-}
+//     return 0;
+// }

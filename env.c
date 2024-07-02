@@ -45,12 +45,12 @@ char	**list_to_table(t_str *str)
 	int		i;
 
 	i = 0;
-	t = malloc(sizeof(char *) * (ft_lstsize(str) + 1));
+	t = ft_malloc(sizeof(char *) * (ft_lstsize(str) + 1), 'a');
 	if (!t)
 		return (NULL);
 	while (str)
 	{
-		t[i] = malloc(sizeof(char) * (ft_strlen(str->str) + 1));
+		t[i] = ft_malloc(sizeof(char) * (ft_strlen(str->str) + 1), 'a');
 		if (!t[i])
 			return (NULL);
 		t[i] = ft_strcpy(t[i], str->str);
