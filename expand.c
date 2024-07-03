@@ -104,18 +104,18 @@ void expand_node(t_ast *root, t_env *env)
 	t_str *arg;
 	t_str *new = NULL;
 	int i = 0;
-	char **tmp;
+	char **tmp = NULL;
 
 	red = root->red;
 	arg = root->args;
 	
 	while(arg)
 	{
-		if(ft_strchr(arg->str,'='))
-			tmp[i] = expand(arg->str, env, 'a');
-		else
+		// if(ft_strchr(arg->str,'='))
+		// 	tmp[i] = expand(arg->str, env, 'a');
+		// else
 			tmp = ft_split(expand(arg->str, env, 'a'), " \n\t\f");
-		while(tmp[i])
+		while(tmp && tmp[i])
 		{
 			ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));
 			i++;

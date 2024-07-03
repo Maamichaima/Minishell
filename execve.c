@@ -89,11 +89,16 @@ void prepare_cmd(t_ast *root, t_env *env)
 	root->cmd.args = list_to_table(root->args);
 	ignor_args(root->cmd.args);
 	init_infile_outfile(root->red, root);
-	root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
+	if (root->cmd.args)
+		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
+	else
+		root->cmd.path = NULL;
 }
 
 void set_last_env_value(t_ast *root ,t_env *env)
 {
+	if(!root->args)
+		return ;
 	while(env)
 	{
 		if(ft_strcmp("_",env->key) == 0)
@@ -119,7 +124,8 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				if (root->cmd.pid == 0)
 				{
 					prepare_cmd(root, *env);
-					executer_cmd(root->cmd, *env, const_root);
+					if (root->args)
+						executer_cmd(root->cmd, *env, const_root);
 				}
 			}
 		}

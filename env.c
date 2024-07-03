@@ -44,6 +44,8 @@ char	**list_to_table(t_str *str)
 	char	**t;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	t = ft_malloc(sizeof(char *) * (ft_lstsize(str) + 1), 'a');
 	if (!t)
