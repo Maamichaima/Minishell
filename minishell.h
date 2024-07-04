@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/30 18:47:40 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/03 21:49:54 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 typedef enum
 {

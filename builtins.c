@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/30 19:12:13 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/04 15:28:00 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,10 @@ void	ft_exit(char **args)
 		write(2, "bash: exit: too many arguments\n", 32);
 	}
 	else if (args[0] && !args[1])
+	{	
+		write(2,"exit\n",6);
 		exit(0);
+	}
 }
 // #include<stdio.h>
 

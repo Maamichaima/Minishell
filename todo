@@ -1,21 +1,27 @@
 export p12=jjjj -->(DONE)
 
-heredoc --> " | ' (del) --> expand
-
 heredoc expand dima (ldakheeel)  -------------------> (done)
-
-expand ila kan num flwel
-
-builtins expand -------------> 
-
-valid syntax (makamlach)
-
 GARBAGE-COLLECTION (done)
-
-SIGNALS
-
 export(last variable)------------->(done)
 
-expand( space in variable example {var = "ls -al"})
+heredoc --> " | ' (del) --> expand(done)
+expand ila kan num flwel(done)
+
+
+
+
+
+builtins expand -------------> ch
+
+valid syntax (makamlach) ch
+
+
+SIGNALS  bashbash riri
+
+expand( space in variable example {var = "ls -al"}) riri
+
+leaks ch
+
+heredoc 1 process (SIGNALS)
 
 !!!!!!!!!!!!!!!!!!!!

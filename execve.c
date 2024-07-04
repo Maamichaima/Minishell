@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/30 18:33:15 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/04 15:33:13 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	message_error(char *str)
 
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
@@ -85,7 +87,7 @@ void	init_infile_outfile(t_str *red, t_ast *node)
 
 void prepare_cmd(t_ast *root, t_env *env)
 {
-	expand_node(root, env);
+	//expand_node(root, env);
 	root->cmd.args = list_to_table(root->args);
 	ignor_args(root->cmd.args);
 	init_infile_outfile(root->red, root);
@@ -116,6 +118,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 	{
 		if (root->args != NULL)
 		{
+			expand_node(root, *env);
 			if (is_builtin(*(root->args)))
 				check_bultins(root, const_root, env);
 			else
@@ -140,12 +143,15 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 
 void	fd_here_doc(t_str *red, t_env *env)
 {
+	int status;
 	while (red)
 	{
 		if (red->type == token_herd)
 		{
 			red->fd = open_here_doc(red->str, env);
-			wait(NULL);
+			wait(&status);
+			if (status)
+				break ;
 		}
 		red = red->next;
 	}

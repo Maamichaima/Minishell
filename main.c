@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/24 21:33:39 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/04 15:09:17 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,14 @@ void error_syntax(t_token *t)
 		write(2, "bash: syntax error near unexpected token `newline'\n", 52);
 }
 
+void control_c(int sig)
+{
+	(void)sig;
+    write(1, "\n", 1);
+	rl_replace_line("",0);
+	rl_on_new_line();
+	rl_redisplay();
+}
 int	main(int c, char **av, char **env)
 {
 	char	*input;
@@ -97,9 +105,14 @@ int	main(int c, char **av, char **env)
 	v = get_env_lst(env);
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, control_c);
 		input = readline("bash$ ");
 		if (!input)
-			break ;
+		{
+			printf("exit\n");
+			exit(1);
+		}
 		if (*input)
 			add_history(input);
 		head = NULL;

@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/28 19:10:35 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/03 23:25:44 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	open_here_doc(char *del, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
 			tmp = readline("> ");
