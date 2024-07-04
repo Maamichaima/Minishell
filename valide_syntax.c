@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/21 16:53:59 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/04 17:51:24 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,8 @@ t_token *is_valid_token(t_token *lst)
 	{
 		if (is_redirectien(lst->type))
 		{
-			if (!lst->next)// || lst->next->type != token_word)
-			{
-				printf("hadi  %p \n", lst->next);
-				return (lst->next);
-			}
+			if ((!lst->next) || lst->next->type != token_word)
+				return (lst);
 		}
 		if (lst->type == token_or || lst->type == token_and)
 		{
@@ -72,7 +69,7 @@ t_token *is_valid_token(t_token *lst)
 			if ((lst->prev->type != token_word)
 				|| (lst->next->type != token_word
 					&& !is_redirectien(lst->next->type)))
-				return (lst->next);
+				return (lst);
 		}
 		if (lst->type == token_word)
 		{

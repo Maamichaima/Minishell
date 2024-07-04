@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 15:09:17 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:49:58 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,24 +75,26 @@ void	close_(t_ast *root)
 
 void error_syntax(t_token *t)
 {
-	printf("hh\n");
 	if(t)
 	{
-		write(2, "bash: syntax error near unexpected token '", 42);
-		write(2, t->token, ft_strlen(t->token));
-		write(2, "'\n", 2);
+		if(!is_redirectien(t->type))
+		{
+			write(2, "bash: syntax error near unexpected token '", 42);
+			write(2, t->token, ft_strlen(t->token));
+			write(2, "'\n", 2);
+		}
+		else
+			write(2, "bash: syntax error near unexpected token `newline'\n", 52);
 	}
-	else if(t == NULL)
-		write(2, "bash: syntax error near unexpected token `newline'\n", 52);
 }
 
 void control_c(int sig)
 {
 	(void)sig;
     write(1, "\n", 1);
-	rl_replace_line("",0);
-	rl_on_new_line();
-	rl_redisplay();
+	// rl_replace_line("",0);
+	// rl_on_new_line();
+	// rl_redisplay();
 }
 int	main(int c, char **av, char **env)
 {
