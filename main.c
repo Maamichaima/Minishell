@@ -49,12 +49,13 @@ void	printf_tree(t_ast *root)
 void	wait_(t_ast *root,t_env *env)
 {
 	int status;
-	char *str;
+	char *str = malloc(256);
+	char *tmp;
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
-		str = ft_itoa(WEXITSTATUS(status));
-		ft_lstadd_back_env(&env,ft_lstnew_env("?",str,NULL));
+		tmp = ft_itoa(WEXITSTATUS(status));
+		ft_lstadd_back_env(&env,ft_lstnew_env("?",tmp,NULL));
 	}
 	else
 	{
@@ -118,10 +119,12 @@ int	main(int c, char **av, char **env)
 	//int status;
 
 	v = get_env_lst(env);
+	t_env *tmp = v;
 	while (1)
 	{
 		signal_handler();
-		input = readline("bash$ ");
+		if(ft_strcmp(get_value_("?",tmp),"130") != 0)
+			input = readline("bash$ ");
 		if (!input)
 		{
 			printf("exit\n");
@@ -142,6 +145,7 @@ int	main(int c, char **av, char **env)
 			executer_tree(root, root, &v);
 			close_(root);
 			wait_(root,v);
+		
 		}
 		free(input);
 		//status = last_status_in tree(root);
