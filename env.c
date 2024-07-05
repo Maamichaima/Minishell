@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/28 19:46:49 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/29 18:53:05 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,19 @@ char	**list_to_table(t_str *str)
 	char	**t;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	i = 0;
-	t = malloc(sizeof(char *) * (ft_lstsize(str) + 1));
+	t = ft_malloc(sizeof(char *) * (ft_lstsize(str) + 1), 'a');
 	if (!t)
 		return (NULL);
 	while (str)
 	{
-		t[i] = malloc(sizeof(char) * (ft_strlen(str->str) + 1));
+		t[i] = ft_malloc(sizeof(char) * (ft_strlen(str->str) + 1), 'a');
 		if (!t[i])
 			return (NULL);
 		t[i] = ft_strcpy(t[i], str->str);
+		t[i] = t[i]; // ignor_quotes
 		str = str->next;
 		i++;
 	}
@@ -85,7 +88,8 @@ char	**list_to_table_env(t_env *str)
 		return (NULL);
 	while (str)
 	{
-		t[i] = ft_strjoin(str->key, str->value);
+		t[i] = ft_strjoin(str->key, "=");
+		t[i] = ft_strjoin(t[i], str->value);
 		str = str->next;
 		i++;
 	}

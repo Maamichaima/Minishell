@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/28 22:38:20 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/21 17:19:27 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red)
 {
 	t_ast	*l;
 
-	l = malloc(sizeof(t_ast));
+	l = ft_malloc(sizeof(t_ast), 'a');
 	if (!l)
 		return (NULL);
 	l->type = type;
@@ -33,7 +33,7 @@ t_str	*lst_new_str(char *content, token_type type)
 {
 	t_str	*l;
 
-	l = malloc(sizeof(t_str));
+	l = ft_malloc(sizeof(t_str), 'a');
 	if (!l)
 		return (NULL);
 	l->str = content;

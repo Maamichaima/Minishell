@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/16 18:07:30 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/17 19:37:54 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	int	count;
-
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
+	if (lst && del)
 	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
+		del(lst->content);
+		free(lst);
 	}
-	return (count);
 }

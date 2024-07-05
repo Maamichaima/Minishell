@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/16 18:52:21 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/17 19:29:22 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+int	ft_lstsize(t_list *lst)
 {
-	int	count;
+	int	i;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
+	i = 0;
+	while (lst)
 	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
+		lst = lst->next;
+		i++;
 	}
-	return (count);
+	return (i);
 }

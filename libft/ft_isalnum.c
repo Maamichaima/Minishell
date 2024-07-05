@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/04 19:12:01 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/11 16:11:53 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+int	ft_isalnum(int c)
 {
-	int	count;
-
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
-	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
-	}
-	return (count);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
+			&& c <= '9'))
+		return (1);
+	return (0);
 }

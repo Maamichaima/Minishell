@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/04 21:19:04 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/18 11:00:35 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+size_t	ft_strlen(const char *s)
 {
-	int	count;
+	size_t	i;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
-	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
-	}
-	return (count);
+	i = 0;
+	if(!s)
+		return 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }

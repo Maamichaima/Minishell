@@ -3,63 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/05/29 18:53:41 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/03 23:25:44 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+int check_del_quotes(char *del)
 {
-	size_t	i;
+	int i = 0;
 
-	i = 0;
-	while (s[i] != '\0')
+	while(del[i])
+	{
+		if(del[i] == '\'' || del[i] == '\"')
+			return 1;
 		i++;
-	return (i);
+	}
+	return 0;
 }
 
-int	open_here_doc(char *del)
+int	open_here_doc(char *del, t_env *env)
 {
 	char	*tmp;
+	char	*del_;
 	int		pipe_fd[2];
-	pid_t		pid;
+	pid_t	pid;
 
 	pipe(pipe_fd);
+	del_ = malloc(sizeof(char) * ft_strlen(del + 1));
+	ft_strcpy(del_, del);
 	pid = fork();
-	if(pid == 0)
+	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
-			write(1, ">", 1);
-			tmp = readline("");
-			if (!tmp || ft_strcmp(tmp, del) == 0)
+			tmp = readline("> ");
+			if (!tmp || ft_strcmp(tmp, ignor(del_)) == 0)
 			{
 				free(tmp);
 				break ;
 			}
-			write(pipe_fd[1], tmp, ft_strlen(tmp));
-			write(pipe_fd[1], "\n", 1);
+			if(check_del_quotes(del) == 1)
+			{
+				write(pipe_fd[1], tmp, ft_strlen(tmp));
+				write(pipe_fd[1], "\n", 1);
+			}
+			else 
+			{
+				write(pipe_fd[1], expand(tmp, env, 'h'), ft_strlen(expand(tmp, env, 'h')));
+				write(pipe_fd[1], "\n", 1);
+			}
 		}
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
 		exit(0);
 	}
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
 }
 
-int	outfile(t_str *red)
+void	outfile(t_str *red)
 {
-	int	fd;
-
 	while (red)
 	{
 		if (red->type == token_apend)
 		{
-			fd = open(red->str, O_CREAT | O_APPEND | O_WRONLY, 0644);
-			if (fd == -1)
+			red->fd = open(ignor(red->str), O_CREAT | O_APPEND | O_WRONLY, 0644);
+			if (red->fd == -1)
 			{
 				perror(red->str);
 				exit(1);
@@ -67,8 +81,8 @@ int	outfile(t_str *red)
 		}
 		else if (red->type == token_red_output)
 		{
-			fd = open(red->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-			if (fd == -1)
+			red->fd = open(ignor(red->str), O_CREAT | O_TRUNC | O_WRONLY, 0644);
+			if (red->fd == -1)
 			{
 				perror(red->str);
 				exit(1);
@@ -76,7 +90,6 @@ int	outfile(t_str *red)
 		}
 		red = red->next;
 	}
-	return (fd);
 }
 
 void	infile(t_str *red)
@@ -85,15 +98,13 @@ void	infile(t_str *red)
 	{
 		if (red->type == token_red_input)
 		{
-			red->fd = open(red->str, O_RDONLY, 0644);
+			red->fd = open(ignor(red->str), O_RDONLY, 0644);
 			if (red->fd == -1)
 			{
 				perror(red->str);
 				exit(1);
 			}
 		}
-		// else if (red->type == token_herd)
-		// 	fd = open_here_doc(red->str);
 		red = red->next;
 	}
 }

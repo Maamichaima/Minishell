@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/04 18:51:02 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/04 18:53:00 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	count_cmd(t_ast *root)
+int	ft_isalpha(int c)
 {
-	int	count;
-
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
 	else
-	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
-	}
-	return (count);
+		return (0);
 }

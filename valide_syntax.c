@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valide_syntax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/05/23 23:34:52 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/04 23:19:06 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,38 @@ int	is_valid_word(char *s)
 		return (0);
 }
 
-int	is_valid_token(t_token *lst)
+t_token *is_valid_token(t_token *lst)
 {
 	while (lst)
 	{
 		if (is_redirectien(lst->type))
 		{
-			if (!lst->next || lst->next->type != token_word)
-				return (0);
+			if ((!lst->next) || lst->next->type != token_word)
+				return (lst);
 		}
 		if (lst->type == token_or || lst->type == token_and)
 		{
-			if (!lst->prev || !lst->next || (lst->next->type != token_word
-					&& !is_redirectien(lst->next->type))
-				|| (lst->prev->type != token_word
-					&& !is_redirectien(lst->prev->type)))
-				return (0);
+			if (!lst->prev || !lst->next)
+				return (lst);
+			if((lst->next->type != token_word && !is_redirectien(lst->next->type))
+				|| (lst->prev->type != token_word && !is_redirectien(lst->prev->type)))
+				return (lst->next);
 		}
 		if (lst->type == token_pipe)
 		{
 			if (!lst->prev || !lst->next)
-				return (0);
+				return (lst);
 			if ((lst->prev->type != token_word)
 				|| (lst->next->type != token_word
 					&& !is_redirectien(lst->next->type)))
-				return (0);
+				return (lst);
+		}
+		if (lst->type == token_word)
+		{
+			if (!is_valid_word(lst->token))
+				return (lst);
 		}
 		lst = lst->next;
 	}
-	return (1);
+	return (NULL);
 }

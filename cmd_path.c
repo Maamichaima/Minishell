@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:59:35 by rraida-           #+#    #+#             */
-/*   Updated: 2024/05/27 20:41:31 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 23:03:35 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strjoin_pipe(char *s1, char *s2)
 	lg = ft_strlen(s1) + ft_strlen(s2) + 2;
 	i = 0;
 	j = 0;
-	str = (char *)malloc(lg * sizeof(char));
+	str = (char *)ft_malloc(lg * sizeof(char), 'a');
 	if (str == NULL)
 		return (0);
 	while (s1[i])
@@ -53,16 +53,25 @@ char	*ft_strjoin_pipe(char *s1, char *s2)
 	return (str);
 }
 
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s != '\0' && *s != (char)c)
+		s++;
+	if (*s == (char)c)
+		return ((char *)s);
+	return (NULL);
+}
+
 char	*correct_path(char **path, char *v)
 {
-	char *tmp;
-	int i;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	if (!v)
 		return (NULL);
-	// if (ft_strchr_pipe(v, '/') || !path)
-	// 	return (ft_error(path, v));
+	if (ft_strchr(v, '/') || !path)
+		return (v);
 	while (path && path[i])
 	{
 		tmp = ft_strjoin_pipe(path[i], v);

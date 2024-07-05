@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 00:33:42 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/07 17:12:58 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_env	*ft_lstnew_env(char *key, char *value, char *path)
 	new->path = path;
 	new->next = NULL;
 	new->prev = NULL;
-	//free(key);
-	//free(value);
+	// free(key);
+	// free(value);
 	return (new);
 }
 
@@ -48,7 +48,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 			p = p->next;
 		}
 		p->next = new;
-		new->prev = p ;
+		new->prev = p;
 	}
 }
 
@@ -56,7 +56,7 @@ char	*get_key(char *env)
 {
 	int		i;
 	char	*key;
-	
+
 	i = 0;
 	key = malloc(256);
 	while (env[i] && env[i] != '=' && env[i] != '+')
@@ -67,40 +67,40 @@ char	*get_key(char *env)
 	key[i] = '\0';
 	return (key);
 }
+
 char	*get_value(char *env)
 {
-	int i;
-	int j;
-	char *value;
+	int		i;
+	int		j;
+	char	*value;
 
 	i = 0;
 	j = 0;
-	
-	while(env[i] && env[i] != '=')
+	while (env[i] && env[i] != '=')
 	{
 		i++;
 	}
-	if(env[i] == '\0')
+	if (env[i] == '\0')
 		value = NULL;
 	else
 	{
 		i++;
 		value = ft_strdup(&env[i]);
 	}
-	//printf("%s \n",value);
-	return(value);
+	return (value);
 }
+
 t_env	*get_env_lst(char **env)
 {
-	t_env *new;
-	t_env *path;
-	int i;
+	t_env	*new;
+	t_env	*path;
+	int		i;
 
 	path = NULL;
 	i = 0;
 	while (env && env[i])
 	{
-		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])),env[i]);
+		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])), env[i]);
 		ft_lstadd_back_env(&path, new);
 		i++;
 	}

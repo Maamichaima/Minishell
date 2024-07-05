@@ -6,246 +6,303 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 00:46:27 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:28:00 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// char *get_content(char *key) --> i9leb fl HOME
+// void  set_content(char *key, char *content)
 
-void ft_cd(t_ast *root,t_env *env)
+void	error_cd(int a, char *str)
 {
-    char *old;
-    char *new;
-    t_env *tmp;
-
-    tmp = env;
-    old  = getcwd(NULL,0);
-    if(root->args->next == NULL)
-    {
-        while(tmp)
-        {
-            if(ft_strcmp(tmp->key, "HOME") == 0)
-                chdir(tmp->value);
-            tmp = tmp->next;
-        }
-    }
-    else 
-        chdir(root->args->next->str);
-    
-    new = getcwd(NULL,0);
-    while(env)
-    {
-        if(ft_strcmp(env->key, "PWD") == 0)
-          {  
-            env->value = new;
-            printf("%s\n",env->value);//path
-            }
-        if(ft_strcmp(env->key, "OLDPWD") == 0)  
-          {  env->value = old;
-            printf("%s\n",env->value);//path
-            }
-        env = env->next;
-    }
+	if (a == 0)
+	{
+		write(2, "bash: cd:", 10);
+		write(2, " HOME not set\n", 14);
+	}
+	else
+	{
+		write(2, "bash: cd: ", 11);
+		perror(str);
+	}
 }
 
-void    ft_pwd(t_env *env)
+void	set_content(t_env *env,char *key, char *content)
 {
-    printf("%s\n",getcwd(NULL,0));
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+			env->value = content;
+		env = env->next;
+	}
 }
 
-int check_key_in_env(t_env *env, t_str *args)
+void	ft_cd(char **args, t_env *env)
 {
-    int i = 0;
-    
-    while(env)
-    {
-        if(ft_strcmp(get_key(args->str), env->key) == 0)
-        {
-            while(args->str[i])
-            {
-                if(args->str[i] == '=' || args->str[i] == '+')
-                    break;
-                i++;
-            }
-            if(args->str[i] == '+' && args->str[i + 1] && args->str[i + 1] == '=')
-            {
-                env->path  = ft_strjoin(env->path, args->str + i + 2);
-                env->value = ft_strjoin(env->value, args->str + i + 2);
-            }
-            else if(args->str[i] == '=')
-            {
-                env->value = get_value(args->str);
-                env->path  = args->str;
-            }
-            return 1;
-        }
-        (env) = (env)->next;
-    }
-    return 0;
+	char	*old;
+	char	*new;
+	char	*val;
+
+	old = getcwd(NULL, 0);
+	if (args[1] == NULL)
+		val = get_value_("HOME", env);
+	else
+		val = args[1];
+	if (!val)
+	{
+		error_cd(0, val);
+		return ;
+	}
+	else if (chdir(val) == -1)
+	{
+		error_cd(1, val);
+		return ;
+	}
+	new = getcwd(NULL, 0);
+	set_content(env, "PWD", new);
+	set_content(env, "OLDPWD", old);
 }
 
-int valide_key(char *str)
+void	ft_pwd(t_env *env)
 {
-    if(str[0] == '=' || str[0] == '+' || str[0] == '-' || ft_isnum(str[0]))
-    {
-        return 0;
-    }
-    return 1;    
+	printf("%s\n", getcwd(NULL, 0));
 }
 
-void ft_error_export(char *str)
+int	check_key_in_env(t_env *env, char *args)
 {
-    write(2, "bash: export: ", 15);
-    write(2, str, ft_strlen(str));
-    write(2, ": not a valid identifier\n", 26);
-}
-//syntaxe error + sorting by ascii +norminette
-void    ft_export(t_ast *root, t_env *env)
-{
-    t_env *new = NULL;
-    t_env *tmp = env;
+	int	i;
 
-    if(root->args && root->args->str && root->args->next == NULL)
-    {
-        while(env)
-        {
-            if(env->value == NULL)
-                printf("declare -x %s=\"\"\n", env->key);
-            else //ignore quotes
-                printf("declare -x %s=\"%s\"\n", env->key, env->value);
-            (env) = (env)->next;
-        }
-    }
-    else
-    {
-        root->args = root->args->next;
-        while(root->args)
-        {
-            if(valide_key(root->args->str) == 0)
-                ft_error_export(root->args->str);
-            else if(!check_key_in_env(env, root->args))
-            {//ignore quotes
-                new = ft_lstnew_env(get_key(root->args->str), get_value(root->args->str),root->args->str);
-                ft_lstadd_back_env(&tmp,new); 
-            }
-            root->args = root->args->next;
-        }
-    }
+	i = 0;
+	while (env)
+	{
+		if (ft_strcmp(get_key(args), env->key) == 0)
+		{
+			while (args[i])
+			{
+				if (args[i] == '=' || args[i] == '+')
+					break ;
+				i++;
+			}
+			if (args[i] == '+' && args[i + 1] && args[i
+				+ 1] == '=')
+			{
+				env->path = ft_strjoin(env->path, args + i + 2);
+				env->value = ft_strjoin(env->value, args + i + 2);
+			}
+			else if (args[i] == '=')
+			{
+				env->value = ignor(get_value(args));
+				env->path = args;
+			}
+			return (1);
+		}
+		(env) = (env)->next;
+	}
+	return (0);
 }
 
-void    ft_unset(t_ast *root, t_env **env)
+int	valide_key(char *str)
 {
-    t_env *new;
-    new = *env;
-    while(*env)
-    {
-        if(ft_strcmp(get_key(root->args->str),(*env)->key) == 0)
-        {
-            (*env)->prev->next =  (*env)->next;
-            (*env)->next->prev =  (*env)->prev; 
-        }
-        (*env)= (*env)->next;
-    }
-   
-}
-void ft_env(t_env *env)
-{
-    while(env)
-    {
-        if(env->value == NULL)
-            (env) = (env)->next;
-        else  
-       {//ignore quotes
-        printf("%s=%s\n",env->key,env->value);
-        (env) = (env)->next;
-        }
-    }
-    return;
+	if (str[0] == '_' || ft_isalpha(str[0]))
+		return (1);
+	return (0);
 }
 
-int check_flag(char *flag)
+void	ft_error_export(char *str)
 {
-    int i;
-
-    i = 0;
-    if(flag[i] == '-')
-    {
-        i++;
-        while(flag[i])
-        {
-            if(flag[i] != 'n')
-                return(1);
-            i++;
-        }
-    }
-    else
-        return(1);
-    return(0);    
+	write(2, "bash: export: ", 15);
+	write(2, str, ft_strlen(str));
+	write(2, ": not a valid identifier\n", 26);
 }
 
-void ft_echo(t_ast *root, t_env *env)
+void	ft_export(char **args, t_env *env)
 {
-    int new_line;
-    t_str *cmd;
-    
-    new_line = 0;
-    cmd = root->args->next;
-    while (check_flag(cmd->str) == 0)
-    {
-        cmd = cmd->next;
-        new_line = 1;
-    }
-    while(cmd)
-    {
-            printf("%s",cmd->str);
-        if (cmd->next)
-            printf(" ");
-        cmd = cmd->next;
-    }
-    if(new_line != 1)
-        printf("\n");
+	t_env	*new;
+	t_env	*tmp;
+	char	**key;
+	int i = 0;
+
+	new = NULL;
+	tmp = env;
+	if (args[0] && !args[1])
+	{
+		// key = sort_table(table_of_key(env));
+		ft_write_export(sort_table(table_of_key(env)), env);
+	}
+	else
+	{
+		i++;
+		while (args[i])
+		{
+			if (valide_key(args[i]) == 0)
+				ft_error_export(args[i]);
+			else if (!check_key_in_env(env, args[i]))
+			{
+				new = ft_lstnew_env(get_key(args[i]),
+						ignor(get_value(args[i])), args[i]);
+				ft_lstadd_back_env(&tmp, new);
+			}
+			i++;
+		}
+	}
 }
 
-void ft_exit(t_ast *root)
+void	supp(char *key, t_env **env)
 {
-    if(root->args && root->args->next && root->args->next->next == NULL)
-    {
-        if(!str_is_num(root->args->next->str))
-            exit(ft_atoi(root->args->next->str));
-        else
-        {  
-            write(2,"exit\nbash: exit: ", 18);
-            write(2,root->args->next->str,ft_strlen(root->args->next->str));
-            write(2,": numeric argument required\n",29);
-            exit(2);
-        }
-    } 
-    else if (root->args && root->args->next && root->args->next->next != NULL)
-    {
-        write(2,"exit\n", 6);
-        write(2,"bash: exit: too many arguments\n",32);
-    }      
+	t_env	*new;
+
+	new = *env;
+	while (new)
+	{
+		if (ft_strcmp(get_key(key), new->key) == 0)
+		{
+			if ((new)->prev == NULL)
+			{
+				(*env) = (*env)->next;
+				(*env)->prev = NULL;
+			}
+			else if (!new->next)
+			{
+				new->prev->next = NULL;
+				return ;
+			}
+			else
+			{
+				new->prev->next = new->next;
+				new->next->prev = new->prev;
+			}
+		}
+		new = new->next;
+	}
 }
-// #include<stdio.h> 
- 
-// chdir function is declared 
-// inside this header 
-// #include<unistd.h> 
-// int main() 
-// { 
-//     char *s; 
- 
-//     // printing current working directory 
-//     printf("%s\n", getcwd(NULL,0)); 
- 
-//     // using the command 
-//     chdir(".."); 
- 
-//     // printing current working directory 
-//     printf("%s\n", getcwd(NULL, 0)); 
+
+void	ft_unset(char **args, t_env **env)
+{
+	t_env	*new;
+	int i;
+
+	new = *env;
+	i = 0;
+	if (!args[1])
+		return ;
+	i++;
+	while (args[i])
+	{
+		if (ft_strcmp(args[i], "_") != 0)
+			supp(args[i], env);
+		i++;
+	}
+}
+
+void	ft_env(t_env *env)
+{
+	while (env)
+	{
+		if (env->value == NULL)
+			(env) = (env)->next;
+		else if(ft_strcmp("_",env->key) == 0)
+			printf("%s=/usr/bin/env\n", env->key);
+		else
+			printf("%s=%s\n", env->key, env->value);
+		(env) = (env)->next;
+	}
+	return ;
+}
+
+int	check_flag(char *flag)
+{
+	int	i;
+
+	i = 0;
+	if (flag[i] == '-' && flag[i])
+	{
+		i++;
+		if (flag[i] == '\0')
+			return (1);
+		while (flag[i] && flag[i] == 'n')
+		{
+			i++;
+		}
+		if (flag[i] == '\0')
+			return (0);
+	}
+	return (1);
+}
+
+void	ft_echo(char **args, t_env *env)
+{
+	int		new_line;
+	int i;
+
+	i = 0;
+	if (args[1] == NULL)//root->args && !root->args->next)
+	{
+		printf("\n");
+		return ;
+	}
+	new_line = 0;
+	i++;
+	while (args[i] && check_flag(args[i]) == 0)
+	{
+		i++;
+		new_line = 1;
+	}
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		if (args[i])
+			printf(" ");
+		i++;
+	}
+	if (new_line != 1)
+		printf("\n");
+}
+
+void	ft_exit(char **args)
+{
+	if (args[0] && args[1] && !args[2])
+	{
+		if (!str_is_num(args[1]))
+			exit(ft_atoi(args[1]));
+		else
+		{
+			write(2, "exit\nbash: exit: ", 18);
+			write(2, args[1], ft_strlen(args[1]));
+			write(2, ": numeric argument required\n", 29);
+			exit(2);
+		}
+	}
+	else if (args[0] && args[1] && args[2] != NULL)//exit hjfsbj 3
+	{
+		write(2, "exit\n", 6);
+		write(2, "bash: exit: too many arguments\n", 32);
+	}
+	else if (args[0] && !args[1])
+	{	
+		write(2,"exit\n",6);
+		exit(0);
+	}
+}
+// #include<stdio.h>
+
+// chdir function is declared
+// inside this header
+// #include<unistd.h>
+// int main()
+// {
+//     char *s;
+
+//     // printing current working directory
+//     printf("%s\n", getcwd(NULL,0));
+
+//     // using the command
+//     chdir("..");
+
+//     // printing current working directory
+//     printf("%s\n", getcwd(NULL, 0));
 //     system("leaks a.out");
-//     // after chdir is executed 
-//     return 0; 
+//     // after chdir is executed
+//     return (0);
 // }
-
