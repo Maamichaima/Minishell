@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 23:43:31 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/12 19:10:54 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:28:00 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,42 @@
 // char *get_content(char *key) --> i9leb fl HOME
 // void  set_content(char *key, char *content)
 
-void error_cd(int a, char *str)
+void	error_cd(int a, char *str)
 {
-	if(a == 0)
+	if (a == 0)
 	{
-		write(2, "bash: cd:",10);
+		write(2, "bash: cd:", 10);
 		write(2, " HOME not set\n", 14);
 	}
-	else 
+	else
 	{
-		write(2,"bash: cd: ",11);
+		write(2, "bash: cd: ", 11);
 		perror(str);
 	}
 }
 
-void	ft_cd(t_ast *root, t_env *env)
+void	set_content(t_env *env,char *key, char *content)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+			env->value = content;
+		env = env->next;
+	}
+}
+
+void	ft_cd(char **args, t_env *env)
 {
 	char	*old;
 	char	*new;
 	char	*val;
 
 	old = getcwd(NULL, 0);
-	if (root->args->next == NULL)
+	if (args[1] == NULL)
 		val = get_value_("HOME", env);
 	else
-		val = root->args->next->str;
-	if(!val)
+		val = args[1];
+	if (!val)
 	{
 		error_cd(0, val);
 		return ;
@@ -51,14 +61,8 @@ void	ft_cd(t_ast *root, t_env *env)
 		return ;
 	}
 	new = getcwd(NULL, 0);
-	while (env)
-	{
-		if (ft_strcmp(env->key, "PWD") == 0)
-			env->value = new;
-		if (ft_strcmp(env->key, "OLDPWD") == 0)
-			env->value = old;
-		env = env->next;
-	}
+	set_content(env, "PWD", new);
+	set_content(env, "OLDPWD", old);
 }
 
 void	ft_pwd(t_env *env)
@@ -66,45 +70,37 @@ void	ft_pwd(t_env *env)
 	printf("%s\n", getcwd(NULL, 0));
 }
 
-int	check_key_in_env(t_env *env, t_str *args)
+int	check_key_in_env(t_env *env, char *args)
 {
 	int	i;
 
 	i = 0;
 	while (env)
 	{
-		if (ft_strcmp(get_key(args->str), env->key) == 0)
+		if (ft_strcmp(get_key(args), env->key) == 0)
 		{
-			while (args->str[i])
+			while (args[i])
 			{
-				if (args->str[i] == '=' || args->str[i] == '+')
+				if (args[i] == '=' || args[i] == '+')
 					break ;
 				i++;
 			}
-			if (args->str[i] == '+' && args->str[i + 1] && args->str[i
+			if (args[i] == '+' && args[i + 1] && args[i
 				+ 1] == '=')
 			{
-				env->path = ft_strjoin(env->path, args->str + i + 2);
-				env->value = ft_strjoin(env->value, args->str + i + 2);
+				env->path = ft_strjoin(env->path, args + i + 2);
+				env->value = ft_strjoin(env->value, args + i + 2);
 			}
-			else if (args->str[i] == '=')
+			else if (args[i] == '=')
 			{
-				env->value = ignor(get_value(args->str));
-				env->path = args->str;
+				env->value = ignor(get_value(args));
+				env->path = args;
 			}
 			return (1);
 		}
 		(env) = (env)->next;
 	}
 	return (0);
-}
-
-int	ft_isalpha(int c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else
-		return (0);
 }
 
 int	valide_key(char *str)
@@ -121,57 +117,56 @@ void	ft_error_export(char *str)
 	write(2, ": not a valid identifier\n", 26);
 }
 
-void	ft_export(t_ast *root, t_env *env)
+void	ft_export(char **args, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
-	char **key;
+	char	**key;
+	int i = 0;
 
 	new = NULL;
 	tmp = env;
-	if (root->args && root->args->str && root->args->next == NULL)
+	if (args[0] && !args[1])
 	{
-		key = sort_table(table_of_key(env));
-		ft_write_export(key, env);
+		// key = sort_table(table_of_key(env));
+		ft_write_export(sort_table(table_of_key(env)), env);
 	}
 	else
 	{
-		root->args = root->args->next;
-		while (root->args)
+		i++;
+		while (args[i])
 		{
-			if (valide_key(root->args->str) == 0)
-				ft_error_export(root->args->str);
-			else if (!check_key_in_env(env, root->args))
+			if (valide_key(args[i]) == 0)
+				ft_error_export(args[i]);
+			else if (!check_key_in_env(env, args[i]))
 			{
-				new = ft_lstnew_env(get_key(root->args->str),
-						ignor(get_value(root->args->str)), root->args->str);
+				new = ft_lstnew_env(get_key(args[i]),
+						ignor(get_value(args[i])), args[i]);
 				ft_lstadd_back_env(&tmp, new);
 			}
-			root->args = root->args->next;
+			i++;
 		}
 	}
 }
 
-void supp(t_ast *root, t_env **env)
+void	supp(char *key, t_env **env)
 {
 	t_env	*new;
 
 	new = *env;
-	if(ft_strcmp(root->args->str, "_") == 0)
-		return;
 	while (new)
 	{
-		if (ft_strcmp(get_key(root->args->str), new->key) == 0)
+		if (ft_strcmp(get_key(key), new->key) == 0)
 		{
 			if ((new)->prev == NULL)
 			{
 				(*env) = (*env)->next;
 				(*env)->prev = NULL;
 			}
-			else if(!new->next)
+			else if (!new->next)
 			{
 				new->prev->next = NULL;
-				return;
+				return ;
 			}
 			else
 			{
@@ -183,18 +178,21 @@ void supp(t_ast *root, t_env **env)
 	}
 }
 
-void	ft_unset(t_ast *root, t_env **env)
+void	ft_unset(char **args, t_env **env)
 {
 	t_env	*new;
+	int i;
 
 	new = *env;
-	if (!root->args->next)
-			return;
-	root->args = root->args->next;
-	while(root->args)
+	i = 0;
+	if (!args[1])
+		return ;
+	i++;
+	while (args[i])
 	{
-		supp(root, env);
-		root->args = root->args->next;
+		if (ft_strcmp(args[i], "_") != 0)
+			supp(args[i], env);
+		i++;
 	}
 }
 
@@ -204,11 +202,11 @@ void	ft_env(t_env *env)
 	{
 		if (env->value == NULL)
 			(env) = (env)->next;
+		else if(ft_strcmp("_",env->key) == 0)
+			printf("%s=/usr/bin/env\n", env->key);
 		else
-		{
 			printf("%s=%s\n", env->key, env->value);
-			(env) = (env)->next;
-		}
+		(env) = (env)->next;
 	}
 	return ;
 }
@@ -221,67 +219,71 @@ int	check_flag(char *flag)
 	if (flag[i] == '-' && flag[i])
 	{
 		i++;
-		if(flag[i] == '\0')
+		if (flag[i] == '\0')
 			return (1);
 		while (flag[i] && flag[i] == 'n')
 		{
 			i++;
 		}
-		if(flag[i] == '\0')
+		if (flag[i] == '\0')
 			return (0);
 	}
 	return (1);
 }
 
-void	ft_echo(t_ast *root, t_env *env)
+void	ft_echo(char **args, t_env *env)
 {
 	int		new_line;
-	t_str	*cmd;
+	int i;
 
-	if (root->args && !root->args->next)
+	i = 0;
+	if (args[1] == NULL)//root->args && !root->args->next)
 	{
 		printf("\n");
 		return ;
 	}
 	new_line = 0;
-	cmd = root->args->next;
-	while (cmd && check_flag(cmd->str) == 0)
+	i++;
+	while (args[i] && check_flag(args[i]) == 0)
 	{
-		cmd = cmd->next;
+		i++;
 		new_line = 1;
 	}
-	while (cmd)
+	while (args[i])
 	{
-		printf("%s", cmd->str);
-		if (cmd->next)
+		printf("%s", args[i]);
+		if (args[i])
 			printf(" ");
-		cmd = cmd->next;
+		i++;
 	}
 	if (new_line != 1)
 		printf("\n");
 }
 
-void	ft_exit(t_ast *root)
+void	ft_exit(char **args)
 {
-	if (root->args && root->args->next && root->args->next->next == NULL)
+	if (args[0] && args[1] && !args[2])
 	{
-		if (!str_is_num(root->args->next->str))
-			exit(ft_atoi(root->args->next->str));
+		if (!str_is_num(args[1]))
+			exit(ft_atoi(args[1]));
 		else
 		{
 			write(2, "exit\nbash: exit: ", 18);
-			write(2, root->args->next->str, ft_strlen(root->args->next->str));
+			write(2, args[1], ft_strlen(args[1]));
 			write(2, ": numeric argument required\n", 29);
 			exit(2);
 		}
 	}
-	else if (root->args && root->args->next && root->args->next->next != NULL)
+	else if (args[0] && args[1] && args[2] != NULL)//exit hjfsbj 3
 	{
 		write(2, "exit\n", 6);
 		write(2, "bash: exit: too many arguments\n", 32);
 	}
-	else if (root->args && !root->args->next)
+	else if (args[0] && !args[1])
+	{	
+		write(2,"exit\n",6);
 		exit(0);
+	}
 }
 // #include<stdio.h>
 

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/11 13:41:44 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/17 10:20:42 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int	count;
+	char	*str;
+	size_t	i;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
+	str = (char *)s;
+	i = 0;
+	while (i < n)
 	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
+		if (str[i] == (char)c)
+			return (str + i);
+		i++;
 	}
-	return (count);
+	return (NULL);
 }

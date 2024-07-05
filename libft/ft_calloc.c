@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/05 12:38:30 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/17 10:19:15 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int	count;
+	void	*p;
+	size_t	i;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
-	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
-	}
-	return (count);
+	i = count * size;
+	if (count != 0 && (i / count) != size)
+		return (NULL);
+	p = malloc(i);
+	if (!p)
+		return (NULL);
+	ft_bzero(p, i);
+	return (p);
 }

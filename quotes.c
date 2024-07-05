@@ -39,3 +39,16 @@ char	*ignor(char *str)
 	str[j] = '\0';
 	return (str);
 }
+
+void ignor_args(char **args)
+{
+	int i = 0;
+
+	if (!args)
+		return ;
+	while(args[i])
+	{
+		ignor(args[i]);
+		i++;
+	}
+}

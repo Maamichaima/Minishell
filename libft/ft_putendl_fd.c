@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/11 13:54:04 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/19 16:25:23 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+void	ft_putendl_fd(char *s, int fd)
 {
-	int	count;
+	int	i;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
+	if (fd == -1)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
 	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
+		write(fd, &s[i], 1);
+		i++;
 	}
-	return (count);
+	write(fd, "\n", 1);
 }

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/04 21:29:16 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/17 14:09:47 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	int	count;
+	int				i;
+	unsigned char	*p;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
+	p = b;
+	i = 0;
+	while (len > 0)
 	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
+		p[i] = (unsigned char)c;
+		i++;
+		len--;
 	}
-	return (count);
+	return (b);
 }

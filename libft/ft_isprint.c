@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/04 19:36:31 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/06 20:35:45 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	count_cmd(t_ast *root)
+int	ft_isprint(int c)
 {
-	int	count;
-
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
-	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
-	}
-	return (count);
+	if (c >= 32 && c <= 126)
+		return (1);
+	return (0);
 }

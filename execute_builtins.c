@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/10 01:41:31 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:18:28 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,30 @@ void	execut_bultin(t_ast *root, t_env **env)
 {
 	t_cmd	cmd;
 
+	//expand_node(root, *env);
+	root->cmd.args = list_to_table(root->args);
 	cmd = root->cmd;
+	//args ??
 	if (ft_strcmp(cmd.args[0], "export") == 0)
-		ft_export(root, *env);
+		ft_export(root->cmd.args, *env);
 	else if (ft_strcmp(cmd.args[0], "cd") == 0)
-		ft_cd(root, *env);
+		ft_cd(root->cmd.args, *env);
 	else if (ft_strcmp(cmd.args[0], "pwd") == 0)
 		ft_pwd(*env);
 	else if (ft_strcmp(cmd.args[0], "unset") == 0)
-		ft_unset(root, env);
+		ft_unset(root->cmd.args, env);
 	else if (ft_strcmp(cmd.args[0], "echo") == 0)
-		ft_echo(root, *env);
+		ft_echo(root->cmd.args, *env);
 	else if (ft_strcmp(cmd.args[0], "exit") == 0)
-		ft_exit(root);
+		ft_exit(root->cmd.args);
 	else if (ft_strcmp(cmd.args[0], "env") == 0)
 		ft_env(*env);
 }
 
 void	execute_in_parent(t_ast *root, t_env **env)
 {
-	int stdin;
-	int stdout;
+	int	stdin;
+	int	stdout;
 
 	stdin = dup(0);
 	stdout = dup(1);
@@ -50,10 +53,10 @@ void	execute_in_parent(t_ast *root, t_env **env)
 
 void	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
 {
-	if(count_cmd(const_root) > 1)
+	if (count_cmd(const_root) > 1)
 	{
 		root->cmd.pid = fork();
-		if(root->cmd.pid == 0)
+		if (root->cmd.pid == 0)
 		{
 			init_infile_outfile(root->red, root);
 			dup2(root->cmd.infile, 0);
@@ -63,6 +66,6 @@ void	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
 			exit(0);
 		}
 	}
-	else 
+	else
 		execute_in_parent(root, env);
 }

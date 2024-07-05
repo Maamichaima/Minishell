@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/07 23:51:59 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/15 15:28:18 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_next_str(char *s, int *i)
 	char	lock;
 	int		a;
 
-	token = malloc(sizeof(char) * (get_next_str_length(s, *i) + 1));
+	token = ft_malloc(sizeof(char) * (get_next_str_length(s, *i) + 1), 'a');
 	lock = 0;
 	a = 0;
 	j = 0;
@@ -78,7 +78,7 @@ char	*get_next_symbol(char *s, int *i)
 	char	*token;
 	int		j;
 
-	token = malloc(3);
+	token = ft_malloc(3, 'a');
 	j = 0;
 	if (s[*i] && is_symbol(s[*i]))
 	{

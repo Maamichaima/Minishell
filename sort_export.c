@@ -44,50 +44,53 @@ char	**table_of_key(t_env *env)
 	return (t);
 }
 
-char **sort_table(char **str)
+char	**sort_table(char **str)
 {
-    int i = 0;
-    int j = 0;
-    char *tmp;
+	int		i;
+	int		j;
+	char	*tmp;
 
-    while(str[i])
-    {
-        tmp = str[i];
-        j = i - 1;
-        while (j >= 0 && strcmp(str[j], tmp) > 0)
-        {
-            str[j + 1] = str[j];
-            j--;
-        }
-        i++;
-        str[j + 1] = tmp;
-    }
-    return str;
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		tmp = str[i];
+		j = i - 1;
+		while (j >= 0 && strcmp(str[j], tmp) > 0)
+		{
+			str[j + 1] = str[j];
+			j--;
+		}
+		i++;
+		str[j + 1] = tmp;
+	}
+	return (str);
 }
 
-char *get_value_(char *key, t_env *env)
+char	*get_value_(char *key, t_env *env)
 {
-    while(env)
-    {
-        if(ft_strcmp(key, env->key) == 0)
-            return (env->value);
-        env = env->next;
-    }
-    return NULL;
+	while (env)
+	{
+		if (ft_strcmp(key, env->key) == 0)
+			return (env->value);
+		env = env->next;
+	}
+	return (NULL);
 }
 
-void ft_write_export(char **key, t_env *env)
+void	ft_write_export(char **key, t_env *env)
 {
-    int i = 0;
+	int	i;
 
-    while(key[i])
-    {
-        printf("declare -x %s", key[i]);
-        if(get_value_(key[i], env))
-            printf("=\"%s\"", get_value_(key[i], env));
-        printf("\n");
-        i++;
-    }
+	i = 0;
+	while (key[i])
+	{
+		printf("declare -x %s", key[i]);
+		if (get_value_(key[i], env))
+			printf("=\"%s\"", get_value_(key[i], env));
+		printf("\n");
+		i++;
+	}
 }
 
 // int main (int c, char **v)
@@ -101,5 +104,5 @@ void ft_write_export(char **key, t_env *env)
 //         printf("%s \n", v[i]);
 //         i++;
 //     }
-//     return 0;
+//     return (0);
 // }

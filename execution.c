@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/12 18:51:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/06/29 18:54:29 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	init_ast(t_ast *root, t_env *env)
 	if (root->type == token_pipe)
 	{
 		inisialiser_pipe(root);
-		initialize_cmd(root->left, env);
+		// initialize_cmd(root->left, env);
 		init_ast(root->right, env);
 	}
-	else
-		initialize_cmd(root, env);
+	// else
+	// 	initialize_cmd(root, env);
 }
 
 int	check_redout(t_str *red)
@@ -69,8 +69,8 @@ int	check_redherdoc(t_str *red)
 	return (0);
 }
 
-void	initialize_cmd(t_ast *node, t_env *env)
-{
-	node->cmd.args = list_to_table(node->args,env);
-	node->cmd.path = correct_path(get_paths(env), node->cmd.args[0]);
-}
+// void	initialize_cmd(t_ast *node, t_env *env)
+// {
+// 	node->cmd.args = list_to_table(node->args);
+// 	node->cmd.path = correct_path(get_paths(env), node->cmd.args[0]);
+// }

@@ -6,58 +6,11 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 23:57:39 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 16:13:58 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/06/15 16:27:26 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strdup(char *src)
-{
-	size_t	i;
-	size_t	l;
-	char	*dest;
-
-	l = ft_strlen(src);
-	dest = malloc(sizeof(char) * (l + 1));
-	if (dest == NULL)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-long	ft_atoi(char *str)
-{
-	int		i;
-	int		sign;
-	long	res;
-
-	i = 0;
-	sign = 1;
-	res = 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+')
-		i++;
-	if (str[i] == '-')
-	{
-		sign *= -1;
-		i++;
-	}
-	while (str[i] <= '9' && str[i] >= '0')
-	{
-		res *= 10;
-		res = res + str[i] - '0';
-		i++;
-	}
-	return (res * sign);
-}
 
 int	ft_isnum(int arg)
 {

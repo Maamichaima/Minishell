@@ -57,7 +57,7 @@ t_token	*ft_lstnew(char *content)
 
 	if (!content)
 		return (NULL);
-	l = malloc(sizeof(t_token));
+	l = ft_malloc(sizeof(t_token), 'a');
 	if (!l)
 		return (NULL);
 	l->token = content;

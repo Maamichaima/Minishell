@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_cmd.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 16:26:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/09 16:26:54 by cmaami           ###   ########.fr       */
+/*   Created: 2023/11/11 13:59:16 by cmaami            #+#    #+#             */
+/*   Updated: 2023/11/17 19:41:40 by cmaami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	count_cmd(t_ast *root)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	int	count;
+	unsigned int	i;
 
-	count = 0;
-	if (root && root->type == token_cmd)
-		count++;
-	else
+	i = 0;
+	if (!s || !f)
+		return ;
+	while (s[i])
 	{
-		count += count_cmd(root->left);
-		count += count_cmd(root->right);
+		f(i, s + i);
+		i++;
 	}
-	return (count);
 }
