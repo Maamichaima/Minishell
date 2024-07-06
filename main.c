@@ -51,6 +51,7 @@ int	wait_(t_ast *root,t_env *env)
 	int status;
 	char *str = malloc(256);
 	char *tmp;
+	
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
@@ -98,12 +99,14 @@ void error_syntax(t_token *t)
 
 void control_c(int sig)
 {
-	//(void)sig;
-	printf("Caught signal %d\n", sig); 
-    write(1, "\n", 1);
+	(void)sig;
+	//printf("Caught signal %d\n", sig); 
+	
+	write(1, "\n", 1);
 	rl_replace_line("",0);
 	rl_on_new_line();
 	rl_redisplay();
+	
 }
 
 void signal_handler()
@@ -124,11 +127,11 @@ int	main(int c, char **av, char **env)
 	t_env *tmp = v;
 	while (1)
 	{
-		signal_handler();
 		//printf("%d    %d     %d\n",status,WEXITSTATUS(status),WIFSIGNALED(status));
-		if(status != 2 && !WIFSIGNALED(status))
-		{
-				input = readline("bash$ ");}
+		//printf("%d\n",WIFSIGNALED(status));
+		signal_handler();
+		//if( !WIFSIGNALED(status))
+			input = readline("bash$ ");
 			if (!input)
 			{
 				printf("exit\n");
@@ -149,10 +152,9 @@ int	main(int c, char **av, char **env)
 				executer_tree(root, root, &v);
 				close_(root);
 				status = wait_(root,v);
-			
 			}
-			free(input);
-		
+			
+			//free(input);
 		}
 		
 		//status = last_status_in tree(root);

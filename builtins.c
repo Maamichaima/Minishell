@@ -204,6 +204,8 @@ void	ft_env(t_env *env)
 			(env) = (env)->next;
 		else if(ft_strcmp("_",env->key) == 0)
 			printf("%s=/usr/bin/env\n", env->key);
+		else if(ft_strcmp("?",env->key) == 0)
+			continue;
 		else
 			printf("%s=%s\n", env->key, env->value);
 		(env) = (env)->next;
@@ -260,49 +262,28 @@ void	ft_echo(char **args, t_env *env)
 		printf("\n");
 }
 
-void	ft_exit(char **args)
+void    ft_exit(char **args)
 {
-	if (args[0] && args[1] && !args[2])
-	{
-		if (!str_is_num(args[1]))
-			exit(ft_atoi(args[1]));
-		else
-		{
-			write(2, "exit\nbash: exit: ", 18);
-			write(2, args[1], ft_strlen(args[1]));
-			write(2, ": numeric argument required\n", 29);
-			exit(2);
-		}
-	}
-	else if (args[0] && args[1] && args[2] != NULL)//exit hjfsbj 3
-	{
-		write(2, "exit\n", 6);
-		write(2, "bash: exit: too many arguments\n", 32);
-	}
-	else if (args[0] && !args[1])
-	{	
-		write(2,"exit\n",6);
-		exit(0);
-	}
+    if(args[0] && !args[1])
+    {
+        write(2,"exit\n",6);
+        exit(0);
+    }
+    else if(str_is_num(args[1]))
+    {
+        write(2, "exit\nbash: exit: ", 18);
+        write(2, args[1], ft_strlen(args[1]));
+        write(2, ": numeric argument required\n", 29);
+        exit(2);
+    }
+    else if (args[0] && !str_is_num(args[1]) && args[2] == NULL)
+    {
+        write(2, "exit\n", 6);
+        exit(ft_atoi(args[1]));
+    }
+    else
+    {
+        write(2,"exit\n",6);
+        write(2, "bash: exit: too many arguments\n", 32);
+    }
 }
-// #include<stdio.h>
-
-// chdir function is declared
-// inside this header
-// #include<unistd.h>
-// int main()
-// {
-//     char *s;
-
-//     // printing current working directory
-//     printf("%s\n", getcwd(NULL,0));
-
-//     // using the command
-//     chdir("..");
-
-//     // printing current working directory
-//     printf("%s\n", getcwd(NULL, 0));
-//     system("leaks a.out");
-//     // after chdir is executed
-//     return (0);
-// }

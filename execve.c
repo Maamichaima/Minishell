@@ -47,8 +47,8 @@ void	ft_quit_signal(int sig)
 }
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
-	signal(SIGQUIT,ft_quit_signal);
-	signal(SIGINT, SIG_DFL);
+	//signal(SIGQUIT,ft_quit_signal);
+	//signal(SIGINT, SIG_DFL);
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
