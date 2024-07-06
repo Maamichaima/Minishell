@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 23:23:14 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/06 01:11:03 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-void	wait_(t_ast *root,t_env *env)
+int	wait_(t_ast *root,t_env *env)
 {
 	int status;
 	char *str = malloc(256);
@@ -62,6 +62,7 @@ void	wait_(t_ast *root,t_env *env)
 		wait_(root->left,env);
 		wait_(root->right,env);
 	}
+	return(status);
 }
 
 void	close_(t_ast *root)
@@ -97,7 +98,8 @@ void error_syntax(t_token *t)
 
 void control_c(int sig)
 {
-	(void)sig;
+	//(void)sig;
+	printf("Caught signal %d\n", sig); 
     write(1, "\n", 1);
 	rl_replace_line("",0);
 	rl_on_new_line();
@@ -116,39 +118,43 @@ int	main(int c, char **av, char **env)
 	t_ast	*root;
 	t_env	*v;
 	t_token *t;
-	//int status;
+	int status = 0;
 
 	v = get_env_lst(env);
 	t_env *tmp = v;
 	while (1)
 	{
 		signal_handler();
-		if(ft_strcmp(get_value_("?",tmp),"130") != 0)
-			input = readline("bash$ ");
-		if (!input)
+		//printf("%d    %d     %d\n",status,WEXITSTATUS(status),WIFSIGNALED(status));
+		if(status != 2 && !WIFSIGNALED(status))
 		{
-			printf("exit\n");
-			exit(127);
-		}
-		if (*input)
-			add_history(input);
-		head = NULL;
-		lst_token(input, &head);
-		// t = is_valid_token(head)
-		if ((t = is_valid_token(head)))//SGV
-			error_syntax(t);
-		else if (head)
-		{
-			root = parse_and_or(head);
-			init_ast(root, v);
-			execut_all_here_doc(root, v);
-			executer_tree(root, root, &v);
-			close_(root);
-			wait_(root,v);
+				input = readline("bash$ ");}
+			if (!input)
+			{
+				printf("exit\n");
+				exit(127);
+			}
+			if (*input)
+				add_history(input);
+			head = NULL;
+			lst_token(input, &head);
+			// t = is_valid_token(head)
+			if ((t = is_valid_token(head)))//SGV
+				error_syntax(t);
+			else if (head)
+			{
+				root = parse_and_or(head);
+				init_ast(root, v);
+				execut_all_here_doc(root, v);
+				executer_tree(root, root, &v);
+				close_(root);
+				status = wait_(root,v);
+			
+			}
+			free(input);
 		
 		}
-		free(input);
+		
 		//status = last_status_in tree(root);
-	}
 	return (0);
 }
