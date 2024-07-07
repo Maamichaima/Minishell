@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/04 15:33:13 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/07 12:37:42 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,14 @@ void	message_error(char *str)
 	}
 	exit(127);
 } 
-
+void	ft_quit_signal(int sig)
+{
+	(void)sig;
+	write(1,"Quit",5);
+}
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT,ft_quit_signal);
 	signal(SIGINT, SIG_DFL);
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);

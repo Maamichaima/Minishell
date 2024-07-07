@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:16:22 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/08 18:16:31 by cmaami           ###   ########.fr       */
+/*   Updated: 2024/07/07 14:40:04 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	**table_of_key(t_env *env)
 	while (env)
 	{
 		t[i] = env->key;
+		printf("key  --> %s   \n", t[i]);
 		env = env->next;
 		i++;
 	}
@@ -54,9 +55,10 @@ char	**sort_table(char **str)
 	j = 0;
 	while (str[i])
 	{
+		// printf("%s   \n", str[i]);
 		tmp = str[i];
 		j = i - 1;
-		while (j >= 0 && strcmp(str[j], tmp) > 0)
+		while (j >= 0 && ft_strcmp(str[j], tmp) > 0)
 		{
 			str[j + 1] = str[j];
 			j--;
@@ -64,6 +66,7 @@ char	**sort_table(char **str)
 		i++;
 		str[j + 1] = tmp;
 	}
+	printf("hhhhh\n");
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 16:11:21 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/07 00:25:52 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
 typedef enum
 {
@@ -131,19 +129,19 @@ int					check_redout(t_str *red);
 int					check_redherdoc(t_str *red);
 void				execut_all_here_doc(t_ast *root, t_env *env);
 int					open_here_doc(char *del, t_env *env);
-void				ft_export(char **args, t_env *env);
+int					ft_export(char **args, t_env *env);
 int					is_builtin(t_str cmd);
-void				ft_cd(char **args, t_env *env);
-void				ft_pwd(t_env *env);
-void				ft_unset(char **str, t_env **env);
-void				ft_env(t_env *env);
-void				ft_echo(char **args, t_env *env);
+int					ft_cd(char **args, t_env *env);
+int					ft_pwd(t_env *env);
+int					ft_unset(char **str, t_env **env);
+int					ft_env(t_env *env);
+int					ft_echo(char **args, t_env *env);
 int					check_flag(char *flag);
-void				ft_exit(char **args);
+int					ft_exit(char **args);
 long				ft_atoi(char *str);
 int					ft_isnum(int arg);
 int					str_is_num(char *str);
-void				execut_bultin(t_ast *root, t_env **env);
+int					execut_bultin(t_ast *root, t_env **env);
 char				*ignor(char *str);
 char				**table_of_key(t_env *env);
 char 				**sort_table(char **str);
@@ -163,5 +161,5 @@ void 				ignor_args(char **args);
 void				ft_lstadd_back_str(t_str **lst, t_str *new);
 t_str				*lst_new_str(char *content, token_type type);
 void 				*ft_malloc(int size, char c);
-
+char				*ft_itoa(int nbr);
 #endif

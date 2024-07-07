@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 17:49:58 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/07 14:21:38 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,21 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-void	wait_(t_ast *root)
+int	wait_(t_ast *root,t_env *env)
 {
+	int status;
+	char *str = malloc(256);
+	char *tmp;
 	if (root->type == token_cmd)
-		waitpid(root->cmd.pid, NULL, 0);
+	{
+		waitpid(root->cmd.pid, &status, 0);
+	}
 	else
 	{
-		wait_(root->left);
-		wait_(root->right);
+		wait_(root->left,env);
+		wait_(root->right,env);
 	}
+	return(status);
 }
 
 void	close_(t_ast *root)
@@ -90,11 +96,18 @@ void error_syntax(t_token *t)
 
 void control_c(int sig)
 {
-	(void)sig;
+	//(void)sig;
+	// printf("Caught signal %d\n", sig); 
     write(1, "\n", 1);
 	// rl_replace_line("",0);
 	// rl_on_new_line();
 	// rl_redisplay();
+}
+
+void signal_handler()
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, control_c);
 }
 int	main(int c, char **av, char **env)
 {
@@ -103,24 +116,24 @@ int	main(int c, char **av, char **env)
 	t_ast	*root;
 	t_env	*v;
 	t_token *t;
+	int status = 0;
 
 	v = get_env_lst(env);
+	t_env *tmp = v;
 	while (1)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, control_c);
+		signal_handler();
 		input = readline("bash$ ");
 		if (!input)
 		{
 			printf("exit\n");
-			exit(1);
+			exit(127);
 		}
 		if (*input)
 			add_history(input);
 		head = NULL;
 		lst_token(input, &head);
-		// t = is_valid_token(head)
-		if ((t = is_valid_token(head)))//SGV
+		if ((t = is_valid_token(head)))
 			error_syntax(t);
 		else if (head)
 		{
@@ -129,9 +142,11 @@ int	main(int c, char **av, char **env)
 			execut_all_here_doc(root, v);
 			executer_tree(root, root, &v);
 			close_(root);
-			wait_(root);
+			status = wait_(root,v);
+		
 		}
-		free(input);
+		// free(input);
 	}
+		//status = last_status_in tree(root);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 17:12:58 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/07 12:36:16 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 		new->prev = p;
 	}
 }
-
+//thydat 256
 char	*get_key(char *env)
 {
 	int		i;
 	char	*key;
 
 	i = 0;
-	key = malloc(256);
+	key = malloc(sizeof(char) * ft_strlen(env + 1));
 	while (env[i] && env[i] != '=' && env[i] != '+')
 	{
 		key[i] = env[i];

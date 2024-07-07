@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 14:41:03 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/01 14:41:08 by cmaami           ###   ########.fr       */
+/*   Updated: 2024/07/06 23:37:32 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void *ft_malloc(int size, char c)
         {
             tmp = head;
             head = head->next;
-            free(tmp->p);
-            free(tmp);
+            // free(tmp->p);
+            // free(tmp);
         }
         head = NULL;
         return NULL;

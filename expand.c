@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/30 19:31:44 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/07 12:36:29 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,20 @@ int	check_quotes(char *str, int c, char h)
 		return 0;
 }
 
+int len_get_expand_value(char *str)
+{
+	int i = 0;
+
+	while(str[i] && (ft_isalpha(str[i]) || ft_isnum(str[i]) || str[i] == '_'))
+		i++;
+	return i;
+}
+//thydat 256
 char *get_expand_value(char *str)
 {
     int j;
     
-    char *val = malloc(sizeof(char ) *256);
+    char *val = malloc(sizeof(char ) * len_get_expand_value(str));
     j = 0;
     while(*str && (ft_isalpha(*str) || ft_isnum(*str) || *str =='_'))
     {     
@@ -75,11 +84,24 @@ char    *expand(char *str, t_env *env, char c)
     {   
         while(str[i])
         {
+			
             if(str[i] == '$' && check_quotes(str, i, c) != -1)
             {
                 i++;
-                key = get_expand_value(str + i);
-                val = get_value_(key, env);
+				if(str[i] == '?')
+				{
+					while(env)
+					{
+						if(ft_strcmp(env->key,"?") == 0 )
+							val = env->value;
+						env = env->next;
+					} 
+				}
+				else
+                {
+					key = get_expand_value(str + i);
+                	val = get_value_(key, env);
+				}
 				if(val == NULL && ft_isnum(key[0]))
 					val = key + 1;
                 tmp = ft_strjoin(tmp, val);
