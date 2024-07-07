@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/04 21:15:55 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/07 23:23:36 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ char    *expand(char *str, t_env *env, char c)
 						if(ft_strcmp(env->key,"?") == 0 )
 							val = env->value;
 						env = env->next;
-					} 
+					}
+					i++; 
 				}
 				else
                 {

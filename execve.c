@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/06 00:44:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/07 23:18:40 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ void	message_error(char *str)
 void	ft_quit_signal(int sig)
 {
 	(void)sig;
-	write(1,"Quit",5);
+	write(1,"Quit\n",5);
 }
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
-	//signal(SIGQUIT,ft_quit_signal);
-	//signal(SIGINT, SIG_DFL);
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
@@ -118,6 +116,11 @@ void set_last_env_value(t_ast *root ,t_env *env)
 }
 void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
+	// struct sigaction act;
+	// act.sa_handler = ft_quit_signal;
+	// act.sa_flags =SA_SIGINFO ;
+	// sigaction(SIGQUIT,&act ,NULL);
+	signal(SIGQUIT, ft_quit_signal);
 	if (root->type == token_cmd)
 	{
 		if (root->args != NULL)
@@ -127,7 +130,9 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				check_bultins(root, const_root, env);
 			else
 			{
+				
 				root->cmd.pid = fork();
+			
 				if (root->cmd.pid == 0)
 				{
 					prepare_cmd(root, *env);

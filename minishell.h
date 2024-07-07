@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 23:20:58 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/07 14:13:33 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,4 +162,5 @@ void				ft_lstadd_back_str(t_str **lst, t_str *new);
 t_str				*lst_new_str(char *content, token_type type);
 void 				*ft_malloc(int size, char c);
 char				*ft_itoa(int nbr);
+void				set_content(t_env *env,char *key, char *content);
 #endif

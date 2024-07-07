@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 17:12:58 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/07 13:33:23 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ t_env	*get_env_lst(char **env)
 		ft_lstadd_back_env(&path, new);
 		i++;
 	}
+	ft_lstadd_back_env(&path,ft_lstnew_env("?",ft_strdup("0"),NULL));
 	return (path);
 }
