@@ -12,38 +12,38 @@
 
 #include "minishell.h"
 
-int	check_quotes(char *str, int c, char h)
-{
-	int lock;
-	int i;
-	int first;
-	int last;
+// int	check_quotes(char *str, int c, char h)
+// {
+// 	int lock;
+// 	int i;
+// 	int first;
+// 	int last;
 
-	i = 0;
-	lock = 0;
-	while(str[i])
-	{
-		if(lock == 0 && (str[i] == '\'' || str[i] == '"'))
-		{
-			lock = str[i];
-			first = i;
-		}
-		else if(lock == str[i])
-		{
-			last = i;
-			if(c < last && c > first)
-				break;
-			lock = 0;
-		}
-		i++;
-	}
-	if(lock == '\"' || h == 'h')
-		return 1;
-	else if(lock == '\'')
-		return -1;
-	else
-		return 0;
-}
+// 	i = 0;
+// 	lock = 0;
+// 	while(str[i])
+// 	{
+// 		if(lock == 0 && (str[i] == '\'' || str[i] == '"'))
+// 		{
+// 			lock = str[i];
+// 			first = i;
+// 		}
+// 		else if(lock == str[i])
+// 		{
+// 			last = i;
+// 			if(c < last && c > first)
+// 				break;
+// 			lock = 0;
+// 		}
+// 		i++;
+// 	}
+// 	if(lock == '\"' || h == 'h')
+// 		return 1;
+// 	else if(lock == '\'')
+// 		return -1;
+// 	else
+// 		return 0;
+// }
 
 int len_get_expand_value(char *str)
 {
@@ -136,9 +136,10 @@ void expand_node(t_ast *root, t_env *env)
 		// if(ft_strchr(arg->str,'='))
 		// 	tmp[i] = expand(arg->str, env, 'a');
 		// else
-			tmp = ft_split(expand(arg->str, env, 'a'), " \n\t\f");
+		tmp = ft_split(expand(arg->str, env, 'a'), " \n\t\f");
 		while(tmp && tmp[i])
 		{
+			// printf("%s   \n", tmp[i]);
 			ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));
 			i++;
 		}

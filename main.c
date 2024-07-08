@@ -120,6 +120,7 @@ int	main(int c, char **av, char **env)
 
 	v = get_env_lst(env);
 	t_env *tmp = v;
+	int i;
 	while (1)
 	{
 		signal_handler();
@@ -145,7 +146,7 @@ int	main(int c, char **av, char **env)
 			status = wait_(root,v);
 		
 		}
-		// free(input);
+		free(input);
 	}
 		//status = last_status_in tree(root);
 	return (0);
