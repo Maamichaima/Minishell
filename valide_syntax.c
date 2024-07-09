@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valide_syntax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 23:19:06 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/09 15:32:33 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_token *is_valid_token(t_token *lst)
 				return (lst);
 			if((lst->next->type != token_word && !is_redirectien(lst->next->type))
 				|| (lst->prev->type != token_word && !is_redirectien(lst->prev->type)))
-				return (lst->next);
+				return (lst);
 		}
 		if (lst->type == token_pipe)
 		{

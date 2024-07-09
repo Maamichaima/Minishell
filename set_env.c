@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/07 12:36:16 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/09 15:44:32 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ t_env	*get_env_lst(char **env)
 		ft_lstadd_back_env(&path, new);
 		i++;
 	}
+	ft_lstadd_back_env(&path,ft_lstnew_env("?",ft_strdup("0"),NULL));
 	return (path);
 }

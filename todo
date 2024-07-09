@@ -8,9 +8,6 @@ heredoc --> " | ' (del) --> expand(done)
 expand ila kan num flwel(done)
 
 
-
-
-
 builtins expand -------------> ch
 
 valid syntax (makamlach) ch
@@ -25,3 +22,5 @@ leaks ch
 heredoc 1 process (SIGNALS)
 
 !!!!!!!!!!!!!!!!!!!!
+
+bash: ls > $rr: ambiguous redirect

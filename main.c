@@ -6,12 +6,12 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/07 14:21:38 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/09 17:43:04 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+int sig_flag = 0;
 void	lst_token(char *ligne, t_token **head)
 {
 	char	*token;
@@ -49,11 +49,15 @@ void	printf_tree(t_ast *root)
 int	wait_(t_ast *root,t_env *env)
 {
 	int status;
-	char *str = malloc(256);
 	char *tmp;
+	
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
+		if (WIFEXITED(status))
+				set_content(env,"?",ft_itoa(WEXITSTATUS(status)));
+		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
+			set_content(env,"?",ft_itoa(128 + WTERMSIG(status)));
 	}
 	else
 	{
@@ -93,15 +97,16 @@ void error_syntax(t_token *t)
 			write(2, "bash: syntax error near unexpected token `newline'\n", 52);
 	}
 }
-
 void control_c(int sig)
 {
-	//(void)sig;
-	// printf("Caught signal %d\n", sig); 
-    write(1, "\n", 1);
-	// rl_replace_line("",0);
-	// rl_on_new_line();
-	// rl_redisplay();
+	(void)sig;
+	write(1, "\n", 1);
+	if (!sig_flag)
+	{
+		// rl_replace_line("",0);
+		// rl_on_new_line();
+		// rl_redisplay();
+	}
 }
 
 void signal_handler()
@@ -117,14 +122,14 @@ int	main(int c, char **av, char **env)
 	t_env	*v;
 	t_token *t;
 	int status = 0;
-
 	v = get_env_lst(env);
 	t_env *tmp = v;
-	int i;
+	signal_handler();
 	while (1)
 	{
-		signal_handler();
-		input = readline("bash$ ");
+		input = readline("42_bash_$ ");
+		sig_flag = 1;
+		
 		if (!input)
 		{
 			printf("exit\n");
@@ -134,7 +139,8 @@ int	main(int c, char **av, char **env)
 			add_history(input);
 		head = NULL;
 		lst_token(input, &head);
-		if ((t = is_valid_token(head)))
+		// t = is_valid_token(head)
+		if ((t = is_valid_token(head)))//SGV
 			error_syntax(t);
 		else if (head)
 		{
@@ -143,11 +149,13 @@ int	main(int c, char **av, char **env)
 			execut_all_here_doc(root, v);
 			executer_tree(root, root, &v);
 			close_(root);
-			status = wait_(root,v);
-		
+			wait_(root,v);
 		}
-		free(input);
+		sig_flag = 0;
+		signal(SIGQUIT, SIG_IGN);
+			//free(input);
 	}
-		//status = last_status_in tree(root);
+		
+		//status = last_status_in_tree(root);
 	return (0);
 }

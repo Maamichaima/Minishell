@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/07 12:37:42 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/09 16:38:29 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	ft_quit_signal(int sig)
 }
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
-	signal(SIGQUIT,ft_quit_signal);
-	signal(SIGINT, SIG_DFL);
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
@@ -118,13 +116,14 @@ void set_last_env_value(t_ast *root ,t_env *env)
 }
 void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
+	signal(SIGQUIT, ft_quit_signal);
 	if (root->type == token_cmd)
 	{
+		expand_node(root, *env);
 		if (root->args != NULL)
 		{
-			expand_node(root, *env);
 			if (is_builtin(*(root->args)))
-				check_bultins(root, const_root, env);
+				set_content(*env,"?", ft_itoa(check_bultins(root, const_root, env)));
 			else
 			{
 				root->cmd.pid = fork();

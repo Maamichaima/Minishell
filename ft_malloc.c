@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 14:41:03 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/06 23:37:32 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/08 20:26:02 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void *ft_malloc(int size, char c)
     else
     {
         ptr = malloc(size);
+        ft_bzero(ptr, size);
         ft_lstadd_back_garbage(&head, ft_lstnew_garbage(ptr));
     }
     return ptr;

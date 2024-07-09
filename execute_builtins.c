@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/07 00:27:22 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/09 16:54:52 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,27 @@ int	execut_bultin(t_ast *root, t_env **env)
 	return (0);
 }
 
-void	execute_in_parent(t_ast *root, t_env **env)
+int	execute_in_parent(t_ast *root, t_env **env)
 {
 	int	stdin;
 	int	stdout;
+	int status;
 
 	stdin = dup(0);
 	stdout = dup(1);
 	init_infile_outfile(root->red, root);
 	dup2(root->cmd.infile, 0);
 	dup2(root->cmd.outfile, 1);
-	execut_bultin(root, env);
+	status = execut_bultin(root, env);
 	dup2(stdin, 0);
 	dup2(stdout, 1);
+	return status;
 }
 
-void	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
+int	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
 {
+	int status;
+
 	if (count_cmd(const_root) > 1)
 	{
 		root->cmd.pid = fork();
@@ -63,10 +67,11 @@ void	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
 			dup2(root->cmd.infile, 0);
 			dup2(root->cmd.outfile, 1);
 			close_(const_root);
-			execut_bultin(root, env);
-			exit(0);
+			status = execut_bultin(root, env);
+			exit(status);
 		}
 	}
 	else
-		execute_in_parent(root, env);
+		status = execute_in_parent(root, env);
+	return status;
 }

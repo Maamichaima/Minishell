@@ -3,7 +3,7 @@ SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c create_tree.c env.c se
       sort_export.c count_cmd.c expand.c ft_malloc.c
 OBJ = ${SRC:.c=.o}
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -fsanitize=address
 LDFLAGS = -lreadline
 NAME = minishell
 LIBFT_DIR = ./libft

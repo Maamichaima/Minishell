@@ -279,12 +279,12 @@ int    ft_exit(char **args)
         write(2,"exit\n",6);
         exit(0);
     }
-    else if(str_is_num(args[1]))
+    else if(str_is_num(args[1]) || (!str_is_num(args[1]) && ft_strlen(args[1]) > 12))
     {
         write(2, "exit\nbash: exit: ", 18);
         write(2, args[1], ft_strlen(args[1]));
         write(2, ": numeric argument required\n", 29);
-        exit(2);
+        exit(255);
     }
     else if (args[0] && !str_is_num(args[1]) && args[2] == NULL)
     {
@@ -293,7 +293,7 @@ int    ft_exit(char **args)
     }
     else
     {
-        write(2,"exit\n",6);
+        write(2, "exit\n", 6);
         write(2, "bash: exit: too many arguments\n", 32);
 		return (1);
     }

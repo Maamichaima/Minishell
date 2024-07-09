@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/07 00:25:52 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/09 17:26:05 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char 				*get_value_(char *key, t_env *env);
 void 				ft_write_export(char **key, t_env *env);
 int 				count_cmd(t_ast *root);
 void				init_infile_outfile(t_str *red, t_ast *node);
-void 				check_bultins(t_ast *root, t_ast *const_root, t_env **env);
+int 				check_bultins(t_ast *root, t_ast *const_root, t_env **env);
 int					ft_isalpha(char c);
 char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -162,4 +162,7 @@ void				ft_lstadd_back_str(t_str **lst, t_str *new);
 t_str				*lst_new_str(char *content, token_type type);
 void 				*ft_malloc(int size, char c);
 char				*ft_itoa(int nbr);
+void				ft_bzero(void *s, size_t n);
+void				set_content(t_env *env,char *key, char *content);
+int	is_builtin(t_str cmd);
 #endif
