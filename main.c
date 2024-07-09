@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/09 17:43:04 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/09 19:30:16 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	wait_(t_ast *root,t_env *env)
 	{
 		waitpid(root->cmd.pid, &status, 0);
 		if (WIFEXITED(status))
-				set_content(env,"?",ft_itoa(WEXITSTATUS(status)));
+			set_content(env,"?",ft_itoa(WEXITSTATUS(status)));
 		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
 			set_content(env,"?",ft_itoa(128 + WTERMSIG(status)));
 	}
