@@ -12,17 +12,18 @@
 
 #include "minishell.h"
 
-int check_del_quotes(char *del)
+int	check_del_quotes(char *del)
 {
-	int i = 0;
+	int	i;
 
-	while(del[i])
+	i = 0;
+	while (del[i])
 	{
-		if(del[i] == '\'' || del[i] == '\"')
-			return 1;
+		if (del[i] == '\'' || del[i] == '\"')
+			return (1);
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
 int	open_here_doc(char *del, t_env *env)
@@ -47,14 +48,15 @@ int	open_here_doc(char *del, t_env *env)
 				free(tmp);
 				break ;
 			}
-			if(check_del_quotes(del) == 1)
+			if (check_del_quotes(del) == 1)
 			{
 				write(pipe_fd[1], tmp, ft_strlen(tmp));
 				write(pipe_fd[1], "\n", 1);
 			}
-			else 
+			else
 			{
-				write(pipe_fd[1], expand(tmp, env, 'h'), ft_strlen(expand(tmp, env, 'h')));
+				write(pipe_fd[1], expand(tmp, env, 'h'), ft_strlen(expand(tmp,
+							env, 'h')));
 				write(pipe_fd[1], "\n", 1);
 			}
 		}
@@ -72,7 +74,8 @@ void	outfile(t_str *red)
 	{
 		if (red->type == token_apend)
 		{
-			red->fd = open(ignor(red->str), O_CREAT | O_APPEND | O_WRONLY, 0644);
+			red->fd = open(ignor(red->str), O_CREAT | O_APPEND | O_WRONLY,
+					0644);
 			if (red->fd == -1)
 			{
 				perror(red->str);

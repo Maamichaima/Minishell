@@ -27,9 +27,9 @@ void	message_error(char *str)
 			exit(126);
 		}
 	}
-	if(access(str, F_OK) == 0)
+	if (access(str, F_OK) == 0)
 	{
-		write(2, "bash: ",7);
+		write(2, "bash: ", 7);
 		write(2, str, ft_strlen(str));
 		write(2, ": Is a directory\n", 18);
 	}
@@ -39,11 +39,11 @@ void	message_error(char *str)
 		write(2, ": command not found\n", 21);
 	}
 	exit(127);
-} 
+}
 void	ft_quit_signal(int sig)
 {
 	(void)sig;
-	write(1,"Quit",5);
+	write(1, "Quit", 5);
 }
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
@@ -87,9 +87,9 @@ void	init_infile_outfile(t_str *red, t_ast *node)
 	}
 }
 
-void prepare_cmd(t_ast *root, t_env *env)
+void	prepare_cmd(t_ast *root, t_env *env)
 {
-	//expand_node(root, env);
+	// expand_node(root, env);
 	root->cmd.args = list_to_table(root->args);
 	ignor_args(root->cmd.args);
 	init_infile_outfile(root->red, root);
@@ -99,19 +99,19 @@ void prepare_cmd(t_ast *root, t_env *env)
 		root->cmd.path = NULL;
 }
 
-void set_last_env_value(t_ast *root ,t_env *env)
+void	set_last_env_value(t_ast *root, t_env *env)
 {
-	if(!root->args)
+	if (!root->args)
 		return ;
-	while(env)
+	while (env)
 	{
-		if(ft_strcmp("_",env->key) == 0)
+		if (ft_strcmp("_", env->key) == 0)
 		{
-			while(root->args->next)
+			while (root->args->next)
 				root->args = root->args->next;
 			env->value = root->args->str;
 		}
-		env= env->next;
+		env = env->next;
 	}
 }
 void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
@@ -123,7 +123,8 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 		if (root->args != NULL)
 		{
 			if (is_builtin(*(root->args)))
-				set_content(*env,"?", ft_itoa(check_bultins(root, const_root, env)));
+				set_content(*env, "?", ft_itoa(check_bultins(root, const_root,
+							env)));
 			else
 			{
 				root->cmd.pid = fork();
@@ -135,7 +136,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 				}
 			}
 		}
-		set_last_env_value(root,*env);
+		set_last_env_value(root, *env);
 	}
 	else
 	{
@@ -146,7 +147,8 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 
 void	fd_here_doc(t_str *red, t_env *env)
 {
-	int status;
+	int	status;
+
 	while (red)
 	{
 		if (red->type == token_herd)

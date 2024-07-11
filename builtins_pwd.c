@@ -1,55 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   builtins_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 17:27:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/07 16:00:08 by maamichaima      ###   ########.fr       */
+/*   Created: 2024/07/10 17:08:31 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/10 17:11:07 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ignor(char *str)
+int	ft_pwd(t_env *env)
 {
-	int		i;
-	int		j;
-	char	c;
-
-	i = 0;
-	j = 0;
-	c = 0;
-	while (str[i])
-	{
-		if (c == 0 && (str[i] == '\'' || str[i] == '\"'))
-		{
-			c = str[i++];
-			continue ;
-		}
-		if (str[i] == c)
-		{
-			c = 0;
-			i++;
-		}
-		else
-			str[j++] = str[i++];
-	}
-	str[j] = '\0';
-	return (str);
-}
-
-void	ignor_args(char **args)
-{
-	int	i;
-
-	i = 0;
-	if (!args)
-		return ;
-	while (args[i])
-	{
-		ignor(args[i]);
-		i++;
-	}
+	printf("%s\n", getcwd(NULL, 0));
+	return (0);
 }

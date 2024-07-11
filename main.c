@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-int sig_flag = 0;
+
+int		sig_flag = 0;
 void	lst_token(char *ligne, t_token **head)
 {
 	char	*token;
@@ -46,25 +47,25 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-int	wait_(t_ast *root,t_env *env)
+int	wait_(t_ast *root, t_env *env)
 {
-	int status;
-	char *tmp;
-	
+	int		status;
+	char	*tmp;
+
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
 		if (WIFEXITED(status))
-			set_content(env,"?",ft_itoa(WEXITSTATUS(status)));
+			set_content(env, "?", ft_itoa(WEXITSTATUS(status)));
 		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
-			set_content(env,"?",ft_itoa(128 + WTERMSIG(status)));
+			set_content(env, "?", ft_itoa(128 + WTERMSIG(status)));
 	}
 	else
 	{
-		wait_(root->left,env);
-		wait_(root->right,env);
+		wait_(root->left, env);
+		wait_(root->right, env);
 	}
-	return(status);
+	return (status);
 }
 
 void	close_(t_ast *root)
@@ -83,21 +84,22 @@ void	close_(t_ast *root)
 	}
 }
 
-void error_syntax(t_token *t)
+void	error_syntax(t_token *t)
 {
-	if(t)
+	if (t)
 	{
-		if(!is_redirectien(t->type))
+		if (!is_redirectien(t->type))
 		{
 			write(2, "bash: syntax error near unexpected token '", 42);
 			write(2, t->token, ft_strlen(t->token));
 			write(2, "'\n", 2);
 		}
 		else
-			write(2, "bash: syntax error near unexpected token `newline'\n", 52);
+			write(2, "bash: syntax error near unexpected token `newline'\n",
+				52);
 	}
 }
-void control_c(int sig)
+void	control_c(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
@@ -109,7 +111,7 @@ void control_c(int sig)
 	}
 }
 
-void signal_handler()
+void	signal_handler(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, control_c);
@@ -120,16 +122,18 @@ int	main(int c, char **av, char **env)
 	t_token	*head;
 	t_ast	*root;
 	t_env	*v;
-	t_token *t;
-	int status = 0;
+	t_token	*t;
+	int		status;
+	t_env	*tmp;
+
+	status = 0;
 	v = get_env_lst(env);
-	t_env *tmp = v;
+	tmp = v;
 	signal_handler();
 	while (1)
 	{
 		input = readline("42_bash_$ ");
 		sig_flag = 1;
-		
 		if (!input)
 		{
 			printf("exit\n");
@@ -140,7 +144,7 @@ int	main(int c, char **av, char **env)
 		head = NULL;
 		lst_token(input, &head);
 		// t = is_valid_token(head)
-		if ((t = is_valid_token(head)))//SGV
+		if ((t = is_valid_token(head))) // SGV
 			error_syntax(t);
 		else if (head)
 		{
@@ -149,13 +153,12 @@ int	main(int c, char **av, char **env)
 			execut_all_here_doc(root, v);
 			executer_tree(root, root, &v);
 			close_(root);
-			wait_(root,v);
+			wait_(root, v);
 		}
 		sig_flag = 0;
 		signal(SIGQUIT, SIG_IGN);
-			//free(input);
+		// free(input);
 	}
-		
-		//status = last_status_in_tree(root);
+	// status = last_status_in_tree(root);
 	return (0);
 }

@@ -45,7 +45,7 @@ int	is_valid_word(char *s)
 		return (0);
 }
 
-t_token *is_valid_token(t_token *lst)
+t_token	*is_valid_token(t_token *lst)
 {
 	while (lst)
 	{
@@ -58,8 +58,10 @@ t_token *is_valid_token(t_token *lst)
 		{
 			if (!lst->prev || !lst->next)
 				return (lst);
-			if((lst->next->type != token_word && !is_redirectien(lst->next->type))
-				|| (lst->prev->type != token_word && !is_redirectien(lst->prev->type)))
+			if ((lst->next->type != token_word
+					&& !is_redirectien(lst->next->type))
+				|| (lst->prev->type != token_word
+					&& !is_redirectien(lst->prev->type)))
 				return (lst);
 		}
 		if (lst->type == token_pipe)

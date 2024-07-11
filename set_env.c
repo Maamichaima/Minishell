@@ -51,7 +51,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 		new->prev = p;
 	}
 }
-//thydat 256
+// thydat 256
 char	*get_key(char *env)
 {
 	int		i;
@@ -104,6 +104,6 @@ t_env	*get_env_lst(char **env)
 		ft_lstadd_back_env(&path, new);
 		i++;
 	}
-	ft_lstadd_back_env(&path,ft_lstnew_env("?",ft_strdup("0"),NULL));
+	ft_lstadd_back_env(&path, ft_lstnew_env("?", ft_strdup("0"), NULL));
 	return (path);
 }

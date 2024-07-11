@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/15 15:28:18 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/10 15:53:51 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_whitespace(char c)
 
 int	is_symbol(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&') // || c == '(' || c == ')')
+	if (c == '|' || c == '<' || c == '>' || c == '&')
 		return (1);
 	return (0);
 }

@@ -1,55 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 17:27:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/07 16:00:08 by maamichaima      ###   ########.fr       */
+/*   Created: 2024/07/10 17:06:30 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/10 17:06:45 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ignor(char *str)
+int	ft_env(t_env *env) // env (dhfbuhbshb || path)
 {
-	int		i;
-	int		j;
-	char	c;
-
-	i = 0;
-	j = 0;
-	c = 0;
-	while (str[i])
+	while (env)
 	{
-		if (c == 0 && (str[i] == '\'' || str[i] == '\"'))
-		{
-			c = str[i++];
-			continue ;
-		}
-		if (str[i] == c)
-		{
-			c = 0;
-			i++;
-		}
+		if (env->value == NULL)
+			(env) = (env)->next;
+		else if (ft_strcmp("_", env->key) == 0)
+			printf("%s=/usr/bin/env\n", env->key);
 		else
-			str[j++] = str[i++];
+			printf("%s=%s\n", env->key, env->value);
+		(env) = (env)->next;
 	}
-	str[j] = '\0';
-	return (str);
-}
-
-void	ignor_args(char **args)
-{
-	int	i;
-
-	i = 0;
-	if (!args)
-		return ;
-	while (args[i])
-	{
-		ignor(args[i]);
-		i++;
-	}
+	return (0);
 }
