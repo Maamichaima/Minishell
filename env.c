@@ -79,10 +79,11 @@ int	ft_lstsize_env(t_env *lst)
 char	**list_to_table_env(t_env *str)
 {
 	char	**t;
+	t_env	*tmp;
 	int		i;
 
 	i = 0;
-	t = malloc(sizeof(char *) * (ft_lstsize_env(str) + 1));
+	t = ft_malloc(sizeof(char *) * (ft_lstsize_env(str) + 1), 'a');
 	if (!t)
 		return (NULL);
 	while (str)

@@ -62,8 +62,8 @@ void	*ft_malloc(int size, char c)
 		{
 			tmp = head;
 			head = head->next;
-			// free(tmp->p);
-			// free(tmp);
+			free(tmp->p);
+			free(tmp);
 		}
 		head = NULL;
 		return (NULL);
@@ -77,3 +77,18 @@ void	*ft_malloc(int size, char c)
 	return (ptr);
 }
 
+void clear_env(t_env *env)
+{
+	t_env *tmp;
+
+	if(!env)
+		return ;
+	while(env)
+	{
+		tmp = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = tmp;
+	}
+}

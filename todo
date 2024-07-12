@@ -24,3 +24,5 @@ heredoc 1 process (SIGNALS)
 !!!!!!!!!!!!!!!!!!!!
 
 bash: ls > $rr: ambiguous redirect
+
+echo -n "ah ahajghas " > out

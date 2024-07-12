@@ -28,7 +28,7 @@ int	execut_bultin(t_ast *root, t_env **env)
 	else if (ft_strcmp(cmd.args[0], "unset") == 0)
 		return (ft_unset(root->cmd.args, env));
 	else if (ft_strcmp(cmd.args[0], "echo") == 0)
-		return (ft_echo(root->cmd.args, *env));
+		return (ft_echo(root->cmd.args, *env, root->cmd.outfile));
 	else if (ft_strcmp(cmd.args[0], "exit") == 0)
 		return (ft_exit(root->cmd.args));
 	else if (ft_strcmp(cmd.args[0], "env") == 0)

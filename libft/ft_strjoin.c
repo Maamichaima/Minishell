@@ -26,7 +26,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (s1);
 	ls1 = ft_strlen(s1);
 	ls2 = ft_strlen(s2);
-	p = malloc(sizeof(char) * (ls1 + ls2 + 1));
+	p = ft_malloc(sizeof(char) * (ls1 + ls2 + 1), 'a');
 	if (!p)
 		return (NULL);
 	p[0] = '\0';

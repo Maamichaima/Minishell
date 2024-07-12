@@ -14,10 +14,13 @@
 
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
+	char **t;
+	int i = 0;
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
-	execve(cmd.path, cmd.args, list_to_table_env(env));
+	t = list_to_table_env(env);
+	execve(cmd.path, cmd.args, t);
 	message_error(cmd.args[0]);
 }
 
@@ -27,9 +30,7 @@ void	prepare_cmd(t_ast *root, t_env *env)
 	ignor_args(root->cmd.args);
 	init_infile_outfile(root->red, root);
 	if (root->cmd.args)
-	{
 		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
-	}
 	else
 		root->cmd.path = NULL;
 }

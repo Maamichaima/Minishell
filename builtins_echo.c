@@ -32,7 +32,7 @@ int	check_flag(char *flag)
 	return (1);
 }
 
-int	ft_echo(char **args, t_env *env)
+int	ft_echo(char **args, t_env *env, int outfile)
 {
 	int	new_line;
 	int	i;
@@ -40,7 +40,7 @@ int	ft_echo(char **args, t_env *env)
 	i = 0;
 	if (args[1] == NULL)
 	{
-		printf("\n");
+		write(outfile, "\n", 1);
 		return (0);
 	}
 	new_line = 0;
@@ -52,11 +52,11 @@ int	ft_echo(char **args, t_env *env)
 	}
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		write(outfile, args[i], ft_strlen(args[i]));
 		if (args[i++])
-			printf(" ");
+			write(outfile, " ", 1);
 	}
 	if (new_line != 1)
-		printf("\n");
+		write(outfile, "\n", 1);
 	return (0);
 }

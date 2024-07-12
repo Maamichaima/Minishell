@@ -34,7 +34,7 @@ int	open_here_doc(char *del, t_env *env)
 	pid_t	pid;
 
 	pipe(pipe_fd);
-	del_ = malloc(sizeof(char) * ft_strlen(del + 1));
+	del_ = ft_malloc(sizeof(char) * ft_strlen(del + 1), 'a');
 	ft_strcpy(del_, del);
 	pid = fork();
 	if (pid == 0)
@@ -45,7 +45,7 @@ int	open_here_doc(char *del, t_env *env)
 			tmp = readline("> ");
 			if (!tmp || ft_strcmp(tmp, ignor(del_)) == 0)
 			{
-				free(tmp);
+				// free(tmp);
 				break ;
 			}
 			if (check_del_quotes(del) == 1)

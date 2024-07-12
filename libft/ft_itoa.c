@@ -48,7 +48,7 @@ char	*ft_itoa(int nbr)
 		c++;
 		n = -n;
 	}
-	t = malloc(sizeof(char) * c + 1);
+	t = ft_malloc(sizeof(char) * c + 1, 'a');
 	if (!t)
 		return (NULL);
 	if (nbr < 0)

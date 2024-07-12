@@ -81,11 +81,14 @@ char	*correct_path(char **path, char *v)
 		tmp = ft_strjoin_pipe(path[i], v);
 		if (access(tmp, F_OK | X_OK) == -1)
 		{
-			free(tmp);
+			// free(tmp);
 			i++;
 		}
 		else if (access(tmp, F_OK | X_OK) == 0)
+		{
+			int j = 0;
 			return (tmp);
+		}
 	}
 	return (NULL);
 }

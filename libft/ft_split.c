@@ -110,17 +110,6 @@ char	*alloc_word(char *s, char *c)
 	return (p);
 }
 
-void	*ft_free_split(int i, char **t)
-{
-	while (i > 0)
-	{
-		free(t[i - 1]);
-		i--;
-	}
-	free(t);
-	return (NULL);
-}
-
 char	**ft_split(char *s, char *c)
 {
 	int		i;

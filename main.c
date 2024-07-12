@@ -55,10 +55,10 @@ int	wait_(t_ast *root, t_env *env)
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
-		if (WIFEXITED(status))
-			set_content(env, "?", ft_itoa(WEXITSTATUS(status)));
-		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
-			set_content(env, "?", ft_itoa(128 + WTERMSIG(status)));
+		// if (WIFEXITED(status))
+		// 	set_content(env, "?", ft_itoa(WEXITSTATUS(status)));
+		// else if (WIFSIGNALED(status) && root->cmd.pid != 0)
+		// 	set_content(env, "?", ft_itoa(128 + WTERMSIG(status)));
 	}
 	else
 	{
@@ -113,37 +113,38 @@ int	main(int c, char **av, char **env)
 
 	status = 0;
 	v = get_env_lst(env);
-	// tmp = v;
-	// signal_handler();
-	// while (1)
-	// {
-	// 	input = readline("42_bash_$ ");
-	// 	sig_flag = 1;
-	// 	if (!input)
-	// 	{
-	// 		printf("exit\n");
-	// 		exit(127);
-	// 	}
-	// 	if (*input)
-	// 		add_history(input);
-	// 	head = NULL;
-	// 	lst_token(input, &head);
-	// 	// t = is_valid_token(head)
-	// 	if ((t = is_valid_token(head))) // SGV
-	// 		error_syntax(t);
-	// 	else if (head)
-	// 	{
-	// 		root = parse_and_or(head);
-	// 		init_ast(root, v);
-	// 		execut_all_here_doc(root, v);
-	// 		executer_tree(root, root, &v);
-	// 		close_(root);
-	// 		wait_(root, v);
-	// 	}
-	// 	sig_flag = 0;
-	// 	signal(SIGQUIT, SIG_IGN);
-	// 	// free(input);
-	// }
-	// status = last_status_in_tree(root);
-	return (0);
+	tmp = v;
+	signal_handler();
+	while (1)
+	{
+		input = readline("42_bash_$ ");
+		sig_flag = 1;
+		if (!input)
+		{
+			printf("exit\n");
+			ft_malloc(0, 'f');
+			// clear_env(v);
+			exit (127);
+		}
+		if (*input)
+			add_history(input);
+		head = NULL;
+		lst_token(input, &head);
+		if ((t = is_valid_token(head))) 
+			error_syntax(t);
+		else if (head)
+		{
+			root = parse_and_or(head);
+			init_ast(root, v);
+			execut_all_here_doc(root, v);
+			executer_tree(root, root, &v);
+			close_(root);
+			wait_(root, v);
+		}
+		ft_malloc(0, 'f');
+		sig_flag = 0;
+		signal(SIGQUIT, SIG_IGN);
+		free(input);
+	}
+	exit (0);
 }

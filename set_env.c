@@ -41,15 +41,29 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	else
 	{
 		while (p->next != NULL)
-		{
 			p = p->next;
-		}
 		p->next = new;
 		new->prev = p;
 	}
 }
 // thydat 256
 char	*get_key(char *env)
+{
+	int		i;
+	char	*key;
+
+	i = 0;
+	key = ft_malloc(sizeof(char) * ft_strlen(env + 1), 'a');
+	while (env[i] && env[i] != '=' && env[i] != '+')
+	{
+		key[i] = env[i];
+		i++;
+	}
+	key[i] = '\0';
+	return (key);
+}
+
+char	*get_key_env(char *env)
 {
 	int		i;
 	char	*key;
@@ -92,6 +106,7 @@ t_env	*get_env_lst(char **env)
 	t_env	*new;
 	t_env	*path;
 	int		i;
+	char	*key;
 
 	path = NULL;
 	i = 0;
@@ -107,12 +122,14 @@ t_env	*get_env_lst(char **env)
 	else
 	{		
 		while (env && env[i])
-			{
-				new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])));
-				ft_lstadd_back_env(&path, new);
-				i++;
-			}
-			ft_lstadd_back_env(&path, ft_lstnew_env("?", ft_strdup("0")));
+		{
+			key = get_key_env(env[i]);
+			new = ft_lstnew_env(key, getenv(key));
+			ft_lstadd_back_env(&path, new);
+			i++;
+		}
+		// key = ft_strdup("0");
+		// ft_lstadd_back_env(&path, ft_lstnew_env("?", key));
 	}
 	return (path);
 }
