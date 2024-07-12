@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/10 18:19:31 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 01:22:26 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,10 @@ int	check_key_in_env(t_env *env, char *args)
 				i++;
 			}
 			if (args[i] == '+' && args[i + 1] && args[i + 1] == '=')
-			{
-				env->path = ft_strjoin(env->path, args + i + 2);
 				env->value = ft_strjoin(env->value, args + i + 2);
-			}
 			else if (args[i] == '=')
-			{
 				env->value = ignor(get_value(args));
-				env->path = args;
-			}
+				
 			return (1);
 		}
 		env = env->next;
@@ -63,7 +58,7 @@ int	ft_export(char **args, t_env *env)
 {
 	int		i;
 	t_env	*new;
-	t_env 	*tmp;
+	t_env	*tmp;
 
 	i = 0;
 	new = NULL;
@@ -79,8 +74,7 @@ int	ft_export(char **args, t_env *env)
 				return (ft_error_export(args[i]));
 			else if (!check_key_in_env(env, args[i]))
 			{
-				new = ft_lstnew_env(get_key(args[i]), ignor(get_value(args[i])),
-						args[i]);
+				new = ft_lstnew_env(get_key(args[i]), ignor(get_value(args[i])));
 				ft_lstadd_back_env(&tmp, new);
 			}
 			i++;

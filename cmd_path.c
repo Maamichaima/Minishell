@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:59:35 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/06 23:37:11 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 00:01:32 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	**get_paths(t_env *env)
 {
 	char	**paths;
 
+	paths = NULL;
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PATH") == 0)
@@ -24,6 +25,9 @@ char	**get_paths(t_env *env)
 		}
 		env = env->next;
 	}
+	if (env == NULL)
+		paths = ft_split("/nfs/homes/rraida-/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+				":");
 	return (paths);
 }
 

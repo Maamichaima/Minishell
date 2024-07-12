@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/10 17:28:18 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 02:26:41 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_env
 {
 	char			*value;
 	char			*key;
-	char			*path;
 	struct s_env	*prev;
 	struct s_env	*next;
 }					t_env;
@@ -112,7 +111,7 @@ void				infile(t_str *red);
 char				**ft_split(char const *s, char *c);
 void				initialize_cmd(t_ast *node, t_env *env);
 t_env				*get_env_lst(char **env);
-t_env				*ft_lstnew_env(char *key, char *value, char *path);
+t_env				*ft_lstnew_env(char *key, char *value);
 void				ft_lstadd_back_env(t_env **lst, t_env *new);
 char				*get_key(char *env);
 char				*get_value(char *env);
@@ -165,4 +164,5 @@ char				*ft_itoa(int nbr);
 void				ft_bzero(void *s, size_t n);
 void				set_content(t_env *env,char *key, char *content);
 int	is_builtin(t_str cmd);
+t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red);
 #endif

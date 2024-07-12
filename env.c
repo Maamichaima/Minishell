@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/06/29 18:53:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/11 23:41:38 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	**list_to_table(t_str *str)
 		if (!t[i])
 			return (NULL);
 		t[i] = ft_strcpy(t[i], str->str);
-		t[i] = t[i]; // ignor_quotes
 		str = str->next;
 		i++;
 	}

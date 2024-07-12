@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/09 15:45:19 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 02:22:36 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	check_quotes(char *str, int c, char h)
-// {
-// 	int lock;
-// 	int i;
-// 	int first;
-// 	int last;
-
-// 	i = 0;
-// 	lock = 0;
-// 	while(str[i])
-// 	{
-// 		if(lock == 0 && (str[i] == '\'' || str[i] == '"'))
-// 		{
-// 			lock = str[i];
-// 			first = i;
-// 		}
-// 		else if(lock == str[i])
-// 		{
-// 			last = i;
-// 			if(c < last && c > first)
-// 				break ;
-// 			lock = 0;
-// 		}
-// 		i++;
-// 	}
-// 	if(lock == '\"' || h == 'h')
-// 		return (1);
-// 	else if(lock == '\'')
-// 		return (-1);
-// 	else
-// 		return (0);
-// }
 
 int	len_get_expand_value(char *str)
 {
@@ -236,10 +203,3 @@ void	expand_node(t_ast *root, t_env *env)
 		red = red->next;
 	}
 }
-
-// int main(int ac, char **av, char **env)
-// {
-
-//     expand("hello$PWD$HOME", );
-
-// }

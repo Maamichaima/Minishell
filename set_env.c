@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/09 15:44:32 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 01:47:16 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_lstnew_env(char *key, char *value, char *path)
+t_env	*ft_lstnew_env(char *key, char *value)
 {
 	t_env	*new;
 
@@ -21,7 +21,6 @@ t_env	*ft_lstnew_env(char *key, char *value, char *path)
 		return (NULL);
 	new->key = key;
 	new->value = value;
-	new->path = path;
 	new->next = NULL;
 	new->prev = NULL;
 	// free(key);
@@ -98,12 +97,24 @@ t_env	*get_env_lst(char **env)
 
 	path = NULL;
 	i = 0;
-	while (env && env[i])
+	if (*env == NULL)
 	{
-		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])), env[i]);
+		new = ft_lstnew_env("PWD","/nfs/homes/rraida-/Desktop/mini");
 		ft_lstadd_back_env(&path, new);
-		i++;
+		new = ft_lstnew_env("SHLVL","1");
+		ft_lstadd_back_env(&path, new);
+		new = ft_lstnew_env("_", "/usr/bin/env");
+		ft_lstadd_back_env(&path, new);
 	}
-	ft_lstadd_back_env(&path, ft_lstnew_env("?", ft_strdup("0"), NULL));
+	else
+	{		
+		while (env && env[i])
+			{
+				new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])));
+				ft_lstadd_back_env(&path, new);
+				i++;
+			}
+			ft_lstadd_back_env(&path, ft_lstnew_env("?", ft_strdup("0")));
+	}
 	return (path);
 }

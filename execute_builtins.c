@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/10 17:22:14 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 02:11:50 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	execut_bultin(t_ast *root, t_env **env)
 {
 	t_cmd	cmd;
 
-	// expand_node(root, *env);
 	root->cmd.args = list_to_table(root->args);
 	cmd = root->cmd;
-	// // args ??
 	if (ft_strcmp(cmd.args[0], "export") == 0)
 		return (ft_export(root->cmd.args, *env));
 	else if (ft_strcmp(cmd.args[0], "cd") == 0)

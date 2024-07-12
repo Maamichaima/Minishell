@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 14:41:03 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/08 20:26:02 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 02:23:31 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,3 @@ void	*ft_malloc(int size, char c)
 	return (ptr);
 }
 
-// int main()
-// {
-//     int *t;
-//     int i = 0;
-
-//     t = (int *)ft_malloc(sizeof(int) * 5, 'a');
-//     t = (int *)ft_malloc(sizeof(int) * 5, 'a');
-//     while (i < 5)
-//     {
-//         t[i] = i;
-//         printf("%d\n", t[i]);
-//         i++;
-//     }
-//     // t = ft_malloc(0, 'f');
-
-//     return (0);
-// }

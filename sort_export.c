@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:16:22 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/07 14:40:04 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/11 23:40:58 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	**table_of_key(t_env *env)
 	while (env)
 	{
 		t[i] = env->key;
-		printf("key  --> %s   \n", t[i]);
 		env = env->next;
 		i++;
 	}
@@ -55,7 +54,6 @@ char	**sort_table(char **str)
 	j = 0;
 	while (str[i])
 	{
-		// printf("%s   \n", str[i]);
 		tmp = str[i];
 		j = i - 1;
 		while (j >= 0 && ft_strcmp(str[j], tmp) > 0)
@@ -66,7 +64,6 @@ char	**sort_table(char **str)
 		i++;
 		str[j + 1] = tmp;
 	}
-	printf("hhhhh\n");
 	return (str);
 }
 
@@ -88,24 +85,15 @@ void	ft_write_export(char **key, t_env *env)
 	i = 0;
 	while (key[i])
 	{
-		printf("declare -x %s", key[i]);
-		if (get_value_(key[i], env))
-			printf("=\"%s\"", get_value_(key[i], env));
-		printf("\n");
-		i++;
+		if (ft_strcmp("_", key[i]) == 0 || ft_strcmp("?", key[i]) == 0)
+			i++;
+		else
+		{
+			printf("declare -x %s", key[i]);
+			if (get_value_(key[i], env))
+				printf("=\"%s\"", get_value_(key[i], env));
+			printf("\n");
+			i++;
+		}
 	}
 }
-
-// int main (int c, char **v)
-// {
-//     int i = 1;
-
-//     sort_table(v+1);
-//     printf("-----------------------------\n");
-//     while(v[i])
-//     {
-//         printf("%s \n", v[i]);
-//         i++;
-//     }
-//     return (0);
-// }

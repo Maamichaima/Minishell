@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/09 19:30:16 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/11 22:02:23 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	control_c(int sig)
 	write(1, "\n", 1);
 	if (!sig_flag)
 	{
-		// rl_replace_line("",0);
-		// rl_on_new_line();
-		// rl_redisplay();
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
@@ -160,5 +160,5 @@ int	main(int c, char **av, char **env)
 		// free(input);
 	}
 	// status = last_status_in_tree(root);
-	return (0);
+	exit(0);
 }
