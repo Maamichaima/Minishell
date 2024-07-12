@@ -21,3 +21,47 @@ void	set_content(t_env *env, char *key, char *content)
 		env = env->next;
 	}
 }
+
+int	check_equal(char *str, int j)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] == '=')
+		return (0);
+	while (str[i] && i < j)
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	copy(char *dst, const char *src)
+{
+	size_t	i;
+	size_t	j;
+
+	if (!src)
+		return ;
+	i = 0;
+	j = ft_strlen(dst);
+	while (src[i] != '\0')
+	{
+		dst[j] = src[i];
+		i++;
+		j++;
+	}
+	dst[j] = '\0';
+}
+
+int	len_get_expand_value(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && (ft_isalpha(str[i]) || ft_isnum(str[i]) || str[i] == '_'))
+		i++;
+	return (i);
+}

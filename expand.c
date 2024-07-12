@@ -6,21 +6,12 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/12 02:22:36 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/12 12:14:33 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	len_get_expand_value(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && (ft_isalpha(str[i]) || ft_isnum(str[i]) || str[i] == '_'))
-		i++;
-	return (i);
-}
 // thydat 256 (fiha mochkil)
 char	*get_expand_value(char *str)
 {
@@ -40,48 +31,11 @@ char	*get_expand_value(char *str)
 	return (val);
 }
 
-int	check_equal(char *str, int j)
-{
-	int	i;
-
-	i = 0;
-	if (str[0] == '=')
-		return (0);
-	while (str[i] && i < j)
-	{
-		if (str[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	copy(char *dst, const char *src)
-{
-	size_t	i;
-	size_t	j;
-
-	if (!src)
-		return ;
-	i = 0;
-	j = ft_strlen(dst);
-	while (src[i] != '\0')
-	{
-		dst[j] = src[i];
-		i++;
-		j++;
-	}
-	dst[j] = '\0';
-}
-
 char	*expand(char *str, t_env *env, char c)
 {
-	int		i;
-	int		k;
-	char	*key;
-	char	*val;
-	char	*tmp;
-
+	char (*tmp), (*key), (*val);
+	int (i), (k);
+	
 	tmp = ft_malloc(sizeof(char) * 256, 'a');
 	i = 0;
 	k = 0;
@@ -90,7 +44,10 @@ char	*expand(char *str, t_env *env, char c)
 	{
 		while (str[i])
 		{
-			if (str[i] == '$' && check_quotes(str, i, c) != -1)
+			if(str[i] == '$' && str[i + 1] == '"' && !check_quotes(str, i, 0))
+				i++;
+			else if (str[i] == '$' && check_quotes(str, i, c) != -1
+				&&  (ft_isalpha(str[i + 1]) || ft_isnum(str[i + 1]) || str[i + 1] == '_'))
 			{
 				i++;
 				key = get_expand_value(str + i);
@@ -139,14 +96,11 @@ char	*add_quotes_dollar(char *str)
 
 char	*hmad(char *str)
 {
-	int		i;
-	int		k;
-	char	*tmp;
-	char	*key;
-
-	tmp = ft_malloc(sizeof(char) * 256, 'a');
-	i = 0;
+	int(i), (k);
+	char(*tmp), (*key);
 	k = 0;
+	i = 0;
+	tmp = ft_malloc(sizeof(char) * 256, 'a');
 	if (ft_strchr(str, '$'))
 	{
 		while (str[i])
@@ -156,8 +110,6 @@ char	*hmad(char *str)
 			{
 				i++;
 				key = get_expand_value(str + i);
-				// if(val == NULL && ft_isnum(key[0]))
-				// 	val = key + 1;
 				copy(tmp, add_quotes_dollar(key));
 				k += ft_strlen(key) + 2;
 				i += ft_strlen(key);
@@ -178,14 +130,14 @@ void	expand_node(t_ast *root, t_env *env)
 	int		i;
 	char	**tmp;
 
-	new = NULL;
 	i = 0;
+	new = NULL;
 	tmp = NULL;
 	red = root->red;
 	arg = root->args;
 	while (arg)
 	{
-		arg->str = hmad(arg->str);
+		// arg->str = hmad(arg->str);
 		tmp = ft_split(expand(arg->str, env, 'a'), "\t\n ");
 		while (tmp && tmp[i])
 		{

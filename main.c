@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/11 22:02:23 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/12 12:18:42 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,6 @@ void	close_(t_ast *root)
 	}
 }
 
-void	error_syntax(t_token *t)
-{
-	if (t)
-	{
-		if (!is_redirectien(t->type))
-		{
-			write(2, "bash: syntax error near unexpected token '", 42);
-			write(2, t->token, ft_strlen(t->token));
-			write(2, "'\n", 2);
-		}
-		else
-			write(2, "bash: syntax error near unexpected token `newline'\n",
-				52);
-	}
-}
 void	control_c(int sig)
 {
 	(void)sig;
@@ -128,37 +113,37 @@ int	main(int c, char **av, char **env)
 
 	status = 0;
 	v = get_env_lst(env);
-	tmp = v;
-	signal_handler();
-	while (1)
-	{
-		input = readline("42_bash_$ ");
-		sig_flag = 1;
-		if (!input)
-		{
-			printf("exit\n");
-			exit(127);
-		}
-		if (*input)
-			add_history(input);
-		head = NULL;
-		lst_token(input, &head);
-		// t = is_valid_token(head)
-		if ((t = is_valid_token(head))) // SGV
-			error_syntax(t);
-		else if (head)
-		{
-			root = parse_and_or(head);
-			init_ast(root, v);
-			execut_all_here_doc(root, v);
-			executer_tree(root, root, &v);
-			close_(root);
-			wait_(root, v);
-		}
-		sig_flag = 0;
-		signal(SIGQUIT, SIG_IGN);
-		// free(input);
-	}
+	// tmp = v;
+	// signal_handler();
+	// while (1)
+	// {
+	// 	input = readline("42_bash_$ ");
+	// 	sig_flag = 1;
+	// 	if (!input)
+	// 	{
+	// 		printf("exit\n");
+	// 		exit(127);
+	// 	}
+	// 	if (*input)
+	// 		add_history(input);
+	// 	head = NULL;
+	// 	lst_token(input, &head);
+	// 	// t = is_valid_token(head)
+	// 	if ((t = is_valid_token(head))) // SGV
+	// 		error_syntax(t);
+	// 	else if (head)
+	// 	{
+	// 		root = parse_and_or(head);
+	// 		init_ast(root, v);
+	// 		execut_all_here_doc(root, v);
+	// 		executer_tree(root, root, &v);
+	// 		close_(root);
+	// 		wait_(root, v);
+	// 	}
+	// 	sig_flag = 0;
+	// 	signal(SIGQUIT, SIG_IGN);
+	// 	// free(input);
+	// }
 	// status = last_status_in_tree(root);
-	exit(0);
+	return (0);
 }

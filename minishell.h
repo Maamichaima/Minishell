@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/12 02:26:41 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:31:07 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,12 @@ void 				*ft_malloc(int size, char c);
 char				*ft_itoa(int nbr);
 void				ft_bzero(void *s, size_t n);
 void				set_content(t_env *env,char *key, char *content);
-int	is_builtin(t_str cmd);
-t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red);
+int					is_builtin(t_str cmd);
+t_ast				*lstnew_ast(token_type type, t_str *cmd, t_str *red);
+void				ft_quit_signal(int sig);
+void				execute_node(t_ast *root, t_ast *const_root, t_env **env);
+void				error_syntax(t_token *t);
+void				message_error(char *str);
+void	copy(char *dst, const char *str);
+int	check_equal(char *str, int j);
 #endif

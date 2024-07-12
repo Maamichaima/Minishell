@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/12 01:47:16 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/12 12:32:02 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_env	*ft_lstnew_env(char *key, char *value)
 	new->value = value;
 	new->next = NULL;
 	new->prev = NULL;
-	// free(key);
-	// free(value);
 	return (new);
 }
 

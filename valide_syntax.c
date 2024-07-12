@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valide_syntax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/09 15:32:33 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/12 10:39:05 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,49 @@ t_token	*is_valid_token(t_token *lst)
 		lst = lst->next;
 	}
 	return (NULL);
+}
+
+void	error_syntax(t_token *t)
+{
+	if (t)
+	{
+		if (!is_redirectien(t->type))
+		{
+			write(2, "bash: syntax error near unexpected token '", 42);
+			write(2, t->token, ft_strlen(t->token));
+			write(2, "'\n", 2);
+		}
+		else
+			write(2, "bash: syntax error near unexpected token `newline'\n",
+				52);
+	}
+}
+
+void	message_error(char *str)
+{
+	if (ft_strchr(str, '/'))
+	{
+		if (access(str, F_OK) == -1)
+		{
+			perror(str);
+			exit(127);
+		}
+		if (access(str, X_OK) == -1)
+		{
+			perror(str);
+			exit(126);
+		}
+	}
+	if (access(str, F_OK) == 0)
+	{
+		write(2, "bash: ", 7);
+		write(2, str, ft_strlen(str));
+		write(2, ": Is a directory\n", 18);
+	}
+	else
+	{
+		write(2, str, ft_strlen(str));
+		write(2, ": command not found\n", 21);
+	}
+	exit(127);
 }
