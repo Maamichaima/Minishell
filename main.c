@@ -55,10 +55,10 @@ int	wait_(t_ast *root, t_env *env)
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
-		// if (WIFEXITED(status))
-		// 	set_content(env, "?", ft_itoa(WEXITSTATUS(status)));
-		// else if (WIFSIGNALED(status) && root->cmd.pid != 0)
-		// 	set_content(env, "?", ft_itoa(128 + WTERMSIG(status)));
+		if (WIFEXITED(status))
+			set_content(env, "?", ft_itoa(WEXITSTATUS(status)));
+		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
+			set_content(env, "?", ft_itoa(128 + WTERMSIG(status)));
 	}
 	else
 	{
@@ -123,7 +123,7 @@ int	main(int c, char **av, char **env)
 		{
 			printf("exit\n");
 			ft_malloc(0, 'f');
-			// clear_env(v);
+			clear_env(v);
 			exit (127);
 		}
 		if (*input)

@@ -124,7 +124,7 @@ t_env	*get_env_lst(char **env)
 		while (env && env[i])
 		{
 			key = get_key_env(env[i]);
-			new = ft_lstnew_env(key, getenv(key));
+			new = ft_lstnew_env(key, ft_strdup(getenv(key)));
 			ft_lstadd_back_env(&path, new);
 			i++;
 		}

@@ -31,7 +31,7 @@ char	**table_of_key(t_env *env)
 	int		i;
 
 	i = 0;
-	t = malloc(sizeof(char *) * (ft_lstsize_(env) + 1));
+	t = ft_malloc(sizeof(char *) * (ft_lstsize_(env) + 1), 'a');
 	if (!t)
 		return (NULL);
 	while (env)

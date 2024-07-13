@@ -15,10 +15,12 @@
 int	skip(char *key, t_env **env, t_env **new)
 {
 	int	found;
+	t_env *h;
 
 	found = 0;
 	if (ft_strcmp(get_key(key), (*new)->key) == 0)
 	{
+		h = *new;
 		if ((*new)->prev == NULL)
 		{
 			(*env) = (*env)->next;
@@ -34,6 +36,9 @@ int	skip(char *key, t_env **env, t_env **new)
 			(*new)->prev->next = (*new)->next;
 			(*new)->next->prev = (*new)->prev;
 		}
+		free(h->key);
+		free(h->value);
+		free(h);
 		found = 1;
 	}
 	return (found);
