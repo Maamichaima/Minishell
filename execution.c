@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/12 10:39:55 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/13 16:49:17 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 	close_(const_root);
 	t = list_to_table_env(env);
 	execve(cmd.path, cmd.args, t);
+	
 	message_error(cmd.args[0]);
 }
 
@@ -37,6 +38,8 @@ void	prepare_cmd(t_ast *root, t_env *env)
 
 void	set_last_env_value(t_ast *root, t_env *env)
 {
+	char *tmp;
+	
 	if (!root->args)
 		return ;
 	while (env)
@@ -45,7 +48,10 @@ void	set_last_env_value(t_ast *root, t_env *env)
 		{
 			while (root->args->next)
 				root->args = root->args->next;
-			env->value = root->args->str;
+			tmp = env->value;
+			env->value = ft_strdup(root->args->str);
+			if(tmp)
+				free(tmp);
 		}
 		env = env->next;
 	}

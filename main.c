@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/12 12:18:42 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/13 16:43:17 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	main(int c, char **av, char **env)
 		{
 			printf("exit\n");
 			ft_malloc(0, 'f');
-			clear_env(v);
+			// clear_env(v);
 			exit (127);
 		}
 		if (*input)

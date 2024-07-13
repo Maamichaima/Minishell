@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/12 12:14:33 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/13 16:34:49 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,23 +135,23 @@ void	expand_node(t_ast *root, t_env *env)
 	tmp = NULL;
 	red = root->red;
 	arg = root->args;
-	while (arg)
-	{
-		// arg->str = hmad(arg->str);
-		tmp = ft_split(expand(arg->str, env, 'a'), "\t\n ");
-		while (tmp && tmp[i])
-		{
-			ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));
-			i++;
-		}
-		i = 0;
-		arg = arg->next;
-	}
-	root->args = new;
-	while (red)
-	{
-		if (red->type != token_herd)
-			red->str = expand(red->str, env, 'a');
-		red = red->next;
-	}
+	// while (arg)
+	// {
+	// 	// arg->str = hmad(arg->str);
+	// 	tmp = ft_split(expand(arg->str, env, 'a'), "\t\n ");
+	// 	while (tmp && tmp[i])
+	// 	{
+	// 		ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));
+	// 		i++;
+	// 	}
+	// 	i = 0;
+	// 	arg = arg->next;
+	// }
+	// root->args = new;
+	// while (red)
+	// {
+	// 	if (red->type != token_herd)
+	// 		red->str = expand(red->str, env, 'a');
+	// 	red = red->next;
+	// }
 }
