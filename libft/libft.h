@@ -51,6 +51,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s1);
+char				*ft_strdup_in_gar(const char *s1);
 typedef struct s_list
 {
 	void			*content;

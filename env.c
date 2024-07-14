@@ -104,7 +104,6 @@ char	*ft_strjoin_(char *s1, char *s2)
 char	**list_to_table_env(t_env *str)
 {
 	char	**t;
-	t_env	*tmp;
 	int		i;
 
 	i = 0;

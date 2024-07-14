@@ -19,7 +19,7 @@ char	*get_expand_value(char *str)
 	char	*val;
 
 	if (str[0] == '?')
-		return (ft_strdup("?"));
+		return (ft_strdup_in_gar("?"));
 	val = ft_malloc(sizeof(char) * 256, 'a');
 	j = 0;
 	while (*str && (ft_isalpha(*str) || ft_isnum(*str) || *str == '_'))

@@ -85,10 +85,7 @@ char	*correct_path(char **path, char *v)
 			i++;
 		}
 		else if (access(tmp, F_OK | X_OK) == 0)
-		{
-			int j = 0;
 			return (tmp);
-		}
 	}
 	return (NULL);
 }

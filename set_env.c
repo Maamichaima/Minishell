@@ -128,8 +128,9 @@ t_env	*get_env_lst(char **env)
 			ft_lstadd_back_env(&path, new);
 			i++;
 		}
-		// key = ft_strdup("0");
-		// ft_lstadd_back_env(&path, ft_lstnew_env("?", key));
+		key = ft_strdup("0");
+		t_env *x = ft_lstnew_env(ft_strdup("?"), key);
+		ft_lstadd_back_env(&path, x);
 	}
 	return (path);
 }

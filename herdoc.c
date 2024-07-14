@@ -19,8 +19,6 @@ void	fd_here_doc(t_str *red, t_env *env)
 
 void	execut_all_here_doc(t_ast *root, t_env *env)
 {
-	t_str	*r;
-
 	if (root->type == token_cmd)
 		fd_here_doc(root->red, env);
 	else

@@ -21,6 +21,8 @@ char	*ignor(char *str)
 	i = 0;
 	j = 0;
 	c = 0;
+	if(!str)
+		return NULL;
 	while (str[i])
 	{
 		if (c == 0 && (str[i] == '\'' || str[i] == '\"'))

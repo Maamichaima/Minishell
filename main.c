@@ -50,15 +50,15 @@ void	printf_tree(t_ast *root)
 int	wait_(t_ast *root, t_env *env)
 {
 	int		status;
-	char	*tmp;
 
+	status = 0;
 	if (root->type == token_cmd)
 	{
 		waitpid(root->cmd.pid, &status, 0);
 		if (WIFEXITED(status))
-			set_content(env, "?", ft_itoa(WEXITSTATUS(status)));
+			set_content_f(env, "?", ft_itoa(WEXITSTATUS(status)));
 		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
-			set_content(env, "?", ft_itoa(128 + WTERMSIG(status)));
+			set_content_f(env, "?", ft_itoa(128 + WTERMSIG(status)));
 	}
 	else
 	{
@@ -124,13 +124,13 @@ void start_minishell(t_token *head,t_env *v)
 int	main(int c, char **av, char **env)
 {
 	char	*input;
-	t_token	*head, *p;
-	t_ast	*root;
+	t_token	*head;
 	t_env	*v;
-	t_token	*t;
 	int		status;
 	t_env	*tmp;
 
+	(void) c;
+	(void) av;
 	status = 0;
 	v = get_env_lst(env);
 	tmp = v;
@@ -143,7 +143,7 @@ int	main(int c, char **av, char **env)
 		{
 			printf("exit\n");
 			ft_malloc(0, 'f');
-			// clear_env(v);
+			clear_env(v);
 			exit (127);
 		}
 		if (*input)

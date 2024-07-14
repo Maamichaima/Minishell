@@ -15,7 +15,6 @@
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
 	char **t;
-	int i = 0;
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
@@ -59,7 +58,7 @@ void	set_last_env_value(t_ast *root, t_env *env)
 void	execute_node(t_ast *root, t_ast *const_root, t_env **env)
 {
 	if ((root->args) && is_builtin(*(root->args)))
-		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env)));
+		set_content_f(*env, "?", ft_itoa(check_bultins(root, const_root, env)));
 	else
 	{
 		root->cmd.pid = fork();

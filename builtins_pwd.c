@@ -14,6 +14,7 @@
 
 int	ft_pwd(t_env *env)
 {
+	(void)env;
 	printf("%s\n", getcwd(NULL, 0));
 	return (0);
 }

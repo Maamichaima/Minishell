@@ -16,9 +16,7 @@ int	ft_env(t_env *env) // env (dhfbuhbshb || path)
 {
 	while (env)
 	{
-		if (env->value == NULL)
-			(env) = (env)->next;
-		else if (ft_strcmp("_", env->key) == 0)
+		if (ft_strcmp("_", env->key) == 0)
 			printf("%s=/usr/bin/env\n", env->key);
 		else if (ft_strcmp("?", env->key) == 0)
 		{
@@ -26,7 +24,10 @@ int	ft_env(t_env *env) // env (dhfbuhbshb || path)
 			continue ;
 		}
 		else
-			printf("%s=%s\n", env->key, env->value);
+		{
+			if(env->value && env->key)
+				printf("%s=%s\n", env->key, env->value);
+		}
 		(env) = (env)->next;
 	}
 	return (0);

@@ -32,7 +32,7 @@ int	check_flag(char *flag)
 	return (1);
 }
 
-int	ft_echo(char **args, t_env *env, int outfile)
+int	ft_echo(char **args, int outfile)
 {
 	int	new_line;
 	int	i;
