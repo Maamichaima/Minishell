@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/12 11:31:07 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/14 12:00:27 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,4 +172,5 @@ void				message_error(char *str);
 void				copy(char *dst, const char *str);
 int					check_equal(char *str, int j);
 void 				clear_env(t_env *env);
+int					check_herdoc(t_token *head,t_env *env);
 #endif

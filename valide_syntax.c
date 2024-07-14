@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/12 10:39:05 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/14 13:40:30 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,26 @@ int	is_valid_word(char *s)
 	else
 		return (0);
 }
-
+int 	check_herdoc(t_token *head,t_env *env)
+{
+	int status;
+	int flag = 0;
+	while(head)
+	{
+		if(head->type == token_herd)
+		{
+			flag = 1;
+			open_here_doc(head->next->token ,env);
+			wait(&status);
+			if (status)
+				break ;
+		}
+		head= head->next;
+	}
+	if(head ==  NULL && flag == 1)
+		return(1);
+	return(flag);
+}
 t_token	*is_valid_token(t_token *lst)
 {
 	while (lst)

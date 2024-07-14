@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/13 16:43:17 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/14 14:13:32 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,30 @@ void	signal_handler(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, control_c);
 }
+
+void start_minishell(t_token *head,t_env *v)
+{
+	t_ast	*root;
+	t_token	*t;
+	
+	if ((t = is_valid_token(head)) && check_herdoc(head,v))
+			error_syntax(t);
+	else if ((t = is_valid_token(head))) 
+			error_syntax(t);
+	else if (head)
+	{
+		root = parse_and_or(head);
+		init_ast(root, v);
+		execut_all_here_doc(root, v);
+		executer_tree(root, root, &v);
+		close_(root);
+		wait_(root, v);
+	}
+}
 int	main(int c, char **av, char **env)
 {
 	char	*input;
-	t_token	*head;
+	t_token	*head, *p;
 	t_ast	*root;
 	t_env	*v;
 	t_token	*t;
@@ -130,17 +150,9 @@ int	main(int c, char **av, char **env)
 			add_history(input);
 		head = NULL;
 		lst_token(input, &head);
-		if ((t = is_valid_token(head))) 
-			error_syntax(t);
-		else if (head)
-		{
-			root = parse_and_or(head);
-			init_ast(root, v);
-			execut_all_here_doc(root, v);
-			executer_tree(root, root, &v);
-			close_(root);
-			wait_(root, v);
-		}
+		
+		start_minishell(head,v);
+		
 		ft_malloc(0, 'f');
 		sig_flag = 0;
 		signal(SIGQUIT, SIG_IGN);

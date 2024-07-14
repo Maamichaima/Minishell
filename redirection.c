@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/06 23:40:30 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/14 14:22:29 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	open_here_doc(char *del, t_env *env)
 			tmp = readline("> ");
 			if (!tmp || ft_strcmp(tmp, ignor(del_)) == 0)
 			{
-				// free(tmp);
+				free(tmp);
 				break ;
 			}
 			if (check_del_quotes(del) == 1)
@@ -59,9 +59,11 @@ int	open_here_doc(char *del, t_env *env)
 							env, 'h')));
 				write(pipe_fd[1], "\n", 1);
 			}
+			free(tmp);
 		}
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
+		ft_malloc(0, 'f');
 		exit(0);
 	}
 	close(pipe_fd[1]);
@@ -74,6 +76,7 @@ void	outfile(t_str *red)
 	{
 		if (red->type == token_apend)
 		{
+			printf("%s\n",red->str);
 			red->fd = open(ignor(red->str), O_CREAT | O_APPEND | O_WRONLY,
 					0644);
 			if (red->fd == -1)
