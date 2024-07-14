@@ -28,6 +28,7 @@ int	is_valid_word(char *s)
 
 	i = 0;
 	lock = 0;
+	j = -1;
 	while (s[i])
 	{
 		if (!lock && (s[i] == '\'' || s[i] == '"'))

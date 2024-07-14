@@ -68,6 +68,8 @@ void	execute_node(t_ast *root, t_ast *const_root, t_env **env)
 			prepare_cmd(root, *env);
 			if (root->args)
 				executer_cmd(root->cmd, *env, const_root);
+			else
+				exit(0);
 		}
 	}
 }
@@ -78,8 +80,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 	if (root->type == token_cmd)
 	{
 		expand_node(root, *env);
-		// if (root->args != NULL)
-			execute_node(root, const_root, env);
+		execute_node(root, const_root, env);
 		set_last_env_value(root, *env);
 	}
 	else

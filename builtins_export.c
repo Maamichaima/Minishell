@@ -74,7 +74,7 @@ int	ft_export(char **args, t_env *env)
 				return (ft_error_export(args[i]));
 			else if (!check_key_in_env(env, args[i]))
 			{
-				// printf("%s   %s \n", get_key(args[i]), ignor(get_value(args[i])));
+				//printf("%s   %s \n", get_key(args[i]), ignor(get_value(args[i])));
 				new = ft_lstnew_env(get_key_env(args[i]), ignor(get_value(args[i])));
 				ft_lstadd_back_env(&tmp, new);
 			}

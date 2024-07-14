@@ -7,7 +7,7 @@ ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
 OBJS = ${SRCS:.c=.o}
 OBJB = ${SRCB:.c=.o}
 NAME = libft.a 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = #-fsanitize=address -Wall -Wextra -Werror
 all : ${NAME}
 ${NAME}: ${OBJS}
 	ar rc ${NAME} ${OBJS}

@@ -5,17 +5,17 @@ SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c create_tree.c env.c se
 	  utils_0.c lst_str.c herdoc.c
 OBJ = ${SRC:.c=.o}
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS =  #-fsanitize=address #-Wall -Wextra -Werror
 LDFLAGS = -lreadline
 NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
-CC = cc
+CC = cc -g
 
 all: ${NAME}
 
 ${NAME}: ${OBJ} $(LIBFT)
-	@$(CC) -o ${NAME} ${OBJ} ${LIBFT} ${LDFLAGS} ${FLAGS}
+	@$(CC) -o ${NAME} ${OBJ} ${LIBFT} ${LDFLAGS} ${CFLAGS}
 	@echo "everything is successfully completed"
 
 clean:
