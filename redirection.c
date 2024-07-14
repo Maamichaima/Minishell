@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/14 14:22:29 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/14 16:21:25 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	outfile(t_str *red)
 	{
 		if (red->type == token_apend)
 		{
-			printf("%s\n",red->str);
 			red->fd = open(ignor(red->str), O_CREAT | O_APPEND | O_WRONLY,
 					0644);
 			if (red->fd == -1)

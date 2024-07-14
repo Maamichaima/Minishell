@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/14 14:24:21 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/14 16:19:58 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	set_last_env_value(t_ast *root, t_env *env)
 
 void	execute_node(t_ast *root, t_ast *const_root, t_env **env)
 {
-	if (is_builtin(*(root->args)))
+	if ((root->args) && is_builtin(*(root->args)))
 		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env)));
 	else
 	{
@@ -78,7 +78,7 @@ void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 	if (root->type == token_cmd)
 	{
 		expand_node(root, *env);
-		if (root->args != NULL)
+		// if (root->args != NULL)
 			execute_node(root, const_root, env);
 		set_last_env_value(root, *env);
 	}

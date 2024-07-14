@@ -7,6 +7,6 @@ bash: ls > $rr: ambiguous redirect
 
 export (problem f key)
 
- ls | >> l 
-ls | > l
+ls | >> l (done)
+ls | > l (done)
 

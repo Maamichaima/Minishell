@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/14 14:13:32 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/14 15:54:10 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ void start_minishell(t_token *head,t_env *v)
 	t_token	*t;
 	
 	if ((t = is_valid_token(head)) && check_herdoc(head,v))
-			error_syntax(t);
+		error_syntax(t);
 	else if ((t = is_valid_token(head))) 
-			error_syntax(t);
+		error_syntax(t);
 	else if (head)
 	{
 		root = parse_and_or(head);
@@ -150,9 +150,7 @@ int	main(int c, char **av, char **env)
 			add_history(input);
 		head = NULL;
 		lst_token(input, &head);
-		
 		start_minishell(head,v);
-		
 		ft_malloc(0, 'f');
 		sig_flag = 0;
 		signal(SIGQUIT, SIG_IGN);
