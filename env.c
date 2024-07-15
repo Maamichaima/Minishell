@@ -6,25 +6,11 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/13 16:32:03 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 01:06:05 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strcpy(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s2[i])
-	{
-		s1[i] = s2[i];
-		i++;
-	}
-	s1[i] = s2[i];
-	return (s1);
-}
 
 int	ft_lstsize(t_str *lst)
 {
@@ -82,8 +68,8 @@ char	*ft_strjoin_(char *s1, char *s2)
 	int		ls2;
 	char	*p;
 
-	if(!s1 && !s2)
-		return NULL;
+	if (!s1 && !s2)
+		return (NULL);
 	if (!s1)
 		return (s2);
 	if (!s2)
@@ -113,7 +99,6 @@ char	**list_to_table_env(t_env *str)
 	while (str)
 	{
 		t[i] = ft_strjoin_(str->key, str->value);
-		// printf("%s   \n", t[i]);
 		str = str->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/14 17:51:50 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 00:49:12 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,9 @@ char	*get_key_env(char *env)
 char	*get_value(char *env)
 {
 	int		i;
-	int		j;
 	char	*value;
 
 	i = 0;
-	j = 0;
 	while (env[i] && env[i] != '=')
 	{
 		i++;

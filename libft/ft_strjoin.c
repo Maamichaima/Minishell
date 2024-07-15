@@ -18,8 +18,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		ls2;
 	char	*p;
 
-	if(!s1 && !s2)
-		return NULL;
+	if (!s1 && !s2)
+		return (NULL);
 	if (!s1)
 		return (s2);
 	if (!s2)

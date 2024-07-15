@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 15:55:10 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/08 18:29:18 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 00:44:45 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s1);
 char				*ft_strdup_in_gar(const char *s1);
+int					check_quotes(char *str, int c, char h);
 typedef struct s_list
 {
 	void			*content;
@@ -67,5 +68,5 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
-void 				*ft_malloc(int size, char c);
+void				*ft_malloc(int size, char c);
 #endif

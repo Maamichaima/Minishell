@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:56:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/08 19:26:07 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 00:45:48 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,35 @@
 
 int	check_quotes(char *str, int c, char h)
 {
-	int lock;
-	int i;
-	int first;
-	int last;
+	int	lock;
+	int	i;
+	int	first;
+	int	last;
 
 	i = 0;
 	lock = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if(lock == 0 && (str[i] == '\'' || str[i] == '"'))
+		if (lock == 0 && (str[i] == '\'' || str[i] == '"'))
 		{
 			lock = str[i];
 			first = i;
 		}
-		else if(lock == str[i])
+		else if (lock == str[i])
 		{
 			last = i;
-			if(c < last && c > first)
-				break;
+			if (c < last && c > first)
+				break ;
 			lock = 0;
 		}
 		i++;
 	}
-	if(lock == '\"' || h == 'h')
-		return 1;
-	else if(lock == '\'')
-		return -1;
+	if (lock == '\"' || h == 'h')
+		return (1);
+	else if (lock == '\'')
+		return (-1);
 	else
-		return 0;
+		return (0);
 }
 
 int	is_separator(char *str, int a, char *charset)
@@ -123,7 +123,7 @@ char	**ft_split(char *s, char *c)
 	tab = (char **)ft_malloc(sizeof(char *) * (count_word(s, c) + 1), 'a');
 	if (!tab)
 		return (NULL);
-	while (s[i] != '\0') 
+	while (s[i] != '\0')
 	{
 		while (s[i] != '\0' && is_separator(s, i, c))
 			i++;

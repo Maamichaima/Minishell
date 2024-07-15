@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/14 15:54:10 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 00:48:50 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void	control_c(int sig)
 	write(1, "\n", 1);
 	if (!sig_flag)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 }
 
@@ -126,14 +126,10 @@ int	main(int c, char **av, char **env)
 	char	*input;
 	t_token	*head;
 	t_env	*v;
-	int		status;
-	t_env	*tmp;
 
 	(void) c;
 	(void) av;
-	status = 0;
 	v = get_env_lst(env);
-	tmp = v;
 	signal_handler();
 	while (1)
 	{

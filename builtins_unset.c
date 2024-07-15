@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:04:34 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/10 17:07:18 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 00:58:40 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	skip(char *key, t_env **env, t_env **new)
 {
-	int	found;
-	t_env *h;
+	int		found;
+	t_env	*h;
 
 	found = 0;
 	if (ft_strcmp(get_key(key), (*new)->key) == 0)
@@ -27,10 +27,7 @@ int	skip(char *key, t_env **env, t_env **new)
 			(*env)->prev = NULL;
 		}
 		else if (!(*new)->next)
-		{
 			(*new)->prev->next = NULL;
-			found = 1;
-		}
 		else
 		{
 			(*new)->prev->next = (*new)->next;
@@ -61,12 +58,10 @@ int	supp(char *key, t_env **env)
 
 int	ft_unset(char **args, t_env **env)
 {
-	t_env	*new;
-	int		i;
-	int		found;
+	int	i;
+	int	found;
 
 	found = 0;
-	new = *env;
 	i = 0;
 	if (!args[1])
 		return (1);

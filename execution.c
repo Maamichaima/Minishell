@@ -14,7 +14,8 @@
 
 void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
-	char **t;
+	char	**t;
+
 	dup2(cmd.infile, 0);
 	dup2(cmd.outfile, 1);
 	close_(const_root);
@@ -36,8 +37,8 @@ void	prepare_cmd(t_ast *root, t_env *env)
 
 void	set_last_env_value(t_ast *root, t_env *env)
 {
-	char *tmp;
-	
+	char	*tmp;
+
 	if (!root->args)
 		return ;
 	while (env)
@@ -48,7 +49,7 @@ void	set_last_env_value(t_ast *root, t_env *env)
 				root->args = root->args->next;
 			tmp = env->value;
 			env->value = ft_strdup(root->args->str);
-			if(tmp)
+			if (tmp)
 				free(tmp);
 		}
 		env = env->next;

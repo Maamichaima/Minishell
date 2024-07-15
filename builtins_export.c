@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/14 17:52:22 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 00:54:10 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	check_key_in_env(t_env *env, char *args)
 				env->value = ft_strjoin(env->value, args + i + 2);
 			else if (args[i] == '=')
 				env->value = ignor(get_value(args));
-				
 			return (1);
 		}
 		env = env->next;
@@ -54,7 +53,7 @@ int	ft_error_export(char *str)
 	return (1);
 }
 
-int	ft_export(char **args, t_env *env)
+int	ft_export(char **a, t_env *env)
 {
 	int		i;
 	t_env	*new;
@@ -63,18 +62,18 @@ int	ft_export(char **args, t_env *env)
 	i = 0;
 	new = NULL;
 	tmp = env;
-	if (args[0] && !args[1])
+	if (a[0] && !a[1])
 		ft_write_export(sort_table(table_of_key(env)), env);
 	else
 	{
 		i++;
-		while (args[i])
+		while (a[i])
 		{
-			if (valide_key(args[i]) == 0)
-				return (ft_error_export(args[i]));
-			else if (!check_key_in_env(env, args[i]))
+			if (valide_key(a[i]) == 0)
+				return (ft_error_export(a[i]));
+			else if (!check_key_in_env(env, a[i]))
 			{
-				new = ft_lstnew_env(get_key_env(args[i]), ignor(get_value(args[i])));
+				new = ft_lstnew_env(get_key_env(a[i]), ignor(get_value(a[i])));
 				ft_lstadd_back_env(&tmp, new);
 			}
 			i++;
