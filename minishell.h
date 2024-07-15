@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 19:47:46 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 21:30:17 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef enum
+typedef enum s_token_type
 {
 	token_pipe,
 	token_red_input,
@@ -39,7 +39,7 @@ typedef enum
 	token_right_par,
 	token_word,
 	token_cmd
-}						token_type;
+}						t_token_type;
 
 typedef struct s_cmd
 {
@@ -61,7 +61,7 @@ typedef struct s_env
 typedef struct s_token
 {
 	char				*token;
-	token_type			type;
+	t_token_type		type;
 	struct s_token		*next;
 	struct s_token		*prev;
 }						t_token;
@@ -70,13 +70,13 @@ typedef struct s_str
 {
 	char				*str;
 	int					fd;
-	token_type			type;
+	t_token_type		type;
 	struct s_str		*next;
 }						t_str;
 
 typedef struct s_ast
 {
-	token_type			type;
+	t_token_type		type;
 	t_str				*args;
 	t_str				*red;
 	t_cmd				cmd;
@@ -101,7 +101,7 @@ t_token					*ft_lstlast(t_token *lst);
 void					ft_lstadd_back(t_token **lst, t_token *new);
 int						is_symbol(char c);
 char					*get_next_token(char *s);
-int						is_redirectien(token_type type);
+int						is_redirectien(t_token_type type);
 t_token					*is_valid_token(t_token *lst);
 int						is_valid_word(char *s);
 t_ast					*parse_pipe(t_token *lst);
@@ -166,14 +166,14 @@ int						check_quotes(char *str, int c, char h);
 char					*ft_strcpy(char *s1, char *s2);
 void					ignor_args(char **args);
 void					ft_lstadd_back_str(t_str **lst, t_str *new);
-t_str					*lst_new_str(char *content, token_type type);
+t_str					*lst_new_str(char *content, t_token_type type);
 void					*ft_malloc(int size, char c);
 char					*ft_itoa(int nbr);
 void					ft_bzero(void *s, size_t n);
 void					set_content(t_env *env, char *key, char *content);
 void					set_content_f(t_env *env, char *key, char *content);
 int						is_builtin(t_str cmd);
-t_ast					*lstnew_ast(token_type type, t_str *cmd, t_str *red);
+t_ast					*lstnew_ast(t_token_type type, t_str *cmd, t_str *red);
 void					ft_quit_signal(int sig);
 void					execute_node(t_ast *root, t_ast *const_root,
 							t_env **env);
@@ -189,6 +189,13 @@ int						check_ex(char *s, char c, int i);
 int						is_whitespace(char c);
 void					inisialiser_ite(t_ite *ite);
 char					*ft_strdup_in_gar(const char *s1);
-int is_valide_pipe(t_token *lst);
-int is_valid_and_or(t_token *lst);
+int						is_valide_pipe(t_token *lst);
+int						is_valid_and_or(t_token *lst);
+void					control_c(int sig);
+void					ctl_d(t_env *v);
+void					signal_handler(void);
+void					close_(t_ast *root);
+int						wait_(t_ast *root, t_env *env);
+void					lst_token(char *ligne, t_token **head);
+
 #endif

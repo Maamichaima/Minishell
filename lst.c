@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:50:22 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 19:48:17 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 21:10:23 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-token_type	set_type(char *content)
+t_token_type	set_type(char *content)
 {
-	token_type	type;
+	t_token_type	type;
 
 	if (!ft_strcmp(content, "<"))
 		type = token_red_input;

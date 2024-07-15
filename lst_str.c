@@ -6,13 +6,13 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:36:46 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 18:37:29 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 21:25:46 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red)
+t_ast	*lstnew_ast(t_token_type type, t_str *cmd, t_str *red)
 {
 	t_ast	*l;
 
@@ -29,7 +29,7 @@ t_ast	*lstnew_ast(token_type type, t_str *cmd, t_str *red)
 	return (l);
 }
 
-t_str	*lst_new_str(char *content, token_type type)
+t_str	*lst_new_str(char *content, t_token_type type)
 {
 	t_str	*l;
 
@@ -63,5 +63,18 @@ void	ft_lstadd_back_str(t_str **lst, t_str *new)
 	{
 		t = ft_lstlast_str(*lst);
 		t->next = new;
+	}
+}
+
+void	lst_token(char *ligne, t_token **head)
+{
+	char	*token;
+
+	while (*ligne != '\0')
+	{
+		token = get_next_token(ligne);
+		if (!token)
+			break ;
+		ft_lstadd_back(head, ft_lstnew(token));
 	}
 }

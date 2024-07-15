@@ -6,13 +6,13 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:39:09 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 19:39:49 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 21:10:57 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_redirectien(token_type type)
+int	is_redirectien(t_token_type type)
 {
 	if (type == token_red_input || type == token_red_output
 		|| type == token_herd || type == token_apend)

@@ -2,7 +2,8 @@ SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c create_tree.c env.c se
       redirection.c execution.c pre_execution.c builtins_utils.c quotes.c execute_builtins.c\
       sort_export.c count_cmd.c expand.c ft_malloc.c builtins_cd.c builtins_exit.c\
 	  builtins_pwd.c builtins_echo.c builtins_unset.c builtins_export.c builtins_env.c\
-	  utils_0.c lst_str.c herdoc.c utils_1.c expand_utils.c set_env_utils.c valide_syntax_utils.c
+	  utils_0.c lst_str.c herdoc.c utils_1.c expand_utils.c set_env_utils.c valide_syntax_utils.c\
+	  signal.c wait_close.c
 OBJ = ${SRC:.c=.o}
 
 CFLAGS =  -Wall -Wextra -Werror #-fsanitize=address #

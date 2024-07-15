@@ -6,44 +6,11 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:56:50 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/15 00:45:48 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 21:45:01 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-int	check_quotes(char *str, int c, char h)
-{
-	int	lock;
-	int	i;
-	int	first;
-	int	last;
-
-	i = 0;
-	lock = 0;
-	while (str[i])
-	{
-		if (lock == 0 && (str[i] == '\'' || str[i] == '"'))
-		{
-			lock = str[i];
-			first = i;
-		}
-		else if (lock == str[i])
-		{
-			last = i;
-			if (c < last && c > first)
-				break ;
-			lock = 0;
-		}
-		i++;
-	}
-	if (lock == '\"' || h == 'h')
-		return (1);
-	else if (lock == '\'')
-		return (-1);
-	else
-		return (0);
-}
 
 int	is_separator(char *str, int a, char *charset)
 {

@@ -6,25 +6,13 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 00:48:50 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 21:36:13 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		sig_flag = 0;
-void	lst_token(char *ligne, t_token **head)
-{
-	char	*token;
-
-	while (*ligne != '\0')
-	{
-		token = get_next_token(ligne);
-		if (!token)
-			break ;
-		ft_lstadd_back(head, ft_lstnew(token));
-	}
-}
 
 void	print(t_ast *root)
 {
@@ -47,69 +35,15 @@ void	printf_tree(t_ast *root)
 		printf_tree(root->right);
 }
 
-int	wait_(t_ast *root, t_env *env)
-{
-	int	status;
-
-	status = 0;
-	if (root->type == token_cmd)
-	{
-		waitpid(root->cmd.pid, &status, 0);
-		if (WIFEXITED(status))
-			set_content_f(env, "?", ft_itoa(WEXITSTATUS(status)));
-		else if (WIFSIGNALED(status) && root->cmd.pid != 0)
-			set_content_f(env, "?", ft_itoa(128 + WTERMSIG(status)));
-	}
-	else
-	{
-		wait_(root->left, env);
-		wait_(root->right, env);
-	}
-	return (status);
-}
-
-void	close_(t_ast *root)
-{
-	if (root->type == token_cmd)
-	{
-		if (root->cmd.infile != 0)
-			close(root->cmd.infile);
-		if (root->cmd.outfile != 1)
-			close(root->cmd.outfile);
-	}
-	else
-	{
-		close_(root->left);
-		close_(root->right);
-	}
-}
-
-void	control_c(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	if (!sig_flag)
-	{
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
-	}
-}
-
-void	signal_handler(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, control_c);
-}
-
 void	start_minishell(t_token *head, t_env *v)
 {
 	t_ast	*root;
 	t_token	*t;
 
-	if ((t = is_valid_token(head)) && check_herdoc(head, v))
+	t = is_valid_token(head);
+	if (t && check_herdoc(head, v))
 		error_syntax(t);
-	else if ((t = is_valid_token(head)))
+	else if (t)
 		error_syntax(t);
 	else if (head)
 	{
@@ -121,6 +55,19 @@ void	start_minishell(t_token *head, t_env *v)
 		wait_(root, v);
 	}
 }
+
+void	control_c(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	if (!sig_flag)
+	{
+	// 	rl_replace_line("", 0);
+	// 	rl_on_new_line();
+	// 	rl_redisplay();
+	}
+}
+
 int	main(int c, char **av, char **env)
 {
 	char	*input;
@@ -136,12 +83,7 @@ int	main(int c, char **av, char **env)
 		input = readline("42_bash_$ ");
 		sig_flag = 1;
 		if (!input)
-		{
-			printf("exit\n");
-			ft_malloc(0, 'f');
-			clear_env(v);
-			exit(127);
-		}
+			ctl_d(v);
 		if (*input)
 			add_history(input);
 		head = NULL;
