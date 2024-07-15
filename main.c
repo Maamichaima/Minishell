@@ -49,7 +49,7 @@ void	printf_tree(t_ast *root)
 
 int	wait_(t_ast *root, t_env *env)
 {
-	int		status;
+	int	status;
 
 	status = 0;
 	if (root->type == token_cmd)
@@ -102,14 +102,14 @@ void	signal_handler(void)
 	signal(SIGINT, control_c);
 }
 
-void start_minishell(t_token *head,t_env *v)
+void	start_minishell(t_token *head, t_env *v)
 {
 	t_ast	*root;
 	t_token	*t;
-	
-	if ((t = is_valid_token(head)) && check_herdoc(head,v))
+
+	if ((t = is_valid_token(head)) && check_herdoc(head, v))
 		error_syntax(t);
-	else if ((t = is_valid_token(head))) 
+	else if ((t = is_valid_token(head)))
 		error_syntax(t);
 	else if (head)
 	{
@@ -127,8 +127,8 @@ int	main(int c, char **av, char **env)
 	t_token	*head;
 	t_env	*v;
 
-	(void) c;
-	(void) av;
+	(void)c;
+	(void)av;
 	v = get_env_lst(env);
 	signal_handler();
 	while (1)
@@ -140,17 +140,17 @@ int	main(int c, char **av, char **env)
 			printf("exit\n");
 			ft_malloc(0, 'f');
 			clear_env(v);
-			exit (127);
+			exit(127);
 		}
 		if (*input)
 			add_history(input);
 		head = NULL;
 		lst_token(input, &head);
-		start_minishell(head,v);
+		start_minishell(head, v);
 		ft_malloc(0, 'f');
 		sig_flag = 0;
 		signal(SIGQUIT, SIG_IGN);
 		free(input);
 	}
-	exit (0);
+	exit(0);
 }

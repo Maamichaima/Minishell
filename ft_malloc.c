@@ -77,13 +77,13 @@ void	*ft_malloc(int size, char c)
 	return (ptr);
 }
 
-void clear_env(t_env *env)
+void	clear_env(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
-	if(!env)
+	if (!env)
 		return ;
-	while(env)
+	while (env)
 	{
 		tmp = env->next;
 		free(env->key);

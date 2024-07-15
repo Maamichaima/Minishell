@@ -10,3 +10,4 @@ export (problem f key)
 ls | >> l (done)
 ls | > l (done)
 
+env -i 

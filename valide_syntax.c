@@ -6,65 +6,33 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/14 15:37:02 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 19:39:33 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_redirectien(token_type type)
+int	check_herdoc(t_token *head, t_env *env)
 {
-	if (type == token_red_input || type == token_red_output
-		|| type == token_herd || type == token_apend)
-		return (1);
-	return (0);
-}
+	int	status;
+	int	flag;
 
-int	is_valid_word(char *s)
-{
-	char	lock;
-	int		i;
-	int		j;
-
-	i = 0;
-	lock = 0;
-	j = -1;
-	while (s[i])
+	flag = 0;
+	while (head)
 	{
-		if (!lock && (s[i] == '\'' || s[i] == '"'))
-		{
-			lock = s[i];
-			j = i;
-		}
-		if (j != i && lock == s[i])
-			lock = 0;
-		i++;
-	}
-	if (!lock)
-		return (1);
-	else
-		return (0);
-}
-
-int 	check_herdoc(t_token *head,t_env *env)
-{
-	int status;
-	int flag = 0;
-	while(head)
-	{
-		if(head->type == token_herd && head->next)
+		if (head->type == token_herd && head->next)
 		{
 			flag = 1;
-			open_here_doc(head->next->token ,env);
+			open_here_doc(head->next->token, env);
 			wait(&status);
 			if (status)
 				break ;
 		}
 		head = head->next;
 	}
-	if(head ==  NULL && flag == 1)
-		return(1);
-	return(flag);
+	if (head == NULL && flag == 1)
+		return (1);
+	return (flag);
 }
 
 t_token	*is_valid_token(t_token *lst)
@@ -78,21 +46,12 @@ t_token	*is_valid_token(t_token *lst)
 		}
 		if (lst->type == token_or || lst->type == token_and)
 		{
-			if (!lst->prev || !lst->next)
-				return (lst);
-			if ((lst->next->type != token_word
-					&& !is_redirectien(lst->next->type))
-				|| (lst->prev->type != token_word
-					&& !is_redirectien(lst->prev->type)))
+			if ((!lst->prev || !lst->next) || is_valid_and_or(lst))
 				return (lst);
 		}
 		if (lst->type == token_pipe)
 		{
-			if (!lst->prev || !lst->next)
-				return (lst);
-			if ((lst->prev->type != token_word)
-				|| (lst->next->type != token_word
-					&& !is_redirectien(lst->next->type)))
+			if (!lst->prev || !lst->next || is_valide_pipe(lst))
 				return (lst);
 		}
 		if (lst->type == token_word)

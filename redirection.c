@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/14 16:21:25 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 19:10:25 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,35 @@ int	check_del_quotes(char *del)
 	return (0);
 }
 
-int	open_here_doc(char *del, t_env *env)
+void	in_the_pipe(char *del, int *p_fd, t_env *env, char *del_)
 {
 	char	*tmp;
+
+	while (1)
+	{
+		tmp = readline("> ");
+		if (!tmp || ft_strcmp(tmp, ignor(del_)) == 0)
+		{
+			free(tmp);
+			break ;
+		}
+		if (check_del_quotes(del) == 1)
+		{
+			write(p_fd[1], tmp, ft_strlen(tmp));
+			write(p_fd[1], "\n", 1);
+		}
+		else
+		{
+			write(p_fd[1], expand(tmp, env, 'h'), ft_strlen(expand(tmp, env,
+						'h')));
+			write(p_fd[1], "\n", 1);
+		}
+		free(tmp);
+	}
+}
+
+int	open_here_doc(char *del, t_env *env)
+{
 	char	*del_;
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -40,27 +66,7 @@ int	open_here_doc(char *del, t_env *env)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		while (1)
-		{
-			tmp = readline("> ");
-			if (!tmp || ft_strcmp(tmp, ignor(del_)) == 0)
-			{
-				free(tmp);
-				break ;
-			}
-			if (check_del_quotes(del) == 1)
-			{
-				write(pipe_fd[1], tmp, ft_strlen(tmp));
-				write(pipe_fd[1], "\n", 1);
-			}
-			else
-			{
-				write(pipe_fd[1], expand(tmp, env, 'h'), ft_strlen(expand(tmp,
-							env, 'h')));
-				write(pipe_fd[1], "\n", 1);
-			}
-			free(tmp);
-		}
+		in_the_pipe(del, pipe_fd, env, del_);
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 		ft_malloc(0, 'f');

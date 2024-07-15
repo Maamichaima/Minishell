@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   herdoc.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/15 18:34:31 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/15 18:35:43 by maamichaima      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	fd_here_doc(t_str *red, t_env *env)
@@ -58,6 +70,7 @@ void	init_infile_outfile(t_str *red, t_ast *node)
 		node->cmd.infile = get_last_fd(red, 'i');
 	}
 }
+
 void	ft_quit_signal(int sig)
 {
 	(void)sig;
