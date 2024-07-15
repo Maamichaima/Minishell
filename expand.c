@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/15 17:39:19 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 22:27:14 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	expand_red(t_str *red, t_env *env)
 	}
 }
 
-// arg->str = hmad(arg->str);
 void	expand_node(t_ast *root, t_env *env)
 {
 	t_str	*arg;
@@ -79,6 +78,7 @@ void	expand_node(t_ast *root, t_env *env)
 	arg = root->args;
 	while (arg)
 	{
+		arg->str = hmad(arg->str);
 		tmp = ft_split(expand(arg->str, env, 'a'), "\t\n ");
 		while (tmp && tmp[i])
 		{

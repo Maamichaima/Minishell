@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:23:39 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 19:25:38 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 22:19:49 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	}
 }
 
-// thydat 256
 char	*get_key(char *env)
 {
 	int		i;
