@@ -1,13 +1,10 @@
 
 leaks ch
 
-heredoc 1 process (SIGNALS)
 
 bash: ls > $rr: ambiguous redirect
 
-export (problem f key)
 
-ls | >> l (done)
-ls | > l (done)
+ $'$'
 
 env -i 

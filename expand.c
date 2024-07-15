@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/15 22:27:14 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 23:24:04 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,37 @@ char	*expandiliya(t_ite *ite, char *str, t_env *env, char *tmp)
 	return (tmp);
 }
 
+int len_expand(char *str, char c,t_env *env)
+{
+	int len;
+	int i;
+	char *key;
+
+	len = 0;
+	i = 0;
+	if (ft_strchr(str, '$'))
+	{
+		while(str[i])
+		{
+			if (str[i] == '$' && str[i + 1] == '"' && !check_quotes(str, i, 0))
+				i++;
+			else if (check_ex(str, c, i))
+			{
+				i++;
+				key = get_expand_value(str + i);
+				len += ft_strlen(get_value_(key, env));
+				i += ft_strlen(key);
+			}
+			else
+			{
+				i++;
+				len++;
+			}
+		}
+	}
+	return len;
+}
+
 char	*expand(char *str, t_env *env, char c)
 {
 	char	*tmp;
@@ -35,7 +66,7 @@ char	*expand(char *str, t_env *env, char c)
 
 	ite.i = 0;
 	ite.j = 0;
-	tmp = ft_malloc(sizeof(char) * 256, 'a');
+	tmp = ft_malloc(sizeof(char) * (len_expand(str, c, env) + 1), 'a');
 	tmp[0] = '\0';
 	if (ft_strchr(str, '$'))
 	{
