@@ -18,7 +18,7 @@ char	*get_key_env(char *env)
 	char	*key;
 
 	i = 0;
-	key = malloc(sizeof(char) * ft_strlen(env + 1));
+	key = malloc(sizeof(char) * (ft_strlen(env) + 1));
 	while (env[i] && env[i] != '=' && env[i] != '+')
 	{
 		key[i] = env[i];

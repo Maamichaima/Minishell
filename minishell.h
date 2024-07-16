@@ -143,7 +143,7 @@ int						ft_unset(char **str, t_env **env);
 int						ft_env(t_env *env);
 int						ft_echo(char **args, int outfile);
 int						check_flag(char *flag);
-int						ft_exit(char **args);
+int						ft_exit(char **args, t_env *env);
 long					ft_atoi(char *str);
 int						ft_isnum(int arg);
 int						str_is_num(char *str);
@@ -178,7 +178,7 @@ void					ft_quit_signal(int sig);
 void					execute_node(t_ast *root, t_ast *const_root,
 							t_env **env);
 void					error_syntax(t_token *t);
-void					message_error(char *str);
+void					message_error(char *str, t_env *env);
 void					copy(char *dst, const char *str);
 int						check_equal(char *str, int j);
 void					clear_env(t_env *env);

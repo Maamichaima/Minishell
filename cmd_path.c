@@ -26,7 +26,9 @@ char	**get_paths(t_env *env)
 		env = env->next;
 	}
 	if (env == NULL)
-		paths = ft_split("/nfs/homes/rraida-/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+		paths = ft_split("/nfs/homes/rraida-/bin:/usr/local/sbin:\
+		/usr/local/bin:/usr/sbin:/usr/bin:\
+		/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
 				":");
 	return (paths);
 }

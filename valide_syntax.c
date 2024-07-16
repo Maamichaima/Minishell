@@ -80,19 +80,27 @@ void	error_syntax(t_token *t)
 	}
 }
 
-void	message_error(char *str)
+void ft_exit_free(t_env *env, int e)
+{
+	// (void)env;
+	// clear_env(env);
+	// ft_malloc(0, 'f');
+	exit (e);
+}
+
+void	message_error(char *str, t_env *env)
 {
 	if (ft_strchr(str, '/'))
 	{
 		if (access(str, F_OK) == -1)
 		{
 			perror(str);
-			exit(127);
+			ft_exit_free(env, 127);
 		}
 		if (access(str, X_OK) == -1)
 		{
 			perror(str);
-			exit(126);
+			ft_exit_free(env, 126);
 		}
 	}
 	if (access(str, F_OK) == 0)
@@ -106,5 +114,5 @@ void	message_error(char *str)
 		write(2, str, ft_strlen(str));
 		write(2, ": command not found\n", 21);
 	}
-	exit(127);
+	ft_exit_free(env, 127);
 }

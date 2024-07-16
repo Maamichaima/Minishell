@@ -21,7 +21,7 @@ void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 	close_(const_root);
 	t = list_to_table_env(env);
 	execve(cmd.path, cmd.args, t);
-	message_error(cmd.args[0]);
+	message_error(cmd.args[0], env);
 }
 
 void	prepare_cmd(t_ast *root, t_env *env)

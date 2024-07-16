@@ -30,7 +30,7 @@ int	execut_bultin(t_ast *root, t_env **env)
 	else if (ft_strcmp(cmd.args[0], "echo") == 0)
 		return (ft_echo(root->cmd.args, root->cmd.outfile));
 	else if (ft_strcmp(cmd.args[0], "exit") == 0)
-		return (ft_exit(root->cmd.args));
+		return (ft_exit(root->cmd.args, *env));
 	else if (ft_strcmp(cmd.args[0], "env") == 0)
 		return (ft_env(*env));
 	return (0);
