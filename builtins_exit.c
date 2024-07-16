@@ -6,13 +6,13 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:05:13 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/10 17:41:40 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/16 20:04:53 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit(char **args)
+int	ft_exit(char **args)//free env 
 {
 	if (args[0] && !args[1])
 	{

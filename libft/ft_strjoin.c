@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:00:13 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/08 18:05:10 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/16 19:45:03 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (s1);
 	ls1 = ft_strlen(s1);
 	ls2 = ft_strlen(s2);
-	p = ft_malloc(sizeof(char) * (ls1 + ls2 + 1), 'a');
+	p = malloc(sizeof(char) * (ls1 + ls2 + 1));
 	if (!p)
 		return (NULL);
 	p[0] = '\0';
 	ft_strlcat(p, s1, ls1 + 1);
 	ft_strlcat(p, s2, ls1 + ls2 + 1);
+	free(s1);
 	return (p);
 }

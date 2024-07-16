@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 22:16:36 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/16 19:09:26 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int     *set_signal_flag()
 {
-        static int      sig_flag = 0;
-        return &sig_flag;
+	static int      sig_flag = 0;
+	return &sig_flag;
 }
 
 void	start_minishell(t_token *head, t_env *v)
@@ -45,9 +45,9 @@ void	control_c(int sig)
 	write(1, "\n", 1);
 	if (!(*set_signal_flag()))
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 }
 
@@ -77,5 +77,5 @@ int	main(int c, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		free(input);
 	}
-	exit(0);
+	return (0);
 }

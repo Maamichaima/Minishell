@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/15 19:23:23 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/16 18:43:46 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	add_default_env(t_env **path)
 {
 	t_env	*new;
 
-	new = ft_lstnew_env("PWD", "/nfs/homes/rraida-/Desktop/mini");
+	new = ft_lstnew_env(ft_strdup("PWD"), ft_strdup("/nfs/homes/rraida-/Desktop/mini"));
 	ft_lstadd_back_env(path, new);
-	new = ft_lstnew_env("SHLVL", "1");
+	new = ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"));
 	ft_lstadd_back_env(path, new);
-	new = ft_lstnew_env("_", "/usr/bin/env");
+	new = ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"));
 	ft_lstadd_back_env(path, new);
 }
 

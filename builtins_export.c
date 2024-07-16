@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 00:54:10 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/16 19:48:46 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ int	check_key_in_env(t_env *env, char *args)
 			if (args[i] == '+' && args[i + 1] && args[i + 1] == '=')
 				env->value = ft_strjoin(env->value, args + i + 2);
 			else if (args[i] == '=')
+			{
+				if(env->value)
+					free(env->value);
 				env->value = ignor(get_value(args));
+			}
 			return (1);
 		}
 		env = env->next;

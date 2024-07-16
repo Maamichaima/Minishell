@@ -4,7 +4,16 @@ leaks ch
 
 bash: ls > $rr: ambiguous redirect
 
+hmad 256
 
- $'$'
+$'$'
 
-env -i 
+env -i (done)
+
+exit --> free env
+
+Invalid write of size 1(unset pwd v)
+
+ligne too log
+
+
