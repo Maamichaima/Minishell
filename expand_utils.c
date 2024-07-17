@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:25:50 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/17 16:18:14 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/17 22:39:55 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*hmad(char *s)
 	char	*key;
 
 	inisialiser_ite(&t);
-	tmp = ft_malloc(sizeof(char) * 256, 'a');
+	tmp = ft_malloc(sizeof(char) * (ft_strlen(s) + 3), 'a');
 	if (ft_strchr(s, '$'))
 	{
 		while (s[t.i])
