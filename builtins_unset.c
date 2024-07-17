@@ -6,32 +6,32 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:04:34 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 00:58:40 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/17 20:28:29 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	skip(char *key, t_env **env, t_env **new)
+int	skip(char *key, t_env **env, t_env *new)
 {
 	int		found;
 	t_env	*h;
 
 	found = 0;
-	if (ft_strcmp(get_key(key), (*new)->key) == 0)
+	if (ft_strcmp(get_key(key), new->key) == 0)
 	{
-		h = *new;
-		if ((*new)->prev == NULL)
+		h = new;
+		if (new->prev == NULL)
 		{
 			(*env) = (*env)->next;
 			(*env)->prev = NULL;
 		}
-		else if (!(*new)->next)
-			(*new)->prev->next = NULL;
+		else if (!new->next)
+			new->prev->next = NULL;
 		else
 		{
-			(*new)->prev->next = (*new)->next;
-			(*new)->next->prev = (*new)->prev;
+			new->prev->next = new->next;
+			new->next->prev = new->prev;
 		}
 		free(h->key);
 		free(h->value);
@@ -50,7 +50,7 @@ int	supp(char *key, t_env **env)
 	new = *env;
 	while (new)
 	{
-		found = skip(key, env, &new);
+		found = skip(key, env, new);
 		new = new->next;
 	}
 	return (found);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/12 11:39:54 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/17 17:01:31 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	execute_in_parent(t_ast *root, t_env **env)
 	status = execut_bultin(root, env);
 	dup2(stdin, 0);
 	dup2(stdout, 1);
+	close(stdin);
+	close(stdout);
 	return (status);
 }
 
@@ -68,7 +70,7 @@ int	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
 			dup2(root->cmd.outfile, 1);
 			close_(const_root);
 			status = execut_bultin(root, env);
-			exit(status);
+			ft_exit_free(*env, status);
 		}
 	}
 	else

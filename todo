@@ -1,11 +1,4 @@
 
-leaks ch
-
-
 bash: ls > $rr: ambiguous redirect
 
 hmad 256
-
-$'$'
-
-exit --> free env

@@ -30,9 +30,15 @@ void	set_content(t_env *env, char *key, char *content)
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
+		{
+			if(env->value)
+				free(env->value);
 			env->value = content;
+			return ;
+		}
 		env = env->next;
 	}
+	free(content);
 }
 
 int	check_equal(char *str, int j)
