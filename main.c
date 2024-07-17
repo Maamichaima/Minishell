@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/16 19:09:26 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/17 15:30:53 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	control_c(int sig)
 	write(1, "\n", 1);
 	if (!(*set_signal_flag()))
 	{
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 

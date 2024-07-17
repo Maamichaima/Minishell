@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/15 23:24:04 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/17 16:05:05 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*expand(char *str, t_env *env, char c)
 	{
 		while (str[ite.i])
 		{
-			if (str[ite.i] == '$' && str[ite.i + 1] == '"' && !check_quotes(str,
+			if (str[ite.i] == '$' && (str[ite.i + 1] == '"' || str[ite.i + 1] == '\'') && !check_quotes(str,
 					ite.i, 0))
 				ite.i++;
 			else if (check_ex(str, c, ite.i))

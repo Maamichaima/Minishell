@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:25:50 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 22:46:50 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/17 16:18:14 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*get_expand_value(char *str)
 		return(NULL);
 	if (str[0] == '?')
 		return (ft_strdup_in_gar("?"));
-	val = ft_malloc(sizeof(char) * len_value(str), 'a');
+	val = ft_malloc(sizeof(char) * (len_value(str) + 1), 'a');
 	j = 0;
 	while (*str && (ft_isalpha(*str) || ft_isnum(*str) || *str == '_'))
 	{

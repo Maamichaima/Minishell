@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/15 01:06:05 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/17 15:52:27 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 	ft_strlcat(p, s1, ls1 + 1);
 	ft_strlcat(p, "=", ls1 + 2);
 	ft_strlcat(p, s2, ls1 + ls2 + 2);
-	free(s1);
+	// free(s1);
 	return (p);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 22:27:52 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/17 16:14:51 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,4 +199,5 @@ int						wait_(t_ast *root, t_env *env);
 void					lst_token(char *ligne, t_token **head);
 int						*set_signal_flag();
 char					*hmad(char *s);
+void ft_exit_free(t_env *env, int e);
 #endif

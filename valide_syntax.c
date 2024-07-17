@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 19:39:33 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/17 15:50:29 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	error_syntax(t_token *t)
 
 void ft_exit_free(t_env *env, int e)
 {
-	// (void)env;
-	// clear_env(env);
-	// ft_malloc(0, 'f');
+	(void)env;
+	clear_env(env);
+	ft_malloc(0, 'f');
 	exit (e);
 }
 
