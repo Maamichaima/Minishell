@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:09:51 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/17 20:01:38 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 15:53:53 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ int	ft_cd(char **args, t_env *env)
 	if (!val)
 	{
 		error_cd(0, val);
+		free(old);
 		return (1);
 	}
 	else if (chdir(val) == -1)
 	{
 		error_cd(1, val);
+		free(old);
 		return (1);
 	}
 	new = getcwd(NULL, 0);

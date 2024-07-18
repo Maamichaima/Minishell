@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:59:35 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/15 01:01:42 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 15:26:19 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ char	**get_paths(t_env *env)
 		}
 		env = env->next;
 	}
-	if (env == NULL)
-		paths = ft_split("/nfs/homes/rraida-/bin:/usr/local/sbin:\
-		/usr/local/bin:/usr/sbin:/usr/bin:\
-		/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
-				":");
+	// if (env == NULL)
+	// 	paths = ft_split("/nfs/homes/rraida-/bin:/usr/local/sbin:
+	// 	/usr/local/bin:/usr/sbin:/usr/bin:
+	// 	/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+	// 			":");
 	return (paths);
 }
 

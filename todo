@@ -2,3 +2,35 @@
 bash: ls > $rr: ambiguous redirect
 
 hmad 256 (done)
+
+$"USER" heredoc
+$$PWD
+
+./minishell ./minishell(double free)
+
+export 7sfsf4=kjfssjkf amine=kaddouri
+bash: export: 7sfsf4=kjfssjkf: not a valid identifier (itzad heta tani)
+
+
+unset PATH (cmd not foud)
+unset head env (heap use after free)
+
+cat << l << l(ctr c) hang
+
+leaks itoi
+
+bzzzzef pipat
+
+
+exit 4 | echo $?
+pwd > i ,i: Permission denied
+
+
+
+cat << |(mayhelch heredoc khas ikhrej ila kan delimiter pas valide )
+<<<< 
+
+
+
+mkdir -p 1/12/1232/3/2/32/323/2/3/3/32/2e
+SHLVL=2 (++)
