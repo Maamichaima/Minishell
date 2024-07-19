@@ -98,6 +98,11 @@ char	**list_to_table_env(t_env *str)
 		return (NULL);
 	while (str)
 	{
+		// if (str->key[0] == '?')
+		// {
+		// 	str = str->next;
+		// 	continue ;
+		// }
 		t[i] = ft_strjoin_(str->key, str->value);
 		str = str->next;
 		i++;

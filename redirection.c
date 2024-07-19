@@ -68,7 +68,7 @@ int	open_here_doc(char *del, t_env *env)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		in_the_pipe(del, pipe_fd, env, del_);
+		in_the_pipe(del, pipe_fd, env, del_);\
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 		ft_exit_free(env, 0);

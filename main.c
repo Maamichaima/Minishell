@@ -12,17 +12,16 @@
 
 #include "minishell.h"
 
-int     *set_signal_flag()
+int *set_signal_flag()
 {
-	static int      sig_flag = 0;
+	static int sig_flag = 0;
 	return &sig_flag;
 }
 
-void	start_minishell(t_token *head, t_env *v)
+void start_minishell(t_token *head, t_env *v)
 {
-	t_ast	*root;
-	t_token	*t;
-	
+	t_ast *root;
+	t_token *t;
 
 	t = is_valid_token(head);
 	if (t && check_herdoc(head, v))
@@ -40,7 +39,7 @@ void	start_minishell(t_token *head, t_env *v)
 	}
 }
 
-void	control_c(int sig)
+void control_c(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
@@ -52,20 +51,29 @@ void	control_c(int sig)
 	}
 }
 
-int	main(int c, char **av, char **env)
+int main(int c, char **av, char **env)
 {
-	char	*input;
-	t_token	*head;
-	t_env	*v;
+	char *input;
+	t_token *head;
+	t_env *v;
 
 	(void)c;
 	(void)av;
+	{
+		int i = 0;
+		while (env[i])
+		{
+			puts(env[i]);
+			i++;
+		}
+		
+	}
 	v = get_env_lst(env);
 	signal_handler();
 	while (1)
 	{
 		input = readline("42_bash_$ ");
-		*set_signal_flag()= 1;
+		*set_signal_flag() = 1;
 		if (!input)
 			ctl_d(v);
 		if (*input)
@@ -74,7 +82,7 @@ int	main(int c, char **av, char **env)
 		lst_token(input, &head);
 		start_minishell(head, v);
 		ft_malloc(0, 'f');
-		*set_signal_flag()= 0;
+		*set_signal_flag() = 0;
 		signal(SIGQUIT, SIG_IGN);
 		free(input);
 	}

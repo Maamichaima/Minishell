@@ -88,9 +88,12 @@ void	clear_env(t_env *env)
 	while (env)
 	{
 		tmp = env->next;
-		free(env->key);
-		free(env->value);
-		free(env);
+		if(env->key)
+			free(env->key);
+		// if(env->value)
+		// 	free(env->value);
+		if(env)
+			free(env);
 		env = tmp;
 	}
 }

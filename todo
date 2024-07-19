@@ -17,11 +17,11 @@ cat << |(mayhelch heredoc khas ikhrej ila kan delimiter pas valide )
 unset PATH (cmd not foud)(done)
 unset head env (heap use after free)(done)
 
+cat << l << l(ctr c) hang(done)
 
 
 
 ./minishell ./minishell(double free)
-cat << l << l(ctr c) hang
 
 leaks itoi
 
@@ -30,6 +30,8 @@ bzzzzef pipat
 
 exit 4 | echo $? 
 pwd > i ,i: Permission denied
+
+unset $?
 
 mkdir -p 1/12/1232/3/2/32/323/2/3/3/32/2e
 SHLVL=2 (++)

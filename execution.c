@@ -68,8 +68,7 @@ void	execute_node(t_ast *root, t_ast *const_root, t_env **env)
 			prepare_cmd(root, *env);
 			if (root->args)
 				executer_cmd(root->cmd, *env, const_root);
-			else
-				exit(0);
+			exit(0);
 		}
 	}
 }
