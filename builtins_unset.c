@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:04:34 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/17 22:30:29 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 01:26:54 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void free_(t_env *node)
 	free(node);
 }
 
-int skip(char *key, t_env **env, t_env *node)
+int skip(char *key, t_env *node)
 {
     int found;
     t_env *prev_node;
@@ -30,18 +30,9 @@ int skip(char *key, t_env **env, t_env *node)
 	found  = 0;
     if (ft_strcmp(get_key(key), node->key) == 0)
     {
-        if (prev_node == NULL)
-        {
-            *env = next_node;
-            if (*env)
-                (*env)->prev = NULL;
-        }
-        else
-        {
-            prev_node->next = next_node;
-            if (next_node)
-                next_node->prev = prev_node;
-        }
+        prev_node->next = next_node;
+        if (next_node)
+            next_node->prev = prev_node;
         free_(node);
         found = 1;
     }
@@ -54,14 +45,22 @@ int supp(char *key, t_env **env)
     t_env *next_node;
     int found = 0;
 
-    while (current)
+    if(ft_strcmp(get_key(key), (*env)->key) == 0)
     {
-        next_node = current->next;
-        if (skip(key, env, current))
-            found = 1;
-        current = next_node;
+        **env = *(*env)->next;
+        if(*env)
+            (*env)->prev = NULL;
     }
-
+    else 
+    {
+        while (current)
+        {
+            next_node = current->next;
+            if (skip(key, current))
+                found = 1;
+            current = next_node;
+        }
+    }
     return found;
 }
 

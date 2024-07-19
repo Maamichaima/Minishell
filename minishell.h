@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/17 16:14:51 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 23:10:57 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void					close_(t_ast *root);
 int						check_redin(t_str *red);
 int						check_redout(t_str *red);
 int						check_redherdoc(t_str *red);
-void					execut_all_here_doc(t_ast *root, t_env *env);
+int						execut_all_here_doc(t_ast *root, t_env *env);
 int						open_here_doc(char *del, t_env *env);
 int						ft_export(char **args, t_env *env);
 int						is_builtin(t_str cmd);
@@ -177,7 +177,7 @@ t_ast					*lstnew_ast(t_token_type type, t_str *cmd, t_str *red);
 void					ft_quit_signal(int sig);
 void					execute_node(t_ast *root, t_ast *const_root,
 							t_env **env);
-void					error_syntax(t_token *t);
+void					error_syntax();
 void					message_error(char *str, t_env *env);
 void					copy(char *dst, const char *str);
 int						check_equal(char *str, int j);

@@ -6,13 +6,13 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:34:31 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/15 18:35:43 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 23:11:27 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fd_here_doc(t_str *red, t_env *env)
+int	fd_here_doc(t_str *red, t_env *env)
 {
 	int	status;
 
@@ -23,21 +23,23 @@ void	fd_here_doc(t_str *red, t_env *env)
 			red->fd = open_here_doc(red->str, env);
 			wait(&status);
 			if (status)
-				break ;
+				return (0) ;
 		}
 		red = red->next;
 	}
+	return (1);
 }
 
-void	execut_all_here_doc(t_ast *root, t_env *env)
+int	execut_all_here_doc(t_ast *root, t_env *env)
 {
 	if (root->type == token_cmd)
-		fd_here_doc(root->red, env);
+		return (fd_here_doc(root->red, env));
 	else
 	{
 		execut_all_here_doc(root->left, env);
 		execut_all_here_doc(root->right, env);
 	}
+	return (1);
 }
 
 int	get_last_fd(t_str *red, char c)

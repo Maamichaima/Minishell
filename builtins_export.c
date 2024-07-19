@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/16 19:48:46 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 17:38:54 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	ft_export(char **a, t_env *env)
 	int		i;
 	t_env	*new;
 	t_env	*tmp;
+	int status = 0;
 
 	i = 0;
 	new = NULL;
@@ -74,7 +75,10 @@ int	ft_export(char **a, t_env *env)
 		while (a[i])
 		{
 			if (valide_key(a[i]) == 0)
-				return (ft_error_export(a[i]));
+			{
+				status = ft_error_export(a[i]);
+				printf("%d   \n", status);
+			}
 			else if (!check_key_in_env(env, a[i]))
 			{
 				new = ft_lstnew_env(get_key_env(a[i]), ignor(get_value(a[i])));
@@ -83,5 +87,5 @@ int	ft_export(char **a, t_env *env)
 			i++;
 		}
 	}
-	return (0);
+	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/16 18:43:46 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 01:40:00 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void	add_default_env(t_env **path)
 	new = ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"));
 	ft_lstadd_back_env(path, new);
 	new = ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"));
+	ft_lstadd_back_env(path, new);
+	new = ft_lstnew_env(ft_strdup("PATH"), ft_strdup("/nfs/homes/rraida-/bin:/usr/local/sbin:\
+				/usr/local/bin:/usr/sbin:/usr/bin:\
+				/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
 	ft_lstadd_back_env(path, new);
 }
 

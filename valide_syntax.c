@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/17 15:50:29 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 16:39:07 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_herdoc(t_token *head, t_env *env)
 	flag = 0;
 	while (head)
 	{
-		if (head->type == token_herd && head->next)
+		if (head->type == token_herd && head->next && head->next->type == token_word)
 		{
 			flag = 1;
 			open_here_doc(head->next->token, env);
@@ -64,20 +64,9 @@ t_token	*is_valid_token(t_token *lst)
 	return (NULL);
 }
 
-void	error_syntax(t_token *t)
+void	error_syntax()
 {
-	if (t)
-	{
-		if (!is_redirectien(t->type))
-		{
-			write(2, "bash: syntax error near unexpected token '", 42);
-			write(2, t->token, ft_strlen(t->token));
-			write(2, "'\n", 2);
-		}
-		else
-			write(2, "bash: syntax error near unexpected token `newline'\n",
-				52);
-	}
+	write(2, "bash: syntax error near unexpected token \n", 43);
 }
 
 void ft_exit_free(t_env *env, int e)

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/17 16:36:16 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 22:39:30 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ int	check_del_quotes(char *del)
 void	in_the_pipe(char *del, int *p_fd, t_env *env, char *del_)
 {
 	char	*tmp;
+	char	*t;
 
+	t = ignor(del_);
 	while (1)
 	{
 		tmp = readline("> ");
-		if (!tmp || ft_strcmp(tmp, ignor(del_)) == 0)
+		if (!tmp || ft_strcmp(tmp, t) == 0)
 		{
 			free(tmp);
 			break ;

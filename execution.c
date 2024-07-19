@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/18 15:20:17 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 17:44:24 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	prepare_cmd(t_ast *root, t_env *env)
 	ignor_args(root->cmd.args);
 	init_infile_outfile(root->red, root);
 	if (root->cmd.args)
-	{
 		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
-		printf("%s    \n", root->cmd.path);
-	}
 	else
 		root->cmd.path = NULL;
 }
@@ -62,7 +59,7 @@ void	set_last_env_value(t_ast *root, t_env *env)
 void	execute_node(t_ast *root, t_ast *const_root, t_env **env)
 {
 	if ((root->args) && is_builtin(*(root->args)))
-		set_content_f(*env, "?", ft_itoa(check_bultins(root, const_root, env)));
+		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env)));
 	else
 	{
 		root->cmd.pid = fork();

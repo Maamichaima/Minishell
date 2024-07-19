@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:05:13 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/16 20:04:53 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 01:56:57 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void write_error_exit(char **args, t_env *env , int x)
 	}
 	else if(x == 3)
 		write(2, "exit\n", 6);
-	clear_env(env);
+	clear_env(env);//henaaaa
 	ft_malloc(0, 'f');
 }
 

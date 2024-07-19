@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/17 16:05:05 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 22:53:59 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ char	*expand(char *str, t_env *env, char c)
 	{
 		while (str[ite.i])
 		{
-			if (str[ite.i] == '$' && (str[ite.i + 1] == '"' || str[ite.i + 1] == '\'') && !check_quotes(str,
-					ite.i, 0))
+			if (c != 'h' && (str[ite.i] == '$' && (str[ite.i + 1] == '"' || str[ite.i + 1] == '\'') && !check_quotes(str,
+					ite.i, 0)))
 				ite.i++;
-			else if (check_ex(str, c, ite.i))
+			if (check_ex(str, c, ite.i))
 				expandiliya(&ite, str, env, tmp);
 			else
 				tmp[ite.j++] = str[ite.i++];
@@ -111,6 +111,7 @@ void	expand_node(t_ast *root, t_env *env)
 	{
 		arg->str = hmad(arg->str);
 		tmp = ft_split(expand(arg->str, env, 'a'), "\t\n ");
+		// printf("%s   \n", tmp[0]);
 		while (tmp && tmp[i])
 		{
 			ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/17 15:30:53 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/18 23:08:57 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@ void	start_minishell(t_token *head, t_env *v)
 {
 	t_ast	*root;
 	t_token	*t;
+	
 
 	t = is_valid_token(head);
 	if (t && check_herdoc(head, v))
-		error_syntax(t);
+		error_syntax();
 	else if (t)
-		error_syntax(t);
+		error_syntax();
 	else if (head)
 	{
 		root = parse_and_or(head);
 		init_ast(root, v);
-		execut_all_here_doc(root, v);
-		executer_tree(root, root, &v);
+		if (execut_all_here_doc(root, v) == 1)
+			executer_tree(root, root, &v);
 		close_(root);
 		wait_(root, v);
 	}
