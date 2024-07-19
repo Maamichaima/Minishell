@@ -32,14 +32,18 @@ int	fd_here_doc(t_str *red, t_env *env)
 
 int	execut_all_here_doc(t_ast *root, t_env *env)
 {
+	int i;
+
+	i = 1;
 	if (root->type == token_cmd)
 		return (fd_here_doc(root->red, env));
 	else
 	{
-		execut_all_here_doc(root->left, env);
-		execut_all_here_doc(root->right, env);
+		i = execut_all_here_doc(root->left, env);
+		if (i)
+			i = execut_all_here_doc(root->right, env);
 	}
-	return (1);
+	return (i);
 }
 
 int	get_last_fd(t_str *red, char c)
