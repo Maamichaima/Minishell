@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-void	set_content_f(t_env *env, char *key, char *content)
-{
-	while (env)
-	{
-		if (ft_strcmp(env->key, key) == 0)
-		{
-			free(env->value);
-			env->value = content;
-		}
-		env = env->next;
-	}
-}
-
 void	set_content(t_env *env, char *key, char *content)
 {
 	while (env)

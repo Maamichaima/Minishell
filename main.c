@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/18 23:08:57 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 23:49:18 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void start_minishell(t_token *head, t_env *v)
 
 	t = is_valid_token(head);
 	if (t && check_herdoc(head, v))
-		error_syntax();
+		error_syntax(v);
 	else if (t)
-		error_syntax();
+		error_syntax(v);
 	else if (head)
 	{
 		root = parse_and_or(head);
@@ -59,15 +59,6 @@ int main(int c, char **av, char **env)
 
 	(void)c;
 	(void)av;
-	{
-		int i = 0;
-		while (env[i])
-		{
-			puts(env[i]);
-			i++;
-		}
-		
-	}
 	v = get_env_lst(env);
 	signal_handler();
 	while (1)

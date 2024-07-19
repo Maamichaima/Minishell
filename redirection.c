@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/18 22:39:30 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 00:27:31 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ int	open_here_doc(char *del, t_env *env)
 	int		pipe_fd[2];
 	pid_t	pid;
 
-	pipe(pipe_fd);
+	if(pipe(pipe_fd) == -1)
+	{
+		perror("pipe");
+		ft_exit_free(env, 1);
+	}
 	del_ = ft_malloc(sizeof(char) * (ft_strlen(del) + 1), 'a');
 	ft_strcpy(del_, del);
 	pid = fork();

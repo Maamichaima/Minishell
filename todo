@@ -20,18 +20,17 @@ unset head env (heap use after free)(done)
 cat << l << l(ctr c) hang(done)
 
 
-
-./minishell ./minishell(double free)
+./minishell ./minishell(double free)(done)
 
 leaks itoi
 
 bzzzzef pipat
 
 
-exit 4 | echo $? 
+exit 4 | echo $? (done)
 pwd > i ,i: Permission denied
 
 unset $?
 
-mkdir -p 1/12/1232/3/2/32/323/2/3/3/32/2e
+mkdir -p 1/12/1232/3/2/32/323/2/3/3/32/2e (tgadat mn 3nd lah )
 SHLVL=2 (++)

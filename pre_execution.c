@@ -6,17 +6,21 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/15 18:40:04 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 00:25:50 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	inisialiser_pipe(t_ast *root)
+void	inisialiser_pipe(t_ast *root, t_env *env)
 {
 	int	pip[2];
 
-	pipe(pip);
+	if(pipe(pip) == -1)
+	{
+		perror("pipe");
+		ft_exit_free(env, 1);
+	}
 	root->left->cmd.outfile = pip[1];
 	if (root->right->type == token_cmd)
 		root->right->cmd.infile = pip[0];
@@ -28,7 +32,7 @@ void	init_ast(t_ast *root, t_env *env)
 {
 	if (root->type == token_pipe)
 	{
-		inisialiser_pipe(root);
+		inisialiser_pipe(root, env);
 		init_ast(root->right, env);
 	}
 }

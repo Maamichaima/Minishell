@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/18 16:39:07 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 23:47:46 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ t_token	*is_valid_token(t_token *lst)
 	return (NULL);
 }
 
-void	error_syntax()
+void	error_syntax(t_env *v)
 {
 	write(2, "bash: syntax error near unexpected token \n", 43);
+	set_content(v, "?", ft_itoa(2));
 }
 
 void ft_exit_free(t_env *env, int e)

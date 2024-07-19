@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:47 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/17 15:52:27 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 23:39:02 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ char	**list_to_table_env(t_env *str)
 		return (NULL);
 	while (str)
 	{
-		// if (str->key[0] == '?')
-		// {
-		// 	str = str->next;
-		// 	continue ;
-		// }
+		if (str->key[0] == '?')
+		{
+			str = str->next;
+			continue ;
+		}
 		t[i] = ft_strjoin_(str->key, str->value);
 		str = str->next;
 		i++;

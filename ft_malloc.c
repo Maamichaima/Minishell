@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 14:41:03 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/17 15:42:40 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 23:49:36 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	clear_env(t_env *env)
 		tmp = env->next;
 		if(env->key)
 			free(env->key);
-		// if(env->value)
-		// 	free(env->value);
+		if(env->value)
+			free(env->value);
 		if(env)
 			free(env);
 		env = tmp;
