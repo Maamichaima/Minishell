@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:34:31 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/18 23:11:27 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 02:49:16 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,22 @@ int	get_last_fd(t_str *red, char c)
 	return (f);
 }
 
-void	init_infile_outfile(t_str *red, t_ast *node)
+int	init_infile_outfile(t_str *red, t_ast *node)
 {
+	int	flag;
+
+	flag = 0;
 	if (check_redout(red))
 	{
-		outfile(red);
+		flag = outfile(red);
 		node->cmd.outfile = get_last_fd(red, 'o');
 	}
 	if (check_redin(red))
 	{
-		infile(red);
+		flag = infile(red);
 		node->cmd.infile = get_last_fd(red, 'i');
 	}
+	return(flag);
 }
 
 void	ft_quit_signal(int sig)

@@ -27,8 +27,8 @@ leaks itoi
 bzzzzef pipat
 
 
-exit 4 | echo $? (done)
-pwd > i ,i: Permission denied
+exit 4 | echo $? (done)---------> return value problem 
+pwd > i ,i: Permission denied(done)
 
 unset $?
 

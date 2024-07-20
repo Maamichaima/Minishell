@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/18 17:38:54 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 02:46:53 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_export(char **a, t_env *env)
 			if (valide_key(a[i]) == 0)
 			{
 				status = ft_error_export(a[i]);
-				printf("%d   \n", status);
+				//printf("%d   \n", status);
 			}
 			else if (!check_key_in_env(env, a[i]))
 			{

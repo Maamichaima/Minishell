@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/18 17:44:24 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 02:48:06 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	prepare_cmd(t_ast *root, t_env *env)
 {
 	root->cmd.args = list_to_table(root->args);
 	ignor_args(root->cmd.args);
-	init_infile_outfile(root->red, root);
+	if( init_infile_outfile(root->red, root) == 1)
+		exit(1);
 	if (root->cmd.args)
 		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/20 00:27:31 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 03:03:43 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	open_here_doc(char *del, t_env *env)
 	return (pipe_fd[0]);
 }
 
-void	outfile(t_str *red)
+int	outfile(t_str *red)
 {
 	while (red)
 	{
@@ -91,8 +91,9 @@ void	outfile(t_str *red)
 					0644);
 			if (red->fd == -1)
 			{
+				write(2,"bash: ",7);
 				perror(red->str);
-				exit(1);
+				return(1);
 			}
 		}
 		else if (red->type == token_red_output)
@@ -100,15 +101,17 @@ void	outfile(t_str *red)
 			red->fd = open(ignor(red->str), O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			if (red->fd == -1)
 			{
+				write(2,"bash: ",7);
 				perror(red->str);
-				exit(1);
+				return(1);
 			}
 		}
 		red = red->next;
 	}
+	return(0);
 }
 
-void	infile(t_str *red)
+int	infile(t_str *red)
 {
 	while (red)
 	{
@@ -117,10 +120,12 @@ void	infile(t_str *red)
 			red->fd = open(ignor(red->str), O_RDONLY, 0644);
 			if (red->fd == -1)
 			{
+				write(2,"bash: ",7);
 				perror(red->str);
-				exit(1);
+				return(1);
 			}
 		}
 		red = red->next;
 	}
+	return(0);
 }

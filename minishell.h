@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/19 23:48:23 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 02:52:08 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ char					**list_to_table(t_str *str);
 int						ft_strcmp(char *s1, char *s2);
 size_t					ft_strlen(const char *s);
 char					*ft_strdup(char *src);
-void					outfile(t_str *red);
-void					infile(t_str *red);
+int						outfile(t_str *red);
+int						infile(t_str *red);
 char					**ft_split(char const *s, char *c);
 void					initialize_cmd(t_ast *node, t_env *env);
 t_env					*get_env_lst(char **env);
@@ -154,7 +154,7 @@ char					**sort_table(char **str);
 char					*get_value_(char *key, t_env *env);
 void					ft_write_export(char **key, t_env *env);
 int						count_cmd(t_ast *root);
-void					init_infile_outfile(t_str *red, t_ast *node);
+int						init_infile_outfile(t_str *red, t_ast *node);
 int						check_bultins(t_ast *root, t_ast *const_root,
 							t_env **env);
 int						ft_isalpha(char c);

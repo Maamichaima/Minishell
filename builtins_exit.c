@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:05:13 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/19 23:55:28 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/20 02:46:33 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void write_error_exit(char **args, t_env *env , int x)
 	}
 	else if(x == 3)
 		write(2, "exit\n", 6);
-	clear_env(env);//hena
-	ft_malloc(0, 'f');
+	//clear_env(env);//hena
+	//ft_malloc(0, 'f');
 }
 
 int	ft_exit(char **args, t_env *env)
@@ -45,7 +45,7 @@ int	ft_exit(char **args, t_env *env)
 	}
 	else if (args[0] && !str_is_num(args[1]) && args[2] == NULL)
 	{
-		e = ft_atoi(args[1]);
+		e = ft_atoi(args[1]);//norminette
 		write_error_exit(args, env, 3);
 		exit(e);
 	}
