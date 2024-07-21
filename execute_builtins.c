@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/20 02:47:35 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/20 18:10:25 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execut_bultin(t_ast *root, t_env **env)
+int	execut_bultin(t_ast *root, t_env **env, int count)
 {
 	t_cmd	cmd;
 
@@ -30,13 +30,13 @@ int	execut_bultin(t_ast *root, t_env **env)
 	else if (ft_strcmp(cmd.args[0], "echo") == 0)
 		return (ft_echo(root->cmd.args, root->cmd.outfile));
 	else if (ft_strcmp(cmd.args[0], "exit") == 0)
-		return (ft_exit(root->cmd.args, *env));
+		return (ft_exit(root->cmd.args, *env, count));
 	else if (ft_strcmp(cmd.args[0], "env") == 0)
 		return (ft_env(*env));
 	return (0);
 }
 
-int	execute_in_parent(t_ast *root, t_env **env)
+int	execute_in_parent(t_ast *root, t_env **env, int count)
 {
 	int	stdin;
 	int	stdout;
@@ -44,11 +44,11 @@ int	execute_in_parent(t_ast *root, t_env **env)
 
 	stdin = dup(0);
 	stdout = dup(1);
-	if(init_infile_outfile(root->red, root) == 1)
-		return(1);
+	init_infile_outfile(root->red, root);
 	dup2(root->cmd.infile, 0);
 	dup2(root->cmd.outfile, 1);
-	status = execut_bultin(root, env);
+	
+	status = execut_bultin(root, env, count);
 	dup2(stdin, 0);
 	dup2(stdout, 1);
 	close(stdin);
@@ -56,26 +56,25 @@ int	execute_in_parent(t_ast *root, t_env **env)
 	return (status);
 }
 
-int	check_bultins(t_ast *root, t_ast *const_root, t_env **env)
+int	check_bultins(t_ast *root, t_ast *const_root, t_env **env, int count)
 {
 	int	status;
 
-	status = 0;
+	status = ft_atoi(get_value_("?", *env));
 	if (count_cmd(const_root) > 1)
 	{
 		root->cmd.pid = fork();
 		if (root->cmd.pid == 0)
 		{
-			if(init_infile_outfile(root->red, root) == 1)
-				exit(1);
+			init_infile_outfile(root->red, root);
 			dup2(root->cmd.infile, 0);
 			dup2(root->cmd.outfile, 1);
 			close_(const_root);
-			status = execut_bultin(root, env);
+			status = execut_bultin(root, env, count);
 			ft_exit_free(*env, status);
 		}
 	}
 	else
-		status = execute_in_parent(root, env);
+		status = execute_in_parent(root, env, count);
 	return (status);
 }

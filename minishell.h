@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/20 02:52:08 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/20 17:54:15 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,11 @@ int						ft_unset(char **str, t_env **env);
 int						ft_env(t_env *env);
 int						ft_echo(char **args, int outfile);
 int						check_flag(char *flag);
-int						ft_exit(char **args, t_env *env);
+int						ft_exit(char **args, t_env *env, int count);
 long					ft_atoi(char *str);
 int						ft_isnum(int arg);
 int						str_is_num(char *str);
-int						execut_bultin(t_ast *root, t_env **env);
+int						execut_bultin(t_ast *root, t_env **env, int count);
 char					*ignor(char *str);
 char					**table_of_key(t_env *env);
 char					**sort_table(char **str);
@@ -156,7 +156,7 @@ void					ft_write_export(char **key, t_env *env);
 int						count_cmd(t_ast *root);
 int						init_infile_outfile(t_str *red, t_ast *node);
 int						check_bultins(t_ast *root, t_ast *const_root,
-							t_env **env);
+							t_env **env, int count);
 int						ft_isalpha(char c);
 char					*ft_strchr(const char *s, int c);
 size_t					ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -175,8 +175,7 @@ void					set_content_f(t_env *env, char *key, char *content);
 int						is_builtin(t_str cmd);
 t_ast					*lstnew_ast(t_token_type type, t_str *cmd, t_str *red);
 void					ft_quit_signal(int sig);
-void					execute_node(t_ast *root, t_ast *const_root,
-							t_env **env);
+void					execute_node(t_ast *root, t_ast *const_root, t_env **env, int count);
 void					error_syntax(t_env *env);
 void					message_error(char *str, t_env *env);
 void					copy(char *dst, const char *str);

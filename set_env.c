@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/19 23:09:09 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/21 15:00:40 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ void	add_default_env(t_env **path)
 	ft_lstadd_back_env(path, new);
 }
 
+t_env *get_new_node_in_env(char *env, char *key)
+{
+	int n;
+	t_env *new;
+
+	if(ft_strcmp(key, "SHLVL") == 0)
+	{
+		n = ft_atoi(getenv(key));
+		n++;
+		new = ft_lstnew_env(key, ft_itoa(n));
+	}
+	else
+		new = ft_lstnew_env(key, ft_strdup(getenv(key)));
+	return new;
+}
+
 t_env	*get_env_lst(char **env)
 {
 	t_env	*new;
@@ -81,7 +97,7 @@ t_env	*get_env_lst(char **env)
 		while (env && env[i])
 		{
 			key = get_key_env(env[i]);
-			new = ft_lstnew_env(key, ft_strdup(getenv(key)));
+			new = get_new_node_in_env(env[i], key);
 			ft_lstadd_back_env(&path, new);
 			i++;
 		}
