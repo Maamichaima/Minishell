@@ -3,74 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 15:17:45 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/29 18:54:29 by rraida-          ###   ########.fr       */
+/*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
+/*   Updated: 2024/07/20 18:06:26 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	inisialiser_pipe(t_ast *root)
+void	executer_cmd(t_cmd cmd, t_env *env, t_ast *const_root)
 {
-	int	pip[2];
+	char	**t;
 
-	pipe(pip);
-	root->left->cmd.outfile = pip[1];
-	if (root->right->type == token_cmd)
-		root->right->cmd.infile = pip[0];
+	dup2(cmd.infile, 0);
+	dup2(cmd.outfile, 1);
+	close_(const_root);
+	t = list_to_table_env(env);
+	execve(cmd.path, cmd.args, t);
+	message_error(cmd.args[0], env);
+}
+
+void	prepare_cmd(t_ast *root, t_env *env)
+{
+	root->cmd.args = list_to_table(root->args);
+	ignor_args(root->cmd.args);
+	init_infile_outfile(root->red, root);
+	if (root->cmd.args)
+		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
 	else
-		root->right->left->cmd.infile = pip[0];
+		root->cmd.path = NULL;
 }
 
-void	init_ast(t_ast *root, t_env *env)
+void	set_last_env_value(t_ast *root, t_env *env)
 {
-	if (root->type == token_pipe)
+	char	*tmp;
+
+	if (!root->args)
+		return ;
+	while (env)
 	{
-		inisialiser_pipe(root);
-		// initialize_cmd(root->left, env);
-		init_ast(root->right, env);
+		if (ft_strcmp("_", env->key) == 0)
+		{
+			while (root->args->next)
+				root->args = root->args->next;
+			tmp = env->value;
+			env->value = ft_strdup(root->args->str);
+			if (tmp)
+				free(tmp);
+		}
+		env = env->next;
 	}
-	// else
-	// 	initialize_cmd(root, env);
 }
 
-int	check_redout(t_str *red)
+void	execute_node(t_ast *root, t_ast *const_root, t_env **env, int count)
 {
-	while (red)
+	if ((root->args) && is_builtin(*(root->args)))
+		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env, count)));
+	else
 	{
-		if (red->type == token_apend || red->type == token_red_output)
-			return (1);
-		red = red->next;
+		root->cmd.pid = fork();
+		if (root->cmd.pid == 0)
+		{
+			prepare_cmd(root, *env);
+			if (root->args)
+				executer_cmd(root->cmd, *env, const_root);
+			exit(0);
+		}
 	}
-	return (0);
 }
 
-int	check_redin(t_str *red)
+void	executer_tree(t_ast *root, t_ast *const_root, t_env **env)
 {
-	while (red)
+	signal(SIGQUIT, ft_quit_signal);
+	if (root->type == token_cmd)
 	{
-		if (red->type == token_red_input || red->type == token_herd)
-			return (1);
-		red = red->next;
+		expand_node(root, *env);
+		execute_node(root, const_root, env, count_cmd(const_root));
+		set_last_env_value(root, *env);
 	}
-	return (0);
-}
-
-int	check_redherdoc(t_str *red)
-{
-	while (red)
+	else
 	{
-		if (red->type == token_herd)
-			return (1);
-		red = red->next;
+		executer_tree(root->left, const_root, env);
+		executer_tree(root->right, const_root, env);
 	}
-	return (0);
 }
-
-// void	initialize_cmd(t_ast *node, t_env *env)
-// {
-// 	node->cmd.args = list_to_table(node->args);
-// 	node->cmd.path = correct_path(get_paths(env), node->cmd.args[0]);
-// }

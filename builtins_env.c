@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 14:00:13 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/16 19:45:03 by maamichaima      ###   ########.fr       */
+/*   Created: 2024/07/10 17:06:30 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/19 22:51:28 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+int	ft_env(t_env *env)
 {
-	int		ls1;
-	int		ls2;
-	char	*p;
-
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (s2);
-	if (!s2)
-		return (s1);
-	ls1 = ft_strlen(s1);
-	ls2 = ft_strlen(s2);
-	p = malloc(sizeof(char) * (ls1 + ls2 + 1));
-	if (!p)
-		return (NULL);
-	p[0] = '\0';
-	ft_strlcat(p, s1, ls1 + 1);
-	ft_strlcat(p, s2, ls1 + ls2 + 1);
-	free(s1);
-	return (p);
+	while (env)
+	{
+		if (ft_strcmp("_", env->key) == 0)
+			printf("%s=/usr/bin/env\n", env->key);
+		else if (ft_strcmp("?", env->key) == 0)
+		{
+			(env) = (env)->next;
+			continue ;
+		}
+		else
+		{
+			if (env->value && env->key)
+				printf("%s=%s\n", env->key, env->value);
+		}
+		(env) = (env)->next;
+	}
+	return (0);
 }

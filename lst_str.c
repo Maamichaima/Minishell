@@ -1,0 +1,80 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_str.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/15 18:36:46 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/15 21:25:46 by maamichaima      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+t_ast	*lstnew_ast(t_token_type type, t_str *cmd, t_str *red)
+{
+	t_ast	*l;
+
+	l = ft_malloc(sizeof(t_ast), 'a');
+	if (!l)
+		return (NULL);
+	l->type = type;
+	l->args = cmd;
+	l->red = red;
+	l->right = NULL;
+	l->left = NULL;
+	l->cmd.infile = 0;
+	l->cmd.outfile = 1;
+	return (l);
+}
+
+t_str	*lst_new_str(char *content, t_token_type type)
+{
+	t_str	*l;
+
+	l = ft_malloc(sizeof(t_str), 'a');
+	if (!l)
+		return (NULL);
+	l->str = content;
+	l->type = type;
+	l->next = NULL;
+	return (l);
+}
+
+t_str	*ft_lstlast_str(t_str *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_lstadd_back_str(t_str **lst, t_str *new)
+{
+	t_str	*t;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		t = ft_lstlast_str(*lst);
+		t->next = new;
+	}
+}
+
+void	lst_token(char *ligne, t_token **head)
+{
+	char	*token;
+
+	while (*ligne != '\0')
+	{
+		token = get_next_token(ligne);
+		if (!token)
+			break ;
+		ft_lstadd_back(head, ft_lstnew(token));
+	}
+}

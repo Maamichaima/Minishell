@@ -3,62 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/07 13:33:23 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/21 15:00:40 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_lstnew_env(char *key, char *value, char *path)
-{
-	t_env	*new;
-
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->key = key;
-	new->value = value;
-	new->path = path;
-	new->next = NULL;
-	new->prev = NULL;
-	// free(key);
-	// free(value);
-	return (new);
-}
-
-void	ft_lstadd_back_env(t_env **lst, t_env *new)
-{
-	t_env	*p;
-
-	p = *lst;
-	if (!lst || !new)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	else
-	{
-		while (p->next != NULL)
-		{
-			p = p->next;
-		}
-		p->next = new;
-		new->prev = p;
-	}
-}
-
-char	*get_key(char *env)
+char	*get_key_env(char *env)
 {
 	int		i;
 	char	*key;
 
 	i = 0;
-	key = malloc(256);
+	key = malloc(sizeof(char) * (ft_strlen(env) + 1));
 	while (env[i] && env[i] != '=' && env[i] != '+')
 	{
 		key[i] = env[i];
@@ -71,11 +31,9 @@ char	*get_key(char *env)
 char	*get_value(char *env)
 {
 	int		i;
-	int		j;
 	char	*value;
 
 	i = 0;
-	j = 0;
 	while (env[i] && env[i] != '=')
 	{
 		i++;
@@ -90,20 +48,46 @@ char	*get_value(char *env)
 	return (value);
 }
 
+void	add_default_env(t_env **path)
+{
+	t_env	*new;
+
+	new = ft_lstnew_env(ft_strdup("PWD"), ft_strdup("/nfs/homes/rraida-/Desktop/mini"));
+	ft_lstadd_back_env(path, new);
+	new = ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"));
+	ft_lstadd_back_env(path, new);
+	new = ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"));
+	ft_lstadd_back_env(path, new);
+	new = ft_lstnew_env(ft_strdup("PATH"), ft_strdup("/nfs/homes/rraida-/bin:/usr/local/sbin:\
+				/usr/local/bin:/usr/sbin:/usr/bin:\
+				/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
+	ft_lstadd_back_env(path, new);
+}
+
 t_env	*get_env_lst(char **env)
 {
 	t_env	*new;
 	t_env	*path;
 	int		i;
+	char	*key;
+	t_env	*x;
 
 	path = NULL;
 	i = 0;
-	while (env && env[i])
+	if (*env == NULL)
+		add_default_env(&path);
+	else
 	{
-		new = ft_lstnew_env(get_key(env[i]), getenv(get_key(env[i])), env[i]);
-		ft_lstadd_back_env(&path, new);
-		i++;
+		while (env && env[i])
+		{
+			key = get_key_env(env[i]);
+			new = ft_lstnew_env(key, ft_strdup(getenv(key)));
+			ft_lstadd_back_env(&path, new);
+			i++;
+		}
+		key = ft_strdup("0");
+		x = ft_lstnew_env(ft_strdup("?"), key);
+		ft_lstadd_back_env(&path, x);
 	}
-	ft_lstadd_back_env(&path,ft_lstnew_env("?",ft_strdup("0"),NULL));
 	return (path);
 }

@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 14:00:13 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/16 19:45:03 by maamichaima      ###   ########.fr       */
+/*   Created: 2024/07/15 01:05:18 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/15 18:26:37 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strcpy(char *s1, char *s2)
 {
-	int		ls1;
-	int		ls2;
-	char	*p;
+	int	i;
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (s2);
-	if (!s2)
-		return (s1);
-	ls1 = ft_strlen(s1);
-	ls2 = ft_strlen(s2);
-	p = malloc(sizeof(char) * (ls1 + ls2 + 1));
-	if (!p)
-		return (NULL);
-	p[0] = '\0';
-	ft_strlcat(p, s1, ls1 + 1);
-	ft_strlcat(p, s2, ls1 + ls2 + 1);
-	free(s1);
-	return (p);
+	i = 0;
+	while (s2[i])
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	s1[i] = s2[i];
+	return (s1);
+}
+
+int	is_whitespace(char c)
+{
+	if (c == ' ')
+		return (1);
+	return (0);
+}
+
+int	is_symbol(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '&')
+		return (1);
+	return (0);
 }

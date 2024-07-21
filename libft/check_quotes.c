@@ -1,37 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 14:00:13 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/16 19:45:03 by maamichaima      ###   ########.fr       */
+/*   Created: 2024/07/15 21:45:37 by maamichaima       #+#    #+#             */
+/*   Updated: 2024/07/15 21:45:59 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+int	check_quotes(char *str, int c, char h)
 {
-	int		ls1;
-	int		ls2;
-	char	*p;
-
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (s2);
-	if (!s2)
-		return (s1);
-	ls1 = ft_strlen(s1);
-	ls2 = ft_strlen(s2);
-	p = malloc(sizeof(char) * (ls1 + ls2 + 1));
-	if (!p)
-		return (NULL);
-	p[0] = '\0';
-	ft_strlcat(p, s1, ls1 + 1);
-	ft_strlcat(p, s2, ls1 + ls2 + 1);
-	free(s1);
-	return (p);
+	int (lock), (i), (last), (first);
+	i = 0;
+	lock = 0;
+	while (str[i])
+	{
+		if (lock == 0 && (str[i] == '\'' || str[i] == '"'))
+		{
+			lock = str[i];
+			first = i;
+		}
+		else if (lock == str[i])
+		{
+			last = i;
+			if (c < last && c > first)
+				break ;
+			lock = 0;
+		}
+		i++;
+	}
+	if (lock == '\"' || h == 'h')
+		return (1);
+	else if (lock == '\'')
+		return (-1);
+	else
+		return (0);
 }

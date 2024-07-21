@@ -6,25 +6,11 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/06/15 15:28:18 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/15 18:33:58 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_whitespace(char c)
-{
-	if (c == ' ')
-		return (1);
-	return (0);
-}
-
-int	is_symbol(char c)
-{
-	if (c == '|' || c == '<' || c == '>' || c == '&') // || c == '(' || c == ')')
-		return (1);
-	return (0);
-}
 
 int	get_next_str_length(char *s, int i)
 {
@@ -86,7 +72,7 @@ char	*get_next_symbol(char *s, int *i)
 		(*i)++;
 		j++;
 	}
-	if (s[*i] && (s[*i] == token[j - 1])) // && s[*i] != '(' && s[*i] != ')'))
+	if (s[*i] && (s[*i] == token[j - 1]))
 	{
 		token[j] = s[*i];
 		(*i)++;

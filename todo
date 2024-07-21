@@ -1,29 +1,36 @@
-export p12=jjjj -->(DONE)
 
-heredoc expand dima (ldakheeel)  -------------------> (done)
-GARBAGE-COLLECTION (done)
-export(last variable)------------->(done)
+bash: ls > $rr: ambiguous redirect
 
-heredoc --> " | ' (del) --> expand(done)
-expand ila kan num flwel(done)
+hmad 256 (done)
 
+$"USER" heredoc(done)
+$$PWD(done)
 
 
+export 7sfsf4=kjfssjkf amine=kaddouri
+bash: export: 7sfsf4=kjfssjkf: not a valid identifier (itzad heta tani)
+(done)
+
+cat << |(mayhelch heredoc khas ikhrej ila kan delimiter pas valide )
+<<<< (done)
+
+unset PATH (cmd not foud)(done)
+unset head env (heap use after free)(done)
+
+cat << l << l(ctr c) hang(done)
 
 
-builtins expand -------------> ch
+./minishell ./minishell(double free)(done)
 
-valid syntax (makamlach) ch
+leaks itoi
+
+bzzzzef pipat
 
 
-SIGNALS  bashbash riri
+exit 4 | echo $? (done)
+pwd > i ,i: Permission denied
 
-expand( space in variable example {var = "ls -al"}) riri
+unset $?
 
-leaks ch
-
-heredoc 1 process (SIGNALS)
-
-_ export
-long long exit
-!!!!!!!!!!!!!!!!!!!!
+mkdir -p 1/12/1232/3/2/32/323/2/3/3/32/2e (tgadat mn 3nd lah )
+SHLVL=2 (++)

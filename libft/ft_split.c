@@ -3,30 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaami <cmaami@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:56:50 by cmaami            #+#    #+#             */
-/*   Updated: 2023/11/17 19:13:10 by cmaami           ###   ########.fr       */
+/*   Updated: 2024/07/15 21:45:01 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_seperator(char s, char *c)
+int	is_separator(char *str, int a, char *charset)
 {
 	int	i;
+	int	c;
 
+	if (!str)
+		return (0);
+	c = str[a];
 	i = 0;
-	while (c[i])
+	while (charset[i] != '\0')
 	{
-		if (c[i] == s)
+		if (c == charset[i] && !check_quotes(str, a, 0))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	count_word(char const *s, char *c)
+int	count_word(char *s, char *c)
 {
 	int	i;
 	int	count;
@@ -35,27 +39,27 @@ int	count_word(char const *s, char *c)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		while (s[i] != '\0' && is_seperator(s[i], c))
+		while (s[i] != '\0' && is_separator(s, i, c))
 			i++;
 		if (s[i] != '\0')
 			count++;
-		while (s[i] != '\0' && !is_seperator(s[i], c))
+		while (s[i] != '\0' && !is_separator(s, i, c))
 			i++;
 	}
 	return (count);
 }
 
-int	c_char(const char *s, char *c)
+int	c_char(char *s, char *c)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0' && !is_seperator(s[i], c))
+	while (s[i] != '\0' && !is_separator(s, i, c))
 		i++;
 	return (i);
 }
 
-char	*alloc_word(const char *s, char *c)
+char	*alloc_word(char *s, char *c)
 {
 	int		i;
 	char	*p;
@@ -64,7 +68,7 @@ char	*alloc_word(const char *s, char *c)
 	p = ft_malloc(sizeof(char) * (c_char(s, c) + 1), 'a');
 	if (!p)
 		return (NULL);
-	while (s[i] && !is_seperator(s[i], c))
+	while (s[i] && !is_separator(s, i, c))
 	{
 		p[i] = s[i];
 		i++;
@@ -73,42 +77,31 @@ char	*alloc_word(const char *s, char *c)
 	return (p);
 }
 
-void	*ft_free_split(int i, char **t)
-{
-	while (i > 0)
-	{
-		free(t[i - 1]);
-		i--;
-	}
-	free(t);
-	return (NULL);
-}
-
-char	**ft_split(char const *s, char *c)
+char	**ft_split(char *s, char *c)
 {
 	int		i;
+	int		w;
 	char	**tab;
 
 	if (!s)
 		return (NULL);
 	i = 0;
+	w = 0;
 	tab = (char **)ft_malloc(sizeof(char *) * (count_word(s, c) + 1), 'a');
 	if (!tab)
 		return (NULL);
-	while (*s)
+	while (s[i] != '\0')
 	{
-		while (is_seperator(*s, c))
-			s++;
-		if (*s != '\0')
-		{
-			tab[i] = alloc_word(s, c);
-			if (tab[i] == NULL)
-				return (ft_free_split(i, tab));
+		while (s[i] != '\0' && is_separator(s, i, c))
 			i++;
+		if (s[i] != '\0')
+		{
+			tab[w] = alloc_word(s + i, c);
+			w++;
 		}
-		while (*s && !is_seperator(*s, c))
-			s++;
+		while (s[i] != '\0' && !is_separator(s, i, c))
+			i++;
 	}
-	tab[i] = NULL;
+	tab[w] = NULL;
 	return (tab);
 }

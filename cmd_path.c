@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:59:35 by rraida-           #+#    #+#             */
-/*   Updated: 2024/06/07 23:03:35 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/19 01:41:29 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	**get_paths(t_env *env)
 {
 	char	**paths;
 
+	paths = NULL;
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PATH") == 0)
@@ -24,6 +25,11 @@ char	**get_paths(t_env *env)
 		}
 		env = env->next;
 	}
+	// if (env == NULL)
+	// 	paths = ft_split("/nfs/homes/rraida-/bin:/usr/local/sbin:
+	// 	/usr/local/bin:/usr/sbin:/usr/bin:
+	// 	/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+	// 			":");
 	return (paths);
 }
 
@@ -41,9 +47,7 @@ char	*ft_strjoin_pipe(char *s1, char *s2)
 	if (str == NULL)
 		return (0);
 	while (s1[i])
-	{
 		str[j++] = s1[i++];
-	}
 	str[j] = '/';
 	j++;
 	i = 0;
@@ -76,10 +80,7 @@ char	*correct_path(char **path, char *v)
 	{
 		tmp = ft_strjoin_pipe(path[i], v);
 		if (access(tmp, F_OK | X_OK) == -1)
-		{
-			free(tmp);
 			i++;
-		}
 		else if (access(tmp, F_OK | X_OK) == 0)
 			return (tmp);
 	}

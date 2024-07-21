@@ -3,49 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   valide_syntax.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/04 23:19:06 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/19 23:47:46 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_redirectien(token_type type)
+int	check_herdoc(t_token *head, t_env *env)
 {
-	if (type == token_red_input || type == token_red_output
-		|| type == token_herd || type == token_apend)
-		return (1);
-	return (0);
-}
+	int	status;
+	int	flag;
 
-int	is_valid_word(char *s)
-{
-	char	lock;
-	int		i;
-	int		j;
-
-	i = 0;
-	lock = 0;
-	while (s[i])
+	flag = 0;
+	while (head)
 	{
-		if (!lock && (s[i] == '\'' || s[i] == '"'))
+		if (head->type == token_herd && head->next && head->next->type == token_word)
 		{
-			lock = s[i];
-			j = i;
+			flag = 1;
+			open_here_doc(head->next->token, env);
+			wait(&status);
+			if (status)
+				break ;
 		}
-		if (j != i && lock == s[i])
-			lock = 0;
-		i++;
+		head = head->next;
 	}
-	if (!lock)
+	if (head == NULL && flag == 1)
 		return (1);
-	else
-		return (0);
+	return (flag);
 }
 
-t_token *is_valid_token(t_token *lst)
+t_token	*is_valid_token(t_token *lst)
 {
 	while (lst)
 	{
@@ -56,19 +46,12 @@ t_token *is_valid_token(t_token *lst)
 		}
 		if (lst->type == token_or || lst->type == token_and)
 		{
-			if (!lst->prev || !lst->next)
+			if ((!lst->prev || !lst->next) || is_valid_and_or(lst))
 				return (lst);
-			if((lst->next->type != token_word && !is_redirectien(lst->next->type))
-				|| (lst->prev->type != token_word && !is_redirectien(lst->prev->type)))
-				return (lst->next);
 		}
 		if (lst->type == token_pipe)
 		{
-			if (!lst->prev || !lst->next)
-				return (lst);
-			if ((lst->prev->type != token_word)
-				|| (lst->next->type != token_word
-					&& !is_redirectien(lst->next->type)))
+			if (!lst->prev || !lst->next || is_valide_pipe(lst))
 				return (lst);
 		}
 		if (lst->type == token_word)
@@ -79,4 +62,47 @@ t_token *is_valid_token(t_token *lst)
 		lst = lst->next;
 	}
 	return (NULL);
+}
+
+void	error_syntax(t_env *v)
+{
+	write(2, "bash: syntax error near unexpected token \n", 43);
+	set_content(v, "?", ft_itoa(2));
+}
+
+void ft_exit_free(t_env *env, int e)
+{
+	(void)env;
+	clear_env(env);
+	ft_malloc(0, 'f');
+	exit (e);
+}
+
+void	message_error(char *str, t_env *env)
+{
+	if (ft_strchr(str, '/'))
+	{
+		if (access(str, F_OK) == -1)
+		{
+			perror(str);
+			ft_exit_free(env, 127);
+		}
+		if (access(str, X_OK) == -1)
+		{
+			perror(str);
+			ft_exit_free(env, 126);
+		}
+	}
+	if (access(str, F_OK) == 0)
+	{
+		write(2, "bash: ", 7);
+		write(2, str, ft_strlen(str));
+		write(2, ": Is a directory\n", 18);
+	}
+	else
+	{
+		write(2, str, ft_strlen(str));
+		write(2, ": command not found\n", 21);
+	}
+	ft_exit_free(env, 127);
 }
