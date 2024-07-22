@@ -24,11 +24,11 @@ cat << l << l(ctr c) hang(done)
 
 leaks itoi
 
-bzzzzef pipat
+bzzzzef pipat(done)
 
 
 exit 4 | echo $? (done)
-pwd > i ,i: Permission denied
+pwd > i ,i: Permission denied(done)
 
 unset $?
 

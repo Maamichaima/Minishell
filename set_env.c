@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/21 15:00:40 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/21 22:11:59 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	add_default_env(t_env **path)
 	ft_lstadd_back_env(path, new);
 	new = ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"));
 	ft_lstadd_back_env(path, new);
-	new = ft_lstnew_env(ft_strdup("PATH"), ft_strdup("/nfs/homes/rraida-/bin:/usr/local/sbin:\
-				/usr/local/bin:/usr/sbin:/usr/bin:\
-				/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
+	new = ft_lstnew_env(ft_strdup("PATH"), ft_strdup("/nfs/homes/rraida-/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
+	ft_lstadd_back_env(path, new);
+	new= ft_lstnew_env(ft_strdup("?"),ft_strdup("0"));
 	ft_lstadd_back_env(path, new);
 }
 
