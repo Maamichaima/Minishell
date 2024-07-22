@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:09:51 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 15:48:44 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/22 16:07:20 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	error_cd(int a, char *str)
 		write(2, "bash: cd:", 10);
 		write(2, " HOME not set\n", 14);
 	}
+	else if(a == 2)
+	{
+		write(2, "bash: cd:", 10);
+		write(2, " too many arguments\n", 21);
+	}
 	else
 	{
 		write(2, "bash: cd: ", 11);
@@ -42,7 +47,12 @@ int	ft_cd(char **args, t_env *env)
 	old = getcwd(NULL, 0);
 	if (args[1] == NULL)
 		val = get_value_("HOME", env);
-	else
+	else if (args[1] && args[2])
+	{
+		(error_cd(2, val), free(old));
+		return (1);
+	}
+	else if(args[1])
 		val = args[1];
 	if (!val)
 	{
