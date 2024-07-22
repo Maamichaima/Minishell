@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 11:26:14 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/21 22:17:06 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/22 13:04:28 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_atoi(char *str)
 	i = 0;
 	nb = 0;
 	signe = 1;
-	if(!str)
-		return 0;
+	if (!str)
+		return (0);
 	while ((str[i] == ' ') || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-')

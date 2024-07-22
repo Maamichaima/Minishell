@@ -6,11 +6,18 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:09:51 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 01:01:48 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/22 15:48:44 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**path_secour(void)
+{
+	static char	*p;
+
+	return (&p);
+}
 
 void	error_cd(int a, char *str)
 {
@@ -39,17 +46,17 @@ int	ft_cd(char **args, t_env *env)
 		val = args[1];
 	if (!val)
 	{
-		error_cd(0, val);
-		free(old);
+		(error_cd(0, val), free(old));
 		return (1);
 	}
 	else if (chdir(val) == -1)
 	{
-		error_cd(1, val);
-		free(old);
+		(error_cd(1, val), free(old));
 		return (1);
 	}
 	new = getcwd(NULL, 0);
+	// if (new)
+	// 	*path_secour() = ft_strdup(new);
 	set_content(env, "PWD", new);
 	set_content(env, "OLDPWD", old);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:56:59 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/20 00:27:31 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/22 13:30:48 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	open_here_doc(char *del, t_env *env)
 	int		pipe_fd[2];
 	pid_t	pid;
 
-	if(pipe(pipe_fd) == -1)
+	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
 		ft_exit_free(env, 1);
@@ -72,7 +72,7 @@ int	open_here_doc(char *del, t_env *env)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		in_the_pipe(del, pipe_fd, env, del_);\
+		in_the_pipe(del, pipe_fd, env, del_);
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 		ft_exit_free(env, 0);
@@ -91,9 +91,9 @@ int	outfile(t_str *red)
 					0644);
 			if (red->fd == -1)
 			{
-				write(2,"bash: ",7);
+				write(2, "bash: ", 7);
 				perror(red->str);
-				return(1);
+				return (1);
 			}
 		}
 		else if (red->type == token_red_output)
@@ -101,14 +101,13 @@ int	outfile(t_str *red)
 			red->fd = open(ignor(red->str), O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			if (red->fd == -1)
 			{
-				write(2,"bash: ",7);
-				perror(red->str);
-				return(1);
+				(write(2, "bash: ", 7), perror(red->str));
+				return (1);
 			}
 		}
 		red = red->next;
 	}
-	return(0);
+	return (0);
 }
 
 int	infile(t_str *red)
@@ -120,12 +119,12 @@ int	infile(t_str *red)
 			red->fd = open(ignor(red->str), O_RDONLY, 0644);
 			if (red->fd == -1)
 			{
-				write(2,"bash: ",7);
+				write(2, "bash: ", 7);
 				perror(red->str);
-				return(1);
+				return (1);
 			}
 		}
 		red = red->next;
 	}
-	return(0);
+	return (0);
 }

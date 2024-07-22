@@ -23,7 +23,7 @@ int	fd_here_doc(t_str *red, t_env *env)
 			red->fd = open_here_doc(red->str, env);
 			wait(&status);
 			if (status)
-				return (0) ;
+				return (0);
 		}
 		red = red->next;
 	}
@@ -32,7 +32,7 @@ int	fd_here_doc(t_str *red, t_env *env)
 
 int	execut_all_here_doc(t_ast *root, t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (root->type == token_cmd)
@@ -78,7 +78,7 @@ int	init_infile_outfile(t_str *red, t_ast *node)
 		flag = infile(red);
 		node->cmd.infile = get_last_fd(red, 'i');
 	}
-	return(flag);
+	return (flag);
 }
 
 void	ft_quit_signal(int sig)

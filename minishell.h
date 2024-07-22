@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/20 17:54:15 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/22 14:30:35 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,8 @@ void					set_content_f(t_env *env, char *key, char *content);
 int						is_builtin(t_str cmd);
 t_ast					*lstnew_ast(t_token_type type, t_str *cmd, t_str *red);
 void					ft_quit_signal(int sig);
-void					execute_node(t_ast *root, t_ast *const_root, t_env **env, int count);
+void					execute_node(t_ast *root, t_ast *const_root,
+							t_env **env, int count);
 void					error_syntax(t_env *env);
 void					message_error(char *str, t_env *env);
 void					copy(char *dst, const char *str);
@@ -196,7 +197,9 @@ void					signal_handler(void);
 void					close_(t_ast *root);
 int						wait_(t_ast *root, t_env *env);
 void					lst_token(char *ligne, t_token **head);
-int						*set_signal_flag();
+int						*set_signal_flag(void);
 char					*hmad(char *s);
-void ft_exit_free(t_env *env, int e);
+void					ft_exit_free(t_env *env, int e);
+char					**path_secour(void);
+int						len_value(char *str);
 #endif

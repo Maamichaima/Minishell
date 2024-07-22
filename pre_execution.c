@@ -16,7 +16,7 @@ void	inisialiser_pipe(t_ast *root, t_env *env)
 {
 	int	pip[2];
 
-	if(pipe(pip) == -1)
+	if (pipe(pip) == -1)
 	{
 		perror("pipe");
 		ft_exit_free(env, 1);

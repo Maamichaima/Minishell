@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/20 16:23:22 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/22 14:33:09 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_key_in_env(t_env *env, char *args)
 				env->value = ft_strjoin(env->value, args + i + 2);
 			else if (args[i] == '=')
 			{
-				if(env->value)
+				if (env->value)
 					free(env->value);
 				env->value = ignor(get_value(args));
 			}
@@ -59,11 +59,9 @@ int	ft_error_export(char *str)
 
 int	ft_export(char **a, t_env *env)
 {
-	int		i;
-	t_env	*new;
-	t_env	*tmp;
-	int status = 0;
-
+	t_env (*new), (*tmp);
+	int (i), (status);
+	status = 0;
 	i = 0;
 	new = NULL;
 	tmp = env;

@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:26:03 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/19 23:49:18 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/22 15:09:30 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int *set_signal_flag()
+int	*set_signal_flag(void)
 {
-	static int sig_flag = 0;
-	return &sig_flag;
+	static int	sig_flag = 0;
+
+	return (&sig_flag);
 }
 
-void start_minishell(t_token *head, t_env *v)
+void	start_minishell(t_token *head, t_env *v)
 {
-	t_ast *root;
-	t_token *t;
+	t_ast	*root;
+	t_token	*t;
 
 	t = is_valid_token(head);
 	if (t && check_herdoc(head, v))
@@ -39,7 +40,7 @@ void start_minishell(t_token *head, t_env *v)
 	}
 }
 
-void control_c(int sig)
+void	control_c(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
@@ -51,11 +52,11 @@ void control_c(int sig)
 	}
 }
 
-int main(int c, char **av, char **env)
+int	main(int c, char **av, char **env)
 {
-	char *input;
-	t_token *head;
-	t_env *v;
+	char	*input;
+	t_token	*head;
+	t_env	*v;
 
 	(void)c;
 	(void)av;

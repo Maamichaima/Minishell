@@ -18,7 +18,7 @@ void	set_content(t_env *env, char *key, char *content)
 	{
 		if (ft_strcmp(env->key, key) == 0)
 		{
-			if(env->value)
+			if (env->value)
 				free(env->value);
 			env->value = content;
 			return ;
@@ -70,4 +70,21 @@ int	len_get_expand_value(char *str)
 	while (str[i] && (ft_isalpha(str[i]) || ft_isnum(str[i]) || str[i] == '_'))
 		i++;
 	return (i);
+}
+
+int	len_value(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	if (!str)
+		return (0);
+	while (str[i] && (ft_isalpha(str[i]) || ft_isnum(str[i]) || str[i] == '_'))
+	{
+		i++;
+		len++;
+	}
+	return (len);
 }

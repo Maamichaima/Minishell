@@ -28,7 +28,7 @@ void	prepare_cmd(t_ast *root, t_env *env)
 {
 	root->cmd.args = list_to_table(root->args);
 	ignor_args(root->cmd.args);
-	if(init_infile_outfile(root->red, root) == 1)
+	if (init_infile_outfile(root->red, root) == 1)
 		exit(1);
 	if (root->cmd.args)
 		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
@@ -60,7 +60,8 @@ void	set_last_env_value(t_ast *root, t_env *env)
 void	execute_node(t_ast *root, t_ast *const_root, t_env **env, int count)
 {
 	if ((root->args) && is_builtin(*(root->args)))
-		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env, count)));
+		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env,
+					count)));
 	else
 	{
 		root->cmd.pid = fork();

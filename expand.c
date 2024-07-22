@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/18 22:53:59 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/22 14:33:23 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ char	*expandiliya(t_ite *ite, char *str, t_env *env, char *tmp)
 	return (tmp);
 }
 
-int len_expand(char *str, char c,t_env *env)
+int	len_expand(char *str, char c, t_env *env)
 {
-	int len;
-	int i;
-	char *key;
+	char	*key;
 
+	int (len), (i);
 	len = 0;
 	i = 0;
 	if (ft_strchr(str, '$'))
 	{
-		while(str[i])
+		while (str[i])
 		{
 			if (str[i] == '$' && str[i + 1] == '"' && !check_quotes(str, i, 0))
 				i++;
@@ -51,12 +50,12 @@ int len_expand(char *str, char c,t_env *env)
 			}
 			else
 			{
-				i++;
-				len++;
+				(i++);
+				(len++);
 			}
 		}
 	}
-	return len;
+	return (len);
 }
 
 char	*expand(char *str, t_env *env, char c)
@@ -72,8 +71,9 @@ char	*expand(char *str, t_env *env, char c)
 	{
 		while (str[ite.i])
 		{
-			if (c != 'h' && (str[ite.i] == '$' && (str[ite.i + 1] == '"' || str[ite.i + 1] == '\'') && !check_quotes(str,
-					ite.i, 0)))
+			if (c != 'h' && (str[ite.i] == '$' && (str[ite.i + 1] == '"'
+						|| str[ite.i + 1] == '\'') && !check_quotes(str, ite.i,
+						0)))
 				ite.i++;
 			if (check_ex(str, c, ite.i))
 				expandiliya(&ite, str, env, tmp);
@@ -111,7 +111,6 @@ void	expand_node(t_ast *root, t_env *env)
 	{
 		arg->str = hmad(arg->str);
 		tmp = ft_split(expand(arg->str, env, 'a'), "\t\n ");
-		// printf("%s   \n", tmp[0]);
 		while (tmp && tmp[i])
 		{
 			ft_lstadd_back_str(&new, lst_new_str(tmp[i], token_cmd));

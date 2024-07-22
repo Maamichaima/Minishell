@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:50:38 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/21 22:09:57 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/22 15:47:35 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ int	execute_in_parent(t_ast *root, t_env **env, int count)
 
 	stdin = dup(0);
 	stdout = dup(1);
-	init_infile_outfile(root->red, root);
+	init_infile_outfile(root->red, root);//
 	dup2(root->cmd.infile, 0);
 	dup2(root->cmd.outfile, 1);
-	
 	status = execut_bultin(root, env, count);
 	dup2(stdin, 0);
 	dup2(stdout, 1);

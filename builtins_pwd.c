@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:31 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 00:59:50 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/22 15:49:29 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 int	ft_pwd(t_env *env)
 {
+	char	*str;
+
 	(void)env;
-	char *str;
-	
 	str = getcwd(NULL, 0);
+	// if (!str)
+	// {
+	// 	printf("%s\n", *path_secour());
+	// 	free(str);
+	// 	return (0);
+	// }
 	printf("%s\n", str);
 	free(str);
 	return (0);

@@ -20,7 +20,8 @@ int	check_herdoc(t_token *head, t_env *env)
 	flag = 0;
 	while (head)
 	{
-		if (head->type == token_herd && head->next && head->next->type == token_word)
+		if (head->type == token_herd && head->next
+			&& head->next->type == token_word)
 		{
 			flag = 1;
 			open_here_doc(head->next->token, env);
@@ -70,12 +71,12 @@ void	error_syntax(t_env *v)
 	set_content(v, "?", ft_itoa(2));
 }
 
-void ft_exit_free(t_env *env, int e)
+void	ft_exit_free(t_env *env, int e)
 {
 	(void)env;
 	clear_env(env);
 	ft_malloc(0, 'f');
-	exit (e);
+	exit(e);
 }
 
 void	message_error(char *str, t_env *env)

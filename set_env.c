@@ -6,7 +6,7 @@
 /*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:47:58 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/21 22:11:59 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/22 13:34:44 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,28 @@ void	add_default_env(t_env **path)
 {
 	t_env	*new;
 
-	new = ft_lstnew_env(ft_strdup("PWD"), ft_strdup("/nfs/homes/rraida-/Desktop/mini"));
+	new = ft_lstnew_env(ft_strdup("PWD"),
+			ft_strdup("/nfs/homes/rraida-/Desktop/mini"));
+	ft_lstadd_back_env(path, new);
+	new = ft_lstnew_env(ft_strdup("OLDPWD"), NULL);
 	ft_lstadd_back_env(path, new);
 	new = ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"));
 	ft_lstadd_back_env(path, new);
 	new = ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"));
 	ft_lstadd_back_env(path, new);
-	new = ft_lstnew_env(ft_strdup("PATH"), ft_strdup("/nfs/homes/rraida-/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
+	new = ft_lstnew_env(ft_strdup("PATH"),
+			ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"));
 	ft_lstadd_back_env(path, new);
-	new= ft_lstnew_env(ft_strdup("?"),ft_strdup("0"));
+	new = ft_lstnew_env(ft_strdup("?"), ft_strdup("0"));
 	ft_lstadd_back_env(path, new);
 }
 
-t_env *get_new_node_in_env(char *env, char *key)
+t_env	*get_new_node_in_env(char *env, char *key)
 {
-	int n;
-	t_env *new;
+	int		n;
+	t_env	*new;
 
-	if(ft_strcmp(key, "SHLVL") == 0)
+	if (ft_strcmp(key, "SHLVL") == 0)
 	{
 		n = ft_atoi(getenv(key));
 		n++;
@@ -77,7 +81,7 @@ t_env *get_new_node_in_env(char *env, char *key)
 	}
 	else
 		new = ft_lstnew_env(key, ft_strdup(getenv(key)));
-	return new;
+	return (new);
 }
 
 t_env	*get_env_lst(char **env)

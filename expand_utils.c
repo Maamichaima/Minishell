@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:25:50 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/18 22:30:31 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/22 14:34:18 by rraida-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,30 +74,13 @@ char	*hmad(char *s)
 	return (s);
 }
 
-int len_value(char *str)
-{
-	int i;
-	int len;
-
-	i = 0;
-	len = 0;
-	if(!str)
-		return 0;
-	while(str[i] && (ft_isalpha(str[i]) || ft_isnum(str[i]) || str[i] == '_'))
-	{
-		i++;
-		len++;
-	}
-	return len;
-}
-
 char	*get_expand_value(char *str)
 {
 	int		j;
 	char	*val;
 
-	if(!str)
-		return(NULL);
+	if (!str)
+		return (NULL);
 	if (str[0] == '?')
 		return (ft_strdup_in_gar("?"));
 	else if (str[0] == '$')
@@ -116,8 +99,8 @@ char	*get_expand_value(char *str)
 int	check_ex(char *s, char c, int i)
 {
 	if (s[i] == '$' && check_quotes(s, i, c) != -1 && (ft_isalpha(s[i + 1])
-			|| ft_isnum(s[i + 1]) || s[i + 1] == '_'
-				|| s[i + 1] == '?' || s[i + 1] == '$'))
+			|| ft_isnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?' || s[i
+			+ 1] == '$'))
 		return (1);
 	return (0);
 }

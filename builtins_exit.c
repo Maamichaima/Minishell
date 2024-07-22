@@ -12,31 +12,29 @@
 
 #include "minishell.h"
 
-void write_error_exit(char **args, t_env *env , int x, int count)
+void	write_error_exit(char **args, t_env *env, int x, int count)
 {
-	if(x == 1)
+	if (x == 1)
 	{
-		if(count == 1)
+		if (count == 1)
 			write(2, "exit\n", 6);
 	}
-	else if(x == 2)
+	else if (x == 2)
 	{
-		if(count == 1)
+		if (count == 1)
 			write(2, "exit\n", 6);
 		write(2, "bash: exit: ", 13);
 		write(2, args[1], ft_strlen(args[1]));
 		write(2, ": numeric argument required\n", 29);
-		}
-
-	else if(x == 3)
+	}
+	else if (x == 3)
 	{
-		if(count == 1)
+		if (count == 1)
 			write(2, "exit\n", 6);
 	}
 	clear_env(env);
 	ft_malloc(0, 'f');
 }
-
 
 int	ft_exit(char **args, t_env *env, int count)
 {
@@ -61,7 +59,7 @@ int	ft_exit(char **args, t_env *env, int count)
 	}
 	else
 	{
-		if(count == 1)
+		if (count == 1)
 			write(2, "exit\n", 6);
 		write(2, "bash: exit: too many arguments\n", 32);
 		return (1);
