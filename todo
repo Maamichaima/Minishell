@@ -1,3 +1,5 @@
 || ysntax err
 
-leaks unset 
+leaks unset
+
+++ env -i

@@ -72,7 +72,7 @@ char	*get_next_symbol(char *s, int *i)
 		(*i)++;
 		j++;
 	}
-	if (s[*i] && (s[*i] == token[j - 1]))
+	if (s[*i] && (s[*i] == token[j - 1]) && s[*i] != '|')
 	{
 		token[j] = s[*i];
 		(*i)++;

@@ -28,14 +28,14 @@ char	*ft_strcpy(char *s1, char *s2)
 
 int	is_whitespace(char c)
 {
-	if (c == ' ')
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\f')
 		return (1);
 	return (0);
 }
 
 int	is_symbol(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&')
+	if (c == '|' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }
