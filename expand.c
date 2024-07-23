@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:49:47 by rraida-           #+#    #+#             */
-/*   Updated: 2024/07/22 14:33:23 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/23 15:24:02 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,33 @@ char	*expandiliya(t_ite *ite, char *str, t_env *env, char *tmp)
 	return (tmp);
 }
 
-int	len_expand(char *str, char c, t_env *env)
+int	len_expand(char *s, char c, t_env *env)
 {
 	char	*key;
+	t_ite	e;
 
-	int(len), (i);
-	len = 0;
-	i = 0;
-	if (ft_strchr(str, '$'))
+	inisialiser_ite(&e);
+	if (ft_strchr(s, '$'))
 	{
-		while (str[i])
+		while (s[e.i])
 		{
-			if (str[i] == '$' && str[i + 1] == '"' && !check_quotes(str, i, 0))
-				i++;
-			else if (check_ex(str, c, i))
+			if (s[e.i] == '$' && s[e.i + 1] == '"' && !check_quotes(s, e.i, 0))
+				e.i++;
+			else if (check_ex(s, c, e.i))
 			{
-				i++;
-				key = get_expand_value(str + i);
-				len += ft_strlen(get_value_(key, env));
-				i += ft_strlen(key);
+				e.i++;
+				key = get_expand_value(s + e.i);
+				e.j += ft_strlen(get_value_(key, env));
+				e.i += ft_strlen(key);
 			}
 			else
 			{
-				(i++);
-				(len++);
+				(e.i++);
+				(e.j++);
 			}
 		}
 	}
-	return (len);
+	return (e.j);
 }
 
 char	*expand(char *str, t_env *env, char c)

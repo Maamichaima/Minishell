@@ -71,13 +71,13 @@ int	init_infile_outfile(t_str *red, t_ast *node)
 	if (check_redout(red))
 	{
 		flag = outfile(red);
-		if(flag == 0)
+		if (flag == 0)
 			node->cmd.outfile = get_last_fd(red, 'o');
 	}
 	if (check_redin(red))
 	{
 		flag = infile(red);
-		if(flag == 0)
+		if (flag == 0)
 			node->cmd.infile = get_last_fd(red, 'i');
 	}
 	return (flag);

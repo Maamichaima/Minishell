@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:08:06 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 14:33:09 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:01:04 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,25 @@ int	check_key_in_env(t_env *env, char *args)
 	}
 	return (0);
 }
+int valide_word(char *str)
+{
+	int i;
 
+	i = 0;
+	while(str[i])
+	{
+		if(str[i] == '_' || ft_isalpha(str[i]) || ft_isnum(str[i]))
+			i++;
+		else
+			return(0);
+	}
+	return(1);
+}
 int	valide_key(char *str)
 {
-	if (str[0] == '_' || ft_isalpha(str[0]))
+	if(!str)
+		return(0);
+	if ((str[0] == '_' || ft_isalpha(str[0])) && valide_word(str + 1))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:05:13 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/20 22:08:53 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/23 14:55:13 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	write_error_exit(char **args, t_env *env, int x, int count)
 		write(2, "bash: exit: ", 13);
 		write(2, args[1], ft_strlen(args[1]));
 		write(2, ": numeric argument required\n", 29);
+		exit(2);
 	}
 	else if (x == 3)
 	{
@@ -48,10 +49,7 @@ int	ft_exit(char **args, t_env *env, int count)
 	}
 	else if (str_is_num(args[1]) || (!str_is_num(args[1])
 			&& ft_strlen(args[1]) > 12))
-	{
 		write_error_exit(args, env, 2, count);
-		exit(2);
-	}
 	else if (args[0] && !str_is_num(args[1]) && args[2] == NULL)
 	{
 		e = ft_atoi(args[1]);

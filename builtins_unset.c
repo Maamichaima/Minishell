@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:04:34 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/19 01:26:54 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/23 16:27:10 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ int	supp(char *key, t_env **env)
 	found = 0;
 	if (ft_strcmp(get_key(key), (*env)->key) == 0)
 	{
-		**env = *(*env)->next;
-		if (*env)
-			(*env)->prev = NULL;
+		*current = *current->next;
+		if (current)
+			(current)->prev = NULL;
+		//free_(*env);
 	}
 	else
 	{

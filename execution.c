@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:05:16 by cmaami            #+#    #+#             */
-/*   Updated: 2024/07/20 18:06:26 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/23 16:24:51 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	prepare_cmd(t_ast *root, t_env *env)
 	if (root->cmd.args)
 	{
 		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
-		if(!root->cmd.path)
+		if (!root->cmd.path)
 			root->cmd.path = ft_strdup_in_gar("");
 	}
 	else

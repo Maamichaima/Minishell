@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 14:30:35 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:25:04 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,4 +200,5 @@ char					*hmad(char *s);
 void					ft_exit_free(t_env *env, int e);
 char					**path_secour(void);
 int						len_value(char *str);
+int						valide_word(char *str);
 #endif

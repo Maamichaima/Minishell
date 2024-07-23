@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:25:50 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 14:34:18 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/23 15:13:58 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ char	*get_expand_value(char *str)
 int	check_ex(char *s, char c, int i)
 {
 	if (s[i] == '$' && check_quotes(s, i, c) != -1 && (ft_isalpha(s[i + 1])
-			|| ft_isnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?' || s[i
-			+ 1] == '$'))
+			|| ft_isnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?'
+			|| s[i + 1] == '$'))
 		return (1);
 	return (0);
 }

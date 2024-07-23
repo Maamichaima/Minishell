@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:09:51 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/22 16:07:20 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/23 15:23:37 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,30 @@ void	error_cd(int a, char *str)
 	}
 }
 
+int puts_err(char *val, char *old)
+{
+	if (!val)
+	{
+		(error_cd(0, val), free(old));
+		return (1);
+	}
+	else if (chdir(val) == -1)
+	{
+		(error_cd(1, val), free(old));
+		return (1);
+	}
+}
+
+void set_old(char *new)
+{
+	if (new)
+	{
+		if (*path_secour())
+			free(*path_secour());
+		*path_secour() = ft_strdup(new);
+	}
+}
+
 int	ft_cd(char **args, t_env *env)
 {
 	char	*old;
@@ -54,23 +78,11 @@ int	ft_cd(char **args, t_env *env)
 	}
 	else if (args[1])
 		val = args[1];
-	if (!val)
-	{
-		(error_cd(0, val), free(old));
+	if(puts_err(val, old))
 		return (1);
-	}
-	else if (chdir(val) == -1)
-	{
-		(error_cd(1, val), free(old));
-		return (1);
-	}
 	new = getcwd(NULL, 0);
 	if (new)
-	{
-		if (*path_secour())
-			free(*path_secour());
-		*path_secour() = ft_strdup(new);
-	}
+		set_old(new);
 	set_content(env, "PWD", new);
 	set_content(env, "OLDPWD", old);
 	return (0);
