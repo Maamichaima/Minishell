@@ -45,11 +45,6 @@ t_token	*is_valid_token(t_token *lst)
 			if ((!lst->next) || lst->next->type != token_word)
 				return (lst);
 		}
-		if (lst->type == token_or || lst->type == token_and)
-		{
-			if ((!lst->prev || !lst->next) || is_valid_and_or(lst))
-				return (lst);
-		}
 		if (lst->type == token_pipe)
 		{
 			if (!lst->prev || !lst->next || is_valide_pipe(lst))
@@ -94,7 +89,7 @@ void	message_error(char *str, t_env *env)
 			ft_exit_free(env, 126);
 		}
 	}
-	if (access(str, F_OK) == 0)
+	if (access(str, F_OK | X_OK) == 0)
 	{
 		write(2, "bash: ", 7);
 		write(2, str, ft_strlen(str));

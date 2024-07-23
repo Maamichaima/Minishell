@@ -53,7 +53,7 @@ int	ft_echo(char **args, int outfile)
 	while (args[i])
 	{
 		write(outfile, args[i], ft_strlen(args[i]));
-		if (args[i++])
+		if (args[++i])
 			write(outfile, " ", 1);
 	}
 	if (new_line != 1)

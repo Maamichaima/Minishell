@@ -18,12 +18,12 @@ int	ft_pwd(t_env *env)
 
 	(void)env;
 	str = getcwd(NULL, 0);
-	// if (!str)
-	// {
-	// 	printf("%s\n", *path_secour());
-	// 	free(str);
-	// 	return (0);
-	// }
+	if (!str)
+	{
+		printf("%s\n", *path_secour());
+		free(str);
+		return (0);
+	}
 	printf("%s\n", str);
 	free(str);
 	return (0);

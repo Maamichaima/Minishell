@@ -71,26 +71,3 @@ t_ast	*parse_pipe(t_token *lst)
 	}
 	return (parse_cmd(h_left));
 }
-
-t_ast	*parse_and_or(t_token *lst)
-{
-	t_ast	*root;
-	t_token	*h_left;
-	t_token	*h_right;
-
-	h_left = lst;
-	while (lst)
-	{
-		if (lst->type == token_or || lst->type == token_and)
-		{
-			h_right = lst->next;
-			lst->prev->next = NULL;
-			root = lstnew_ast(lst->type, NULL, NULL);
-			root->left = parse_pipe(h_left);
-			root->right = parse_and_or(h_right);
-			return (root);
-		}
-		lst = lst->next;
-	}
-	return (parse_pipe(h_left));
-}

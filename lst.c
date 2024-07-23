@@ -38,16 +38,6 @@ t_token_type	set_type(char *content)
 		type = token_apend;
 	else if (!ft_strcmp(content, "|"))
 		type = token_pipe;
-	else if (!ft_strcmp(content, "||"))
-		type = token_or;
-	else if (!ft_strcmp(content, ")"))
-		type = token_right_par;
-	else if (!ft_strcmp(content, "("))
-		type = token_left_par;
-	else if (!ft_strcmp(content, "&"))
-		type = token_back_ope;
-	else if (!ft_strcmp(content, "&&"))
-		type = token_and;
 	else
 		type = token_word;
 	return (type);

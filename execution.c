@@ -29,9 +29,13 @@ void	prepare_cmd(t_ast *root, t_env *env)
 	root->cmd.args = list_to_table(root->args);
 	ignor_args(root->cmd.args);
 	if (init_infile_outfile(root->red, root) == 1)
-		exit(1);
+		ft_exit_free(env, 1);
 	if (root->cmd.args)
+	{
 		root->cmd.path = correct_path(get_paths(env), root->cmd.args[0]);
+		if(!root->cmd.path)
+			root->cmd.path = ft_strdup_in_gar("");
+	}
 	else
 		root->cmd.path = NULL;
 }

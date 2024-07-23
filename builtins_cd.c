@@ -26,7 +26,7 @@ void	error_cd(int a, char *str)
 		write(2, "bash: cd:", 10);
 		write(2, " HOME not set\n", 14);
 	}
-	else if(a == 2)
+	else if (a == 2)
 	{
 		write(2, "bash: cd:", 10);
 		write(2, " too many arguments\n", 21);
@@ -52,7 +52,7 @@ int	ft_cd(char **args, t_env *env)
 		(error_cd(2, val), free(old));
 		return (1);
 	}
-	else if(args[1])
+	else if (args[1])
 		val = args[1];
 	if (!val)
 	{
@@ -65,8 +65,12 @@ int	ft_cd(char **args, t_env *env)
 		return (1);
 	}
 	new = getcwd(NULL, 0);
-	// if (new)
-	// 	*path_secour() = ft_strdup(new);
+	if (new)
+	{
+		if (*path_secour())
+			free(*path_secour());
+		*path_secour() = ft_strdup(new);
+	}
 	set_content(env, "PWD", new);
 	set_content(env, "OLDPWD", old);
 	return (0);

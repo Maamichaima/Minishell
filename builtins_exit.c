@@ -42,14 +42,15 @@ int	ft_exit(char **args, t_env *env, int count)
 
 	if (args[0] && !args[1])
 	{
+		e = ft_atoi(get_value_("?", env));
 		write_error_exit(args, env, 1, count);
-		exit(0);
+		exit(e);
 	}
 	else if (str_is_num(args[1]) || (!str_is_num(args[1])
 			&& ft_strlen(args[1]) > 12))
 	{
 		write_error_exit(args, env, 2, count);
-		exit(255);
+		exit(2);
 	}
 	else if (args[0] && !str_is_num(args[1]) && args[2] == NULL)
 	{

@@ -46,14 +46,6 @@ int	is_valid_word(char *s)
 		return (0);
 }
 
-int	is_valid_and_or(t_token *lst)
-{
-	if ((lst->next->type != token_word && !is_redirectien(lst->next->type))
-		|| (lst->prev->type != token_word && !is_redirectien(lst->prev->type)))
-		return (1);
-	return (0);
-}
-
 int	is_valide_pipe(t_token *lst)
 {
 	if ((lst->prev->type != token_word) || (lst->next->type != token_word

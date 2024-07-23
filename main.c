@@ -31,7 +31,7 @@ void	start_minishell(t_token *head, t_env *v)
 		error_syntax(v);
 	else if (head)
 	{
-		root = parse_and_or(head);
+		root = parse_pipe(head);
 		init_ast(root, v);
 		if (execut_all_here_doc(root, v) == 1)
 			executer_tree(root, root, &v);

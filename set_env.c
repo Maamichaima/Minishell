@@ -72,7 +72,9 @@ t_env	*get_new_node_in_env(char *env, char *key)
 {
 	int		n;
 	t_env	*new;
-
+	
+	n = 0;
+	new=NULL;
 	if (ft_strcmp(key, "SHLVL") == 0)
 	{
 		n = ft_atoi(getenv(key));

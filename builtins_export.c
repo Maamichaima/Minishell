@@ -59,8 +59,8 @@ int	ft_error_export(char *str)
 
 int	ft_export(char **a, t_env *env)
 {
-	t_env (*new), (*tmp);
-	int (i), (status);
+	t_env(*new), (*tmp);
+	int(i), (status);
 	status = 0;
 	i = 0;
 	new = NULL;

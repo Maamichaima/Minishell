@@ -32,8 +32,6 @@ typedef enum s_token_type
 	token_red_output,
 	token_herd,
 	token_apend,
-	token_or,
-	token_and,
 	token_back_ope,
 	token_left_par,
 	token_right_par,

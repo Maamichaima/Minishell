@@ -32,7 +32,7 @@ int	len_expand(char *str, char c, t_env *env)
 {
 	char	*key;
 
-	int (len), (i);
+	int(len), (i);
 	len = 0;
 	i = 0;
 	if (ft_strchr(str, '$'))
