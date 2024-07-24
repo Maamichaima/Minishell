@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:14 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/19 23:47:46 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/24 13:46:01 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	check_herdoc(t_token *head, t_env *env)
 	while (head)
 	{
 		if (head->type == token_herd && head->next
-			&& head->next->type == token_word)
+			&& head->next->type == token_word
+			&& is_valid_word(head->next->token))
 		{
 			flag = 1;
 			open_here_doc(head->next->token, env);

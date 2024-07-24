@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:55:55 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/23 16:25:04 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/24 19:03:07 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int						is_redirectien(t_token_type type);
 t_token					*is_valid_token(t_token *lst);
 int						is_valid_word(char *s);
 t_ast					*parse_pipe(t_token *lst);
-t_str					*jbdi_red(t_token *lst);
+t_str					*getred(t_token *lst);
 t_str					*jbdi_cmd(t_token *lst);
 t_ast					*parse_and_or(t_token *lst);
 char					**list_to_table(t_str *str);
@@ -196,7 +196,7 @@ void					close_(t_ast *root);
 int						wait_(t_ast *root, t_env *env);
 void					lst_token(char *ligne, t_token **head);
 int						*set_signal_flag(void);
-char					*hmad(char *s);
+char					*check_to_split(char *s);
 void					ft_exit_free(t_env *env, int e);
 char					**path_secour(void);
 int						len_value(char *str);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraida- <rraida-@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:38:54 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/12 02:09:07 by rraida-          ###   ########.fr       */
+/*   Updated: 2024/07/24 13:55:14 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_str	*jbdi_red(t_token *lst)
+t_str	*get_lst_red(t_token *lst)
 {
 	t_str	*red;
 
@@ -26,7 +26,7 @@ t_str	*jbdi_red(t_token *lst)
 	return (red);
 }
 
-t_str	*jbdi_cmd(t_token *lst)
+t_str	*get_lst_cmd(t_token *lst)
 {
 	t_str	*cmd;
 
@@ -45,7 +45,7 @@ t_ast	*parse_cmd(t_token *lst)
 {
 	t_ast	*cmd;
 
-	cmd = lstnew_ast(token_cmd, jbdi_cmd(lst), jbdi_red(lst));
+	cmd = lstnew_ast(token_cmd, get_lst_cmd(lst), get_lst_red(lst));
 	return (cmd);
 }
 

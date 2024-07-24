@@ -6,7 +6,7 @@
 /*   By: maamichaima <maamichaima@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 17:25:50 by maamichaima       #+#    #+#             */
-/*   Updated: 2024/07/23 15:13:58 by maamichaima      ###   ########.fr       */
+/*   Updated: 2024/07/24 15:40:40 by maamichaima      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	inisialiser_ite(t_ite *ite)
 	ite->j = 0;
 }
 
-char	*hmad(char *s)
+char	*check_to_split(char *s)
 {
 	t_ite	t;
 	char	*tmp;
