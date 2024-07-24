@@ -21,12 +21,8 @@ int	check_key_in_env(t_env *env, char *args)
 	{
 		if (ft_strcmp(get_key(args), env->key) == 0)
 		{
-			while (args[i])
-			{
-				if (args[i] == '=' || args[i] == '+')
-					break ;
+			while (args[i] && !(args[i] == '=' || args[i] == '+'))
 				i++;
-			}
 			if (args[i] == '+' && args[i + 1] && args[i + 1] == '=')
 				env->value = ft_strjoin(env->value, args + i + 2);
 			else if (args[i] == '=')
@@ -41,25 +37,30 @@ int	check_key_in_env(t_env *env, char *args)
 	}
 	return (0);
 }
-int valide_word(char *str)
+
+int	valide_word(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == '_' || ft_isalpha(str[i]) || ft_isnum(str[i]))
+		if (str[i] == '_' || ft_isalpha(str[i]) || ft_isnum(str[i]))
 			i++;
 		else
-			return(0);
+			return (0);
 	}
-	return(1);
+	return (1);
 }
+
 int	valide_key(char *str)
 {
-	if(!str)
-		return(0);
-	if ((str[0] == '_' || ft_isalpha(str[0])) && valide_word(str + 1))
+	char	*key;
+
+	key = get_key(str);
+	if (!str || !key[0])
+		return (0);
+	if (!ft_isnum(key[0]) && valide_word(key))
 		return (1);
 	return (0);
 }
@@ -74,11 +75,12 @@ int	ft_error_export(char *str)
 
 int	ft_export(char **a, t_env *env)
 {
-	t_env(*new), (*tmp);
-	int(i), (status);
+	t_env	*new;
+	t_env	*tmp;
+
+	int (i), (status);
 	status = 0;
 	i = 0;
-	new = NULL;
 	tmp = env;
 	if (a[0] && !a[1])
 		ft_write_export(sort_table(table_of_key(env)), env);
@@ -91,7 +93,7 @@ int	ft_export(char **a, t_env *env)
 				status = ft_error_export(a[i]);
 			else if (!check_key_in_env(env, a[i]))
 			{
-				new = ft_lstnew_env(get_key_env(a[i]), ignor(get_value(a[i])));
+				new = ft_lstnew_env(get_key_env(a[i]), get_value(a[i]));
 				ft_lstadd_back_env(&tmp, new);
 			}
 			i++;

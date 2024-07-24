@@ -38,7 +38,7 @@ void	error_cd(int a, char *str)
 	}
 }
 
-int puts_err(char *val, char *old)
+int	puts_err(char *val, char *old)
 {
 	if (!val)
 	{
@@ -50,9 +50,10 @@ int puts_err(char *val, char *old)
 		(error_cd(1, val), free(old));
 		return (1);
 	}
+	return (0);
 }
 
-void set_old(char *new)
+void	set_old(char *new)
 {
 	if (new)
 	{
@@ -68,6 +69,7 @@ int	ft_cd(char **args, t_env *env)
 	char	*new;
 	char	*val;
 
+	val = NULL;
 	old = getcwd(NULL, 0);
 	if (args[1] == NULL)
 		val = get_value_("HOME", env);
@@ -78,7 +80,7 @@ int	ft_cd(char **args, t_env *env)
 	}
 	else if (args[1])
 		val = args[1];
-	if(puts_err(val, old))
+	if (puts_err(val, old))
 		return (1);
 	new = getcwd(NULL, 0);
 	if (new)

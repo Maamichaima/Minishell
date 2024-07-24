@@ -14,8 +14,12 @@
 
 void	free_(t_env *node)
 {
-	free(node->key);
-	free(node->value);
+	if (!node)
+		return ;
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
 	free(node);
 }
 
@@ -28,7 +32,7 @@ int	skip(char *key, t_env *node)
 	prev_node = node->prev;
 	next_node = node->next;
 	found = 0;
-	if (ft_strcmp(get_key(key), node->key) == 0)
+	if (ft_strcmp(key, node->key) == 0)
 	{
 		prev_node->next = next_node;
 		if (next_node)
@@ -47,12 +51,12 @@ int	supp(char *key, t_env **env)
 
 	current = *env;
 	found = 0;
-	if (ft_strcmp(get_key(key), (*env)->key) == 0)
+	if (ft_strcmp(key, (*env)->key) == 0)
 	{
-		*current = *current->next;
-		if (current)
-			(current)->prev = NULL;
-		//free_(*env);
+		*env = (*env)->next;
+		if (*env)
+			(*env)->prev = NULL;
+		free_(current);
 	}
 	else
 	{
@@ -79,7 +83,7 @@ int	ft_unset(char **args, t_env **env)
 	i++;
 	while (args[i])
 	{
-		if (ft_strcmp(args[i], "_") != 0)
+		if (ft_strcmp(args[i], "_") != 0 && ft_strcmp(args[i], "?") != 0)
 			found = supp(args[i], env);
 		i++;
 	}

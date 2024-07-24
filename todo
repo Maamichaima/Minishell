@@ -1,5 +1,11 @@
-|| ysntax err
+hgf || ysntax err (done)
 
-leaks unset
+leaks unset (done)
 
-++ env -i
+++ env -i(done)
+
+permission den built(done)
+
+read line
+
+ctl \ "\n"

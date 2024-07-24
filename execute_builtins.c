@@ -44,7 +44,8 @@ int	execute_in_parent(t_ast *root, t_env **env, int count)
 
 	stdin = dup(0);
 	stdout = dup(1);
-	init_infile_outfile(root->red, root);
+	if (init_infile_outfile(root->red, root) == 1)
+		return (1);
 	dup2(root->cmd.infile, 0);
 	dup2(root->cmd.outfile, 1);
 	status = execut_bultin(root, env, count);
@@ -65,7 +66,8 @@ int	check_bultins(t_ast *root, t_ast *const_root, t_env **env, int count)
 		root->cmd.pid = fork();
 		if (root->cmd.pid == 0)
 		{
-			init_infile_outfile(root->red, root);
+			if (init_infile_outfile(root->red, root) == 1)
+				ft_exit_free(*env, 1);
 			dup2(root->cmd.infile, 0);
 			dup2(root->cmd.outfile, 1);
 			status = execut_bultin(root, env, count);

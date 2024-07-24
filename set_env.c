@@ -19,7 +19,7 @@ char	*get_key_env(char *env)
 
 	i = 0;
 	key = malloc(sizeof(char) * (ft_strlen(env) + 1));
-	while (env[i] && env[i] != '=' && env[i] != '+')
+	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 	{
 		key[i] = env[i];
 		i++;
@@ -62,13 +62,14 @@ void	add_default_env(t_env **path)
 	new = ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"));
 	ft_lstadd_back_env(path, new);
 	new = ft_lstnew_env(ft_strdup("PATH"),
-			ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"));
+			ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:\
+			/usr/bin:/sbin:/bin"));
 	ft_lstadd_back_env(path, new);
 	new = ft_lstnew_env(ft_strdup("?"), ft_strdup("0"));
 	ft_lstadd_back_env(path, new);
 }
 
-t_env	*get_new_node_in_env(char *env, char *key)
+t_env	*get_new_node_in_env(char *key)
 {
 	int		n;
 	t_env	*new;
@@ -103,7 +104,7 @@ t_env	*get_env_lst(char **env)
 		while (env && env[i])
 		{
 			key = get_key_env(env[i]);
-			new = get_new_node_in_env(env[i], key);
+			new = get_new_node_in_env(key);
 			ft_lstadd_back_env(&path, new);
 			i++;
 		}

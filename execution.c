@@ -63,9 +63,13 @@ void	set_last_env_value(t_ast *root, t_env *env)
 
 void	execute_node(t_ast *root, t_ast *const_root, t_env **env, int count)
 {
+	int	e;
+
 	if ((root->args) && is_builtin(*(root->args)))
-		set_content(*env, "?", ft_itoa(check_bultins(root, const_root, env,
-					count)));
+	{
+		e = check_bultins(root, const_root, env, count);
+		set_content(*env, "?", ft_itoa(e));
+	}
 	else
 	{
 		root->cmd.pid = fork();
@@ -74,7 +78,7 @@ void	execute_node(t_ast *root, t_ast *const_root, t_env **env, int count)
 			prepare_cmd(root, *env);
 			if (root->args)
 				executer_cmd(root->cmd, *env, const_root);
-			exit(0);
+			ft_exit_free(*env, 0);
 		}
 	}
 }

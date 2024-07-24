@@ -83,7 +83,6 @@ char	*ft_strjoin_(char *s1, char *s2)
 	ft_strlcat(p, s1, ls1 + 1);
 	ft_strlcat(p, "=", ls1 + 2);
 	ft_strlcat(p, s2, ls1 + ls2 + 2);
-	// free(s1);
 	return (p);
 }
 

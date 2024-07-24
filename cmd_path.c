@@ -32,7 +32,7 @@ char	*ft_strjoin_pipe(char *s1, char *s2)
 {
 	int		i;
 	int		j;
-	char	lg;
+	size_t	lg;
 	char	*str;
 
 	lg = ft_strlen(s1) + ft_strlen(s2) + 2;

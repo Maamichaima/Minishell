@@ -6,7 +6,7 @@ SRC = main.c lst.c get_token.c valide_syntax.c cmd_path.c create_tree.c env.c se
 	  signal.c wait_close.c
 OBJ = ${SRC:.c=.o}
 
-CFLAGS = -g3 #-fsanitize=address  #-Wall -Wextra -Werror 
+CFLAGS = -g3  #-fsanitize=address #-Wall -Wextra -Werror
 LDFLAGS = -lreadline
 NAME = minishell
 LIBFT_DIR = ./libft

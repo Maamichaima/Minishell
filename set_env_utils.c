@@ -54,7 +54,7 @@ char	*get_key(char *env)
 
 	i = 0;
 	key = ft_malloc(sizeof(char) * (ft_strlen(env) + 1), 'a');
-	while (env[i] && env[i] != '=' && env[i] != '+')
+	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 	{
 		key[i] = env[i];
 		i++;
